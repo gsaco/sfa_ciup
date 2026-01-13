@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-01-13T09:30:35",
+  "git_hash": "6b6d1576bd5509711080b36eef223a26c294c5e5",
+  "n_obs_final": 35187,
+  "key_variables": [
+    "valor_total",
+    "area_total_ha",
+    "labor_total",
+    "input_costs",
+    "diversificacion_area",
+    "practice_any"
+  ],
+  "plans": {
+    "output": "Plan A: P220_* value components from CAP200AB.",
+    "land": "Plan A: P217_SUP_ha aggregated.",
+    "labor": "Plan A: P1001A_2A/2B counts.",
+    "inputs": "Plan A: P237_VAL + P239 + P241.",
+    "practices": "Plan A: any P301A_* practice."
+  }
+}
