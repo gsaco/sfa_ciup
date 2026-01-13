@@ -1,6 +1,6 @@
 # ENA 2024 Variable Dictionary (Mapped)
 
-- Generated: 2026-01-13T09:29:12
+- Generated: 2026-01-13T11:22:18
 - Source: `/Users/gabrielsaco/Documents/GitHub/sfa_ciup/DICCIONARIO DE DATOS ENA-2024.pdf`
 
 | Variable original | Nombre estandarizado | Definicion | Unidad | Notas |

@@ -23,3 +23,16 @@
 - Executed full pipeline via `./scripts/run_all.sh`.
 - Added interpretation and improvement notes in `docs/RESULTS_INTERPRETATION.md`.
 - Added `requirements.txt`, `R/install_packages.R`, and `scripts/setup.sh` for venv-based setup.
+- Baseline run captured: `./scripts/run_all.sh > logs/baseline_run.log 2>&1`, plus `outputs/baseline_manifest.json` and `outputs/baseline_tables/*`.
+- Added geo key QA script `src/qa/geo_keys_profile.py` and ran it.
+- Created `docs/REPO_AUDIT.md`.
+- Implemented UBIGEO download/parse (Plan A + fallback), produced `data/external/processed/ubigeo_district_capitals.parquet`, and added UBIGEO tests.
+- Implemented CHIRPS monthly downloader/extractor (Plan B with fallback baseline range), generated `data/external/processed/chirps_district_features_2024.parquet`, and added CHIRPS tests.
+- Added geo merge script `src/features/merge_geo_features.py` and produced `data/processed/model_data_ena2024_plus_geo.*` plus coverage table.
+- Extended SFA and logit scripts with geo/climate controls and comparison tables (07–10).
+- Updated `docs/EXTERNAL_DATA.md`, `docs/CHIRPS_FEATURES.md`, `docs/GEO_MERGE.md`, `docs/ROBUSTNESS_WITH_GEO.md`, and refreshed `docs/REPO_AUDIT.md`.
+- Updated `docs/MODELS.md` for geo/climate robustness and regenerated report/manifest via `python src/report/build_report.py`.
+- Updated `scripts/run_all.sh` to include external data steps and prefer venv Python if available.
+- Re-ran `./scripts/setup.sh` to install new Python dependencies (openpyxl, rasterio).
+- Verified producer/crop key duplication patterns in `CARATULA.csv`, `USOSTIERRA.csv`, and `03_CAP200AB.csv` and documented counts in `docs/DATA_STRUCTURE.md`.
+- Updated `docs/RESULTS_INTERPRETATION.md` to include geo/climate model interpretation and improvement notes.

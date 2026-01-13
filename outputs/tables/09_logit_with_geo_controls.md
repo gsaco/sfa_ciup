@@ -1,0 +1,12 @@
+| model | term | estimate | std_error | z_value | p_value | odds_ratio | 
+| --- | --- | --- | --- | --- | --- | --- | 
+ | main_geo | (Intercept) |  2.7251941 | 0.5556447 |  4.9045625 | 9.739317e-07 | 15.2593751 |
+| main_geo | diversificacion_area |  2.7232890 | 0.6104945 |  4.4607918 | 8.392251e-06 | 15.2303331 |
+| main_geo | size_catmediano_2_5ha |  0.4624174 | 0.4009134 |  1.1534098 | 2.488118e-01 |  1.5879080 |
+| main_geo | size_catpequeno_<2ha |  0.3330951 | 0.4617783 |  0.7213314 | 4.707482e-01 |  1.3952801 |
+| main_geo | log_area |  0.1109765 | 0.1633812 |  0.6792487 | 4.970200e-01 |  1.1173686 |
+| main_geo | region_natural2 |  1.4024037 | 0.4710133 |  2.9774186 | 2.924471e-03 |  4.0649591 |
+| main_geo | region_natural3 | -1.8989866 | 0.3854254 | -4.9269884 | 8.691812e-07 |  0.1497203 |
+| main_geo | prcp_total_z |  0.6373037 | 0.1302650 |  4.8923645 | 1.035909e-06 |  1.8913742 |
+| main_geo | diversificacion_area:size_catmediano_2_5ha | -0.4173759 | 0.8206206 | -0.5086101 | 6.110539e-01 |  0.6587732 |
+| main_geo | diversificacion_area:size_catpequeno_<2ha | -0.9244165 | 0.8339937 | -1.1084214 | 2.677471e-01 |  0.3967629 |

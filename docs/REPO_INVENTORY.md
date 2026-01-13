@@ -1,6 +1,6 @@
 # Repo Inventory
 
-- Generated: 2026-01-13T09:28:50
+- Generated: 2026-01-13T11:22:09
 - Repo root: `/Users/gabrielsaco/Documents/GitHub/sfa_ciup`
 
 ## Tree (depth <= 3)
@@ -16,7 +16,6 @@
     02_logit_practices.R
     install_packages.R
   data/
-    ENA_2024.zip
     README.md
     intermediate/
       ena2024_dictionary.csv
@@ -45,10 +44,13 @@
     REPRODUCIBILITY.md
     RESULTS_INTERPRETATION.md
   logs/
+    baseline_run.log
     load_and_profile_20260113_082944.log
     load_and_profile_20260113_085420.log
+    load_and_profile_20260113_092901.log
     run_all_20260113_085420.log
     run_all_20260113_092850.log
+    run_all_20260113_112209.log
   outputs/
     manifest.json
     tables/
@@ -127,7 +129,7 @@
 ## ENA 2024 data locations
 
 - Raw ENA 2024 folder: `/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/raw/ENA_2024` (exists: True)
-- Raw ENA 2024 zip: `/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/ENA_2024.zip` (exists: True, size: 135.40 MB)
+- Raw ENA 2024 zip: `/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/ENA_2024.zip` (exists: False, size: NA)
 - Data README: `/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/README.md` (exists: True)
 
 ## Variable dictionary
@@ -145,5 +147,4 @@
 | .csv | 30 | 394.52 MB |
 | .md | 1 | 20.45 KB |
 | .pdf | 42 | 105.04 MB |
-| .zip | 1 | 135.40 MB |
 

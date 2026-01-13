@@ -14,6 +14,8 @@ OUTPUT_TABLES = REPO_ROOT / "outputs" / "tables"
 REPORTS_DIR = REPO_ROOT / "reports"
 PROCESSED_DIR = REPO_ROOT / "data" / "processed"
 INTERMEDIATE_DIR = REPO_ROOT / "data" / "intermediate"
+EXTERNAL_RAW = REPO_ROOT / "data" / "external" / "raw"
+EXTERNAL_PROCESSED = REPO_ROOT / "data" / "external" / "processed"
 
 
 def to_markdown(df: pd.DataFrame) -> str:
@@ -33,6 +35,16 @@ def git_hash() -> str:
         return out.decode().strip()
     except Exception:
         return "unknown"
+
+
+def sha256(path: Path) -> str:
+    import hashlib
+
+    h = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
 def main() -> None:
@@ -177,9 +189,59 @@ def main() -> None:
     sections.append("- SFA no usa pesos por limitaciones del paquete.\n")
     sections.append("- Algunas variables presentan faltantes; ver docs/DATA_GAPS.md.\n")
 
+    # External data section
+    sections.append("\n## Mejoras con datos externos (UBIGEO + CHIRPS)\n")
+    sections.append(
+        "Se incorporaron coordenadas y area distrital, y precipitacion CHIRPS como control exogeno. "
+        "Las tablas siguientes comparan resultados base vs controles geo/clima."
+    )
+    if (OUTPUT_TABLES / "06_geo_feature_coverage.md").exists():
+        sections.append("\n### Tabla 06. Cobertura geo/clima\n")
+        sections.append((OUTPUT_TABLES / "06_geo_feature_coverage.md").read_text(encoding="utf-8"))
+    if (OUTPUT_TABLES / "07_sfa_with_geo_controls.md").exists():
+        sections.append("\n### Tabla 07. SFA con controles geo/clima\n")
+        sections.append((OUTPUT_TABLES / "07_sfa_with_geo_controls.md").read_text(encoding="utf-8"))
+    if (OUTPUT_TABLES / "08_sfa_compare_main_effects.md").exists():
+        sections.append("\n### Tabla 08. Comparacion efectos SFA\n")
+        sections.append((OUTPUT_TABLES / "08_sfa_compare_main_effects.md").read_text(encoding="utf-8"))
+    if (OUTPUT_TABLES / "09_logit_with_geo_controls.md").exists():
+        sections.append("\n### Tabla 09. Logit con controles geo/clima\n")
+        sections.append((OUTPUT_TABLES / "09_logit_with_geo_controls.md").read_text(encoding="utf-8"))
+    if (OUTPUT_TABLES / "10_logit_compare_main_effects.md").exists():
+        sections.append("\n### Tabla 10. Comparacion efectos logit\n")
+        sections.append((OUTPUT_TABLES / "10_logit_compare_main_effects.md").read_text(encoding="utf-8"))
+
     report_path.write_text("\n".join(sections), encoding="utf-8")
 
+    # External metadata
+    ubigeo_plan = "unknown"
+    ubigeo_plan_path = EXTERNAL_PROCESSED / "ubigeo_plan_used.json"
+    if ubigeo_plan_path.exists():
+        ubigeo_plan = json.loads(ubigeo_plan_path.read_text(encoding="utf-8")).get("plan_used", "unknown")
+
+    chirps_meta = {}
+    chirps_meta_path = EXTERNAL_RAW / "chirps" / "metadata.json"
+    if chirps_meta_path.exists():
+        chirps_meta = json.loads(chirps_meta_path.read_text(encoding="utf-8"))
+
+    plus_geo_path = PROCESSED_DIR / "model_data_ena2024_plus_geo.parquet"
+    geo_match_rate = None
+    chirps_match_rate = None
+    if plus_geo_path.exists():
+        geo = pd.read_parquet(plus_geo_path)
+        geo_match_rate = float(geo["capital_lat"].notna().mean())
+        chirps_match_rate = float(geo["prcp_2024_total"].notna().mean())
+
     # Manifest
+    external_hashes = {}
+    for path in [
+        EXTERNAL_RAW / "ubigeo" / "DD_TB_UBIGEOS.xlsx",
+        EXTERNAL_RAW / "ubigeo" / "ubigeo_distrito.csv",
+        EXTERNAL_RAW / "chirps" / "metadata.json",
+    ]:
+        if path.exists():
+            external_hashes[path.as_posix()] = sha256(path)
+
     manifest = {
         "timestamp": dt.datetime.now().isoformat(timespec="seconds"),
         "git_hash": git_hash(),
@@ -198,7 +260,14 @@ def main() -> None:
             "labor": "Plan A: P1001A_2A/2B counts.",
             "inputs": "Plan A: P237_VAL + P239 + P241.",
             "practices": "Plan A: any P301A_* practice.",
+            "ubigeo_plan": ubigeo_plan,
+            "chirps_plan": chirps_meta.get("plan_used", "unknown"),
+            "chirps_baseline_start": chirps_meta.get("baseline_start"),
+            "chirps_baseline_end": chirps_meta.get("baseline_end"),
         },
+        "geo_match_rate": geo_match_rate,
+        "chirps_match_rate": chirps_match_rate,
+        "external_hashes": external_hashes,
     }
     manifest_path = REPO_ROOT / "outputs" / "manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")

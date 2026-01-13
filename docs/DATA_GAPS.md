@@ -32,3 +32,4 @@
 ## Coverage issues
 - Some geographic codes (`CCDD/CCPP/CCDI`) are missing for ~2.6–4.3% of records; handled as missing in joins/filters.
 - `valor_total` and `diversificacion_area` have non-trivial missingness (~9.6% and ~3.2% respectively); models drop missing rows.
+- CHIRPS baseline window uses 2015–2020 as a fallback; 1991–2020 was not used due to download size/time constraints.

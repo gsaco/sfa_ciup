@@ -11,6 +11,10 @@
   - Interaction: `diversificacion_area × size_mediano`, `diversificacion_area × size_grande`.
 - **Weights**: `frontier` does not accept survey weights; results are unweighted and noted as a limitation.
 - **Outputs**: `outputs/tables/02_sfa_main.*`, `outputs/tables/03_sfa_robustness.*`, and `data/processed/ena2024_with_TE.parquet`.
+- **Geo/climate robustness**:
+  - XGEO: adds `prcp_total_z` (CHIRPS) and `log_surface_km2` to the frontier.
+  - ZGEO: adds `prcp_total_z` to inefficiency.
+  - Outputs: `outputs/tables/07_sfa_with_geo_controls.*` and `outputs/tables/08_sfa_compare_main_effects.*`.
 
 ## Logit (survey-weighted)
 - **Package**: `survey` (R).
@@ -20,3 +24,6 @@
   - Robustness: alternative diversification indices (`shannon_area`, `num_crops_area`), stricter outcome (`num_practices >= 2`), and small-producer subsample.
 - **Survey design**: `weights = FACTOR_PRODUCTOR`, `strata = ESTRATO`, `PSU = NSEGM` (with lonely PSU adjustment).
 - **Outputs**: `outputs/tables/04_logit_main.*`, `outputs/tables/05_logit_robustness.*`.
+- **Geo/climate robustness**:
+  - Adds `prcp_total_z` to the main specification.
+  - Outputs: `outputs/tables/09_logit_with_geo_controls.*` and `outputs/tables/10_logit_compare_main_effects.*`.

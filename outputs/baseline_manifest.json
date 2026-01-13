@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-01-13T11:23:56",
+  "success": true,
+  "n_obs_final": 35187,
+  "paths": {
+    "tables_dir": "outputs/tables",
+    "baseline_tables_dir": "outputs/baseline_tables",
+    "report": "reports/reporte_final.md",
+    "model_data": "data/processed/model_data_ena2024.parquet",
+    "baseline_log": "logs/baseline_run.log"
+  },
+  "hashes": {
+    "outputs/tables/00_sample_overview.csv": "33220d20141c682f1139815cbf8ce015e3315979e6cf6b2db458ffd466fdc330",
+    "outputs/tables/00_sample_overview.md": "f0ec9c8ab1948f13edf788f10ca1f4de0ea184df1ddc59dfc08fdc3812715c9e",
+    "outputs/tables/01_diversification_descriptives.csv": "13b38d582f7e60c59ffc007e75228d80fcfae1398e466d0d509e37dca7954fc9",
+    "outputs/tables/01_diversification_descriptives.md": "7a265c3629857b06a159913277b4843617d7def6cae9d5c860d161ed9f5f8d63",
+    "outputs/tables/02_sfa_main.csv": "43d4f2823853e6c240c77a0a23cddb73e11daa0b711981efa0a7489f18fdfccc",
+    "outputs/tables/02_sfa_main.md": "390793dd1fa4f3d45dd20a2005677ac3c9c5c6d840812e1aae7bfb59ae0d9b64",
+    "outputs/tables/03_sfa_robustness.csv": "20a3e6eb3623d381199ff8af39a626555ed6f708e5eea03b1fd91f6c86a08cad",
+    "outputs/tables/03_sfa_robustness.md": "9936490eb443c655940da0062b7083ffd2b76e90e3f21ddb0bd6983d5d5fbe47",
+    "outputs/tables/04_logit_main.csv": "46d3ba175392b421188cb00ae0788f1cbff6bb03da400e3f8f1265bdf6678330",
+    "outputs/tables/04_logit_main.md": "bda073e4d3b441377f841690b59e59c94454e27703f874d0dcff157605356fa2",
+    "outputs/tables/05_logit_robustness.csv": "e42f9c78b2a9b77c3ad98f6425bf507dd7aa583d9d5713a2847b456f58a9d539",
+    "outputs/tables/05_logit_robustness.md": "4e491ccd0c58f8ee8eec77bdd1f88d52dc73f70a359607b8ace213d4356639fe",
+    "outputs/tables/99_variable_definitions_table.csv": "8fb0494026fb5c6ed089ee30475bf7eb21569dc1b5e4ad049725c8efa3cd50ad",
+    "outputs/tables/99_variable_definitions_table.md": "082b2689b368dfbd7ad3308651fe16e5c521b27e447bf68b32a8aaa9055d7fa0",
+    "reports/reporte_final.md": "fc14c8e6e9088ea3f64661b7dee7caf4de5070b2f875bf13aa2751f4ee76e748"
+  }
+}

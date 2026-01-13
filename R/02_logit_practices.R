@@ -123,4 +123,80 @@ writeLines(
   con = file.path(out_tables, "05_logit_robustness.md")
 )
 
+geo_path <- file.path(repo_root, "data", "processed", "model_data_ena2024_plus_geo.csv")
+if (file.exists(geo_path)) {
+  geo <- read.csv(geo_path, stringsAsFactors = FALSE)
+  geo_numeric <- c(
+    "practice_any",
+    "num_practices",
+    "diversificacion_area",
+    "area_total_ha",
+    "weight",
+    "prcp_total_z"
+  )
+  for (v in geo_numeric) {
+    if (v %in% names(geo)) {
+      geo[[v]] <- suppressWarnings(as.numeric(geo[[v]]))
+    }
+  }
+
+  geo <- geo[!is.na(geo$practice_any) & !is.na(geo$diversificacion_area) & !is.na(geo$weight), ]
+  geo <- geo[!is.na(geo$prcp_total_z), ]
+  geo$size_cat <- factor(geo$size_cat)
+  geo$region_natural <- factor(geo$region_natural)
+  geo$psu <- factor(geo$psu)
+  geo$estrato <- factor(geo$estrato)
+  geo$log_area <- log(geo$area_total_ha + 1)
+
+  design_geo <- svydesign(
+    ids = ~psu,
+    strata = ~estrato,
+    weights = ~weight,
+    data = geo,
+    nest = TRUE
+  )
+
+  geo_formula <- practice_any ~ diversificacion_area * size_cat + log_area + region_natural + prcp_total_z
+  geo_res <- tryCatch(
+    {
+      fit_logit(geo_formula, design_geo, "main_geo")
+    },
+    error = function(e) {
+      alt_formula <- practice_any ~ diversificacion_area * size_cat + log_area + prcp_total_z
+      fit_logit(alt_formula, design_geo, "main_geo_no_region")
+    }
+  )
+
+  write.csv(geo_res, file.path(out_tables, "09_logit_with_geo_controls.csv"), row.names = FALSE)
+  writeLines(
+    paste(
+      "|", paste(names(geo_res), collapse = " | "), "|",
+      "\n|", paste(rep("---", ncol(geo_res)), collapse = " | "), "|",
+      "\n",
+      paste(apply(geo_res, 1, function(row) paste("|", paste(row, collapse = " | "), "|")), collapse = "\n")
+    ),
+    con = file.path(out_tables, "09_logit_with_geo_controls.md")
+  )
+
+  compare_terms <- c(
+    "diversificacion_area",
+    "diversificacion_area:size_catmediano_2_5ha",
+    "diversificacion_area:size_catpequeno_<2ha"
+  )
+  compare_table <- rbind(
+    main_res[main_res$term %in% compare_terms, ],
+    geo_res[geo_res$term %in% compare_terms, ]
+  )
+  write.csv(compare_table, file.path(out_tables, "10_logit_compare_main_effects.csv"), row.names = FALSE)
+  writeLines(
+    paste(
+      "|", paste(names(compare_table), collapse = " | "), "|",
+      "\n|", paste(rep("---", ncol(compare_table)), collapse = " | "), "|",
+      "\n",
+      paste(apply(compare_table, 1, function(row) paste("|", paste(row, collapse = " | "), "|")), collapse = "\n")
+    ),
+    con = file.path(out_tables, "10_logit_compare_main_effects.md")
+  )
+}
+
 cat("Logit outputs written to outputs/tables.\\n")

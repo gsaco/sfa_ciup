@@ -174,3 +174,97 @@ Fuente: ENA 2024 (INEI). Diseno muestral con pesos (FACTOR_PRODUCTOR), estratos 
 - SFA no usa pesos por limitaciones del paquete.
 
 - Algunas variables presentan faltantes; ver docs/DATA_GAPS.md.
+
+
+## Mejoras con datos externos (UBIGEO + CHIRPS)
+
+Se incorporaron coordenadas y area distrital, y precipitacion CHIRPS como control exogeno. Las tablas siguientes comparan resultados base vs controles geo/clima.
+
+### Tabla 06. Cobertura geo/clima
+
+| group_type   | group   |     n |   share_geo_match |   share_chirps_match |   mean_prcp_total_z |   sd_prcp_total_z |
+|:-------------|:--------|------:|------------------:|---------------------:|--------------------:|------------------:|
+| overall      | overall | 35187 |          0.968397 |             0.968397 |           -0.448926 |          0.8133   |
+| region       | 1       |  8263 |          0.906329 |             0.906329 |           -0.458567 |          0.528105 |
+| region       | 2       | 20601 |          0.990437 |             0.990437 |           -0.290769 |          0.774407 |
+| region       | 3       |  6323 |          0.9777   |             0.9777   |           -0.959249 |          0.992875 |
+
+### Tabla 07. SFA con controles geo/clima
+
+| model | term | estimate | std_error | z_value | p_value | component | 
+| --- | --- | --- | --- | --- | --- | --- | 
+ | xgeo_prcp | (Intercept) |    8.66619978 | 4.129273e-02 |  209.8722763 | 0.000000e+00 | frontier |
+| xgeo_prcp | log_land |    0.73118445 | 5.056946e-03 |  144.5901177 | 0.000000e+00 | frontier |
+| xgeo_prcp | log_labor |    0.23945529 | 5.907768e-03 |   40.5322797 | 0.000000e+00 | frontier |
+| xgeo_prcp | log_inputs |    0.11104136 | 2.484275e-03 |   44.6976936 | 0.000000e+00 | frontier |
+| xgeo_prcp | region_natural2 |   -1.00494983 | 1.402775e-02 |  -71.6401334 | 0.000000e+00 | frontier |
+| xgeo_prcp | region_natural3 |   -0.16403178 | 2.064174e-02 |   -7.9466070 | 1.998401e-15 | frontier |
+| xgeo_prcp | log_surface_km2 |    0.01446090 | 5.408218e-03 |    2.6738755 | 7.498029e-03 | frontier |
+| xgeo_prcp | prcp_total_z |    0.01455123 | 7.216358e-03 |    2.0164229 | 4.375577e-02 | frontier |
+| xgeo_prcp | Z_(Intercept) | -315.05932210 | 3.034157e+01 |  -10.3837499 | 0.000000e+00 | inefficiency |
+| xgeo_prcp | Z_diversificacion_area |  -10.32626883 | 1.232804e+00 |   -8.3762431 | 0.000000e+00 | inefficiency |
+| xgeo_prcp | Z_size_mediano |  -31.08852658 | 1.275193e+00 |  -24.3794709 | 0.000000e+00 | inefficiency |
+| xgeo_prcp | Z_size_grande |  174.24048611 | 1.824269e+01 |    9.5512472 | 0.000000e+00 | inefficiency |
+| xgeo_prcp | Z_diversif_mediano |  155.63581183 | 1.051659e+01 |   14.7990738 | 0.000000e+00 | inefficiency |
+| xgeo_prcp | Z_diversif_grande |  -58.85856996 | 9.973392e+00 |   -5.9015598 | 3.600808e-09 | inefficiency |
+| xgeo_prcp | sigmaSq |  245.55241096 | 2.283592e+01 |   10.7529025 | 0.000000e+00 | variance |
+| xgeo_prcp | gamma |    0.99778149 | 2.224445e-04 | 4485.5294404 | 0.000000e+00 | variance |
+| zgeo_prcp | (Intercept) |    8.66519932 | 4.024360e-02 |  215.3186689 | 0.000000e+00 | frontier |
+| zgeo_prcp | log_land |    0.73320076 | 5.255855e-03 |  139.5016994 | 0.000000e+00 | frontier |
+| zgeo_prcp | log_labor |    0.23481199 | 5.898053e-03 |   39.8117811 | 0.000000e+00 | frontier |
+| zgeo_prcp | log_inputs |    0.11132296 | 2.509702e-03 |   44.3570427 | 0.000000e+00 | frontier |
+| zgeo_prcp | region_natural2 |   -1.00035964 | 1.545413e-02 |  -64.7308748 | 0.000000e+00 | frontier |
+| zgeo_prcp | region_natural3 |   -0.14528044 | 2.076859e-02 |   -6.9952006 | 2.648770e-12 | frontier |
+| zgeo_prcp | log_surface_km2 |    0.01292904 | 5.307003e-03 |    2.4362229 | 1.484154e-02 | frontier |
+| zgeo_prcp | Z_(Intercept) | -142.91725346 | 1.987679e+01 |   -7.1901594 | 6.472600e-13 | inefficiency |
+| zgeo_prcp | Z_diversificacion_area |   -0.17454426 | 4.207120e-01 |   -0.4148783 | 6.782310e-01 | inefficiency |
+| zgeo_prcp | Z_size_mediano |  -15.09597425 | 3.799652e+00 |   -3.9729888 | 7.097639e-05 | inefficiency |
+| zgeo_prcp | Z_size_grande |   69.51060255 | 9.900570e+00 |    7.0208686 | 2.204903e-12 | inefficiency |
+| zgeo_prcp | Z_diversif_mediano |   69.03718986 | 1.228076e+01 |    5.6215729 | 1.892266e-08 | inefficiency |
+| zgeo_prcp | Z_diversif_grande |  -23.37312740 | 3.707608e+00 |   -6.3040982 | 2.898768e-10 | inefficiency |
+| zgeo_prcp | Z_prcp_total_z |  -11.83888695 | 1.657252e+00 |   -7.1436840 | 9.086065e-13 | inefficiency |
+| zgeo_prcp | sigmaSq |  106.26869466 | 1.494298e+01 |    7.1116135 | 1.146860e-12 | variance |
+| zgeo_prcp | gamma |    0.99486304 | 7.861645e-04 | 1265.4642825 | 0.000000e+00 | variance |
+
+
+### Tabla 08. Comparacion efectos SFA
+
+| model | term | estimate | std_error | p_value | 
+| --- | --- | --- | --- | --- | 
+ | main_area | Z_diversificacion_area | -14.9304685 |  1.820617 | 2.220446e-16 |
+| main_area | Z_diversif_mediano | 174.7929733 | 23.979256 | 3.115286e-13 |
+| main_area | Z_diversif_grande | -69.9012745 | 10.234233 | 8.482992e-12 |
+| xgeo_prcp | Z_diversificacion_area | -10.3262688 |  1.232804 | 0.000000e+00 |
+| xgeo_prcp | Z_diversif_mediano | 155.6358118 | 10.516591 | 0.000000e+00 |
+| xgeo_prcp | Z_diversif_grande | -58.8585700 |  9.973392 | 3.600808e-09 |
+| zgeo_prcp | Z_diversificacion_area |  -0.1745443 |  0.420712 | 6.782310e-01 |
+| zgeo_prcp | Z_diversif_mediano |  69.0371899 | 12.280760 | 1.892266e-08 |
+| zgeo_prcp | Z_diversif_grande | -23.3731274 |  3.707608 | 2.898768e-10 |
+
+
+### Tabla 09. Logit con controles geo/clima
+
+| model | term | estimate | std_error | z_value | p_value | odds_ratio | 
+| --- | --- | --- | --- | --- | --- | --- | 
+ | main_geo | (Intercept) |  2.7251941 | 0.5556447 |  4.9045625 | 9.739317e-07 | 15.2593751 |
+| main_geo | diversificacion_area |  2.7232890 | 0.6104945 |  4.4607918 | 8.392251e-06 | 15.2303331 |
+| main_geo | size_catmediano_2_5ha |  0.4624174 | 0.4009134 |  1.1534098 | 2.488118e-01 |  1.5879080 |
+| main_geo | size_catpequeno_<2ha |  0.3330951 | 0.4617783 |  0.7213314 | 4.707482e-01 |  1.3952801 |
+| main_geo | log_area |  0.1109765 | 0.1633812 |  0.6792487 | 4.970200e-01 |  1.1173686 |
+| main_geo | region_natural2 |  1.4024037 | 0.4710133 |  2.9774186 | 2.924471e-03 |  4.0649591 |
+| main_geo | region_natural3 | -1.8989866 | 0.3854254 | -4.9269884 | 8.691812e-07 |  0.1497203 |
+| main_geo | prcp_total_z |  0.6373037 | 0.1302650 |  4.8923645 | 1.035909e-06 |  1.8913742 |
+| main_geo | diversificacion_area:size_catmediano_2_5ha | -0.4173759 | 0.8206206 | -0.5086101 | 6.110539e-01 |  0.6587732 |
+| main_geo | diversificacion_area:size_catpequeno_<2ha | -0.9244165 | 0.8339937 | -1.1084214 | 2.677471e-01 |  0.3967629 |
+
+
+### Tabla 10. Comparacion efectos logit
+
+| model | term | estimate | std_error | z_value | p_value | odds_ratio | 
+| --- | --- | --- | --- | --- | --- | --- | 
+ | main | diversificacion_area |  2.7379459 | 0.5720020 |  4.7866017 | 1.758159e-06 | 15.4552053 |
+| main | diversificacion_area:size_catmediano_2_5ha | -0.3240044 | 0.7803323 | -0.4152133 | 6.780082e-01 |  0.7232471 |
+| main | diversificacion_area:size_catpequeno_<2ha | -0.8807614 | 0.8227013 | -1.0705725 | 2.844269e-01 |  0.4144672 |
+| main_geo | diversificacion_area |  2.7232890 | 0.6104945 |  4.4607918 | 8.392251e-06 | 15.2303331 |
+| main_geo | diversificacion_area:size_catmediano_2_5ha | -0.4173759 | 0.8206206 | -0.5086101 | 6.110539e-01 |  0.6587732 |
+| main_geo | diversificacion_area:size_catpequeno_<2ha | -0.9244165 | 0.8339937 | -1.1084214 | 2.677471e-01 |  0.3967629 |

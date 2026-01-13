@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-01-13T09:30:35",
-  "git_hash": "6b6d1576bd5509711080b36eef223a26c294c5e5",
+  "timestamp": "2026-01-13T12:24:18",
+  "git_hash": "e9381a8e4ce2e1b8ad1e54b9c7db5241ed88e30a",
   "n_obs_final": 35187,
   "key_variables": [
     "valor_total",
@@ -15,6 +15,17 @@
     "land": "Plan A: P217_SUP_ha aggregated.",
     "labor": "Plan A: P1001A_2A/2B counts.",
     "inputs": "Plan A: P237_VAL + P239 + P241.",
-    "practices": "Plan A: any P301A_* practice."
+    "practices": "Plan A: any P301A_* practice.",
+    "ubigeo_plan": "B",
+    "chirps_plan": "B",
+    "chirps_baseline_start": 2015,
+    "chirps_baseline_end": 2020
+  },
+  "geo_match_rate": 0.9683974195015205,
+  "chirps_match_rate": 0.9683974195015205,
+  "external_hashes": {
+    "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/ubigeo/DD_TB_UBIGEOS.xlsx": "25c71e1d2a9b2d03d25baddf7a8287cb9b5862924decf505f02b4d93e914ad53",
+    "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/ubigeo/ubigeo_distrito.csv": "6a2cde8fb82e336285da4d684241450e8a36630e42799652c8d72b596ec252e4",
+    "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/chirps/metadata.json": "d77a3e2e32b9ee0c9b013a5ba0461e2e620b53522e9ba53848e328f40b021acb"
   }
 }

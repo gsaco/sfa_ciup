@@ -176,4 +176,128 @@ if (length(robust_rows) > 0) {
   )
 }
 
+geo_path <- file.path(repo_root, "data", "processed", "model_data_ena2024_plus_geo.csv")
+if (file.exists(geo_path)) {
+  geo <- read.csv(geo_path, stringsAsFactors = FALSE)
+  geo_numeric <- c(
+    "valor_total",
+    "area_total_ha",
+    "labor_total",
+    "input_costs",
+    "diversificacion_area",
+    "shannon_area",
+    "num_crops_area",
+    "prcp_total_z",
+    "surface_km2"
+  )
+  for (v in geo_numeric) {
+    if (v %in% names(geo)) {
+      geo[[v]] <- suppressWarnings(as.numeric(geo[[v]]))
+    }
+  }
+
+  geo <- geo[geo$valor_total > 0 & geo$area_total_ha > 0, ]
+  geo <- geo[!is.na(geo$diversificacion_area) & !is.na(geo$size_cat) & !is.na(geo$region_natural), ]
+  geo <- geo[!is.na(geo$prcp_total_z), ]
+
+  geo$log_y <- log(geo$valor_total)
+  geo$log_land <- log(geo$area_total_ha)
+  geo$log_labor <- log(geo$labor_total + 1)
+  geo$log_inputs <- log(geo$input_costs + 1)
+  geo$log_surface_km2 <- if ("surface_km2" %in% names(geo)) log(geo$surface_km2 + 1) else NA
+
+  geo$size_cat <- factor(geo$size_cat)
+  geo$region_natural <- factor(geo$region_natural)
+
+  geo$size_mediano <- as.integer(geo$size_cat == "mediano_2_5ha")
+  geo$size_grande <- as.integer(geo$size_cat == "grande_>5ha")
+  geo$diversif_mediano <- geo$diversificacion_area * geo$size_mediano
+  geo$diversif_grande <- geo$diversificacion_area * geo$size_grande
+
+  geo_region_dummies <- model.matrix(~ region_natural, data = geo)
+  if (ncol(geo_region_dummies) > 1) {
+    geo_region_dummies <- geo_region_dummies[, -1, drop = FALSE]
+  }
+  geo <- cbind(geo, geo_region_dummies)
+
+  x_geo_base <- c("log_land", "log_labor", "log_inputs", colnames(geo_region_dummies))
+  if ("surface_km2" %in% names(geo)) {
+    x_geo_base <- c(x_geo_base, "log_surface_km2")
+  }
+
+  z_geo <- c("diversificacion_area", "size_mediano", "size_grande", "diversif_mediano", "diversif_grande", "prcp_total_z")
+
+  geo_models <- list()
+  model_xgeo <- NULL
+  model_zgeo <- NULL
+  geo_x_names <- c(x_geo_base, "prcp_total_z")
+  model_xgeo <- safe_frontier(geo, geo_x_names, z_names_main, "xgeo_prcp")
+  if (!is.null(model_xgeo)) {
+    geo_models[[length(geo_models) + 1]] <- tidy_frontier(model_xgeo$model, model_xgeo$name)
+  }
+
+  model_zgeo <- safe_frontier(geo, x_geo_base, z_geo, "zgeo_prcp")
+  if (!is.null(model_zgeo)) {
+    geo_models[[length(geo_models) + 1]] <- tidy_frontier(model_zgeo$model, model_zgeo$name)
+  }
+
+  if (length(geo_models) > 0) {
+    geo_table <- do.call(rbind, geo_models)
+    write.csv(geo_table, file.path(out_tables, "07_sfa_with_geo_controls.csv"), row.names = FALSE)
+    writeLines(
+      paste(
+        "|", paste(names(geo_table), collapse = " | "), "|",
+        "\n|", paste(rep("---", ncol(geo_table)), collapse = " | "), "|",
+        "\n",
+        paste(apply(geo_table, 1, function(row) paste("|", paste(row, collapse = " | "), "|")), collapse = "\n")
+      ),
+      con = file.path(out_tables, "07_sfa_with_geo_controls.md")
+    )
+
+    compare_terms <- c("Z_diversificacion_area", "Z_diversif_mediano", "Z_diversif_grande")
+    compare_table <- rbind(
+      main_table[main_table$term %in% compare_terms, c("model", "term", "estimate", "std_error", "p_value")],
+      geo_table[geo_table$term %in% compare_terms, c("model", "term", "estimate", "std_error", "p_value")]
+    )
+    write.csv(compare_table, file.path(out_tables, "08_sfa_compare_main_effects.csv"), row.names = FALSE)
+    writeLines(
+      paste(
+        "|", paste(names(compare_table), collapse = " | "), "|",
+        "\n|", paste(rep("---", ncol(compare_table)), collapse = " | "), "|",
+        "\n",
+        paste(apply(compare_table, 1, function(row) paste("|", paste(row, collapse = " | "), "|")), collapse = "\n")
+      ),
+      con = file.path(out_tables, "08_sfa_compare_main_effects.md")
+    )
+  }
+
+  build_te <- function(model_obj, data, model_name) {
+    valid <- model_obj$model$validObs
+    keys <- data[valid, c("anio", "ccdd", "ccpp", "ccdi", "psu", "id_prod", "ua")]
+    keys$te <- as.numeric(efficiencies(model_obj$model))
+    keys$model <- model_name
+    keys
+  }
+
+  te_geo_rows <- list()
+  if (!is.null(model_xgeo)) {
+    te_geo_rows[[length(te_geo_rows) + 1]] <- build_te(model_xgeo, geo, "xgeo_prcp")
+  }
+  if (!is.null(model_zgeo)) {
+    te_geo_rows[[length(te_geo_rows) + 1]] <- build_te(model_zgeo, geo, "zgeo_prcp")
+  }
+  if (length(te_geo_rows) > 0) {
+    te_geo <- do.call(rbind, te_geo_rows)
+    te_geo_csv <- file.path(out_data, "ena2024_with_TE_geo.csv")
+    write.csv(te_geo, te_geo_csv, row.names = FALSE)
+    te_geo_parquet <- file.path(out_data, "ena2024_with_TE_geo.parquet")
+    py_cmd_geo <- sprintf(
+      "import pandas as pd; df=pd.read_csv(r'%s'); df.to_parquet(r'%s', index=False)",
+      te_geo_csv,
+      te_geo_parquet
+    )
+    system2("python", c("-c", shQuote(py_cmd_geo)))
+  }
+}
+
 cat("SFA outputs written to outputs/tables and data/processed.\\n")
