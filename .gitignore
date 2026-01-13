@@ -1,0 +1,7 @@
+data/raw/
+data/external/raw/
+data/intermediate/
+data/processed/
+logs/
+outputs/baseline_tables/
+venv/
