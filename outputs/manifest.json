@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-01-13T19:32:24",
-  "git_hash": "3ea1051acbfbde88bb3e5fc19a19926e3ad71222",
+  "timestamp": "2026-01-13T20:57:49",
+  "git_hash": "15667129e9697db7cb9fe951ff0d71758e021bc2",
   "versions": {
     "python": "3.13.1",
     "pandas": "2.3.3",
@@ -112,6 +112,38 @@
     "data/processed/model_data_ena2024_plus_geo2.parquet",
     "data/processed/model_data_ena2024_plus_geo.parquet"
   ],
+  "model_samples": {
+    "sfa_main": 31824,
+    "logit_main": 34074,
+    "sfa_geo_prcp": 31824,
+    "logit_geo_prcp": 34074,
+    "sfa_controls_ena": 31824,
+    "logit_controls_ena": 34074,
+    "sfa_temp_topo": 31804,
+    "logit_temp_topo": 34051
+  },
+  "plot_outputs": [
+    "outputs/plots/01_data_quality/cost_capital_log1p.png",
+    "outputs/plots/01_data_quality/cost_input_costs_log1p.png",
+    "outputs/plots/01_data_quality/cost_irrigation_cost_log1p.png",
+    "outputs/plots/01_data_quality/cost_seed_log1p.png",
+    "outputs/plots/01_data_quality/diversif_vs_num_crops.png",
+    "outputs/plots/01_data_quality/diversification_distributions.png",
+    "outputs/plots/01_data_quality/hist_log_valor_total.png",
+    "outputs/plots/01_data_quality/num_practices_hist.png",
+    "outputs/plots/01_data_quality/practice_any_by_region.png",
+    "outputs/plots/01_data_quality/practice_any_by_size.png",
+    "outputs/plots/01_data_quality/usuario_agua_practice_any_heatmap.png",
+    "outputs/plots/02_geospatial/map_elev_m.png",
+    "outputs/plots/02_geospatial/map_external_coverage.png",
+    "outputs/plots/02_geospatial/map_prcp_total_z.png",
+    "outputs/plots/02_geospatial/map_tmean_2024.png",
+    "outputs/plots/03_models/logit_pred_practice_any.png",
+    "outputs/plots/03_models/logit_pred_practice_two_plus.png",
+    "outputs/plots/03_models/te_by_region.png",
+    "outputs/plots/03_models/te_by_size_cat.png",
+    "outputs/plots/03_models/te_vs_diversif_binned.png"
+  ],
   "key_hashes": {
     "outputs/tables/02_sfa_main.csv": "43d4f2823853e6c240c77a0a23cddb73e11daa0b711981efa0a7489f18fdfccc",
     "outputs/tables/04_logit_main.csv": "46d3ba175392b421188cb00ae0788f1cbff6bb03da400e3f8f1265bdf6678330",
@@ -128,12 +160,12 @@
   "external_hashes": {
     "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/ubigeo/DD_TB_UBIGEOS.xlsx": "25c71e1d2a9b2d03d25baddf7a8287cb9b5862924decf505f02b4d93e914ad53",
     "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/ubigeo/ubigeo_distrito.csv": "6a2cde8fb82e336285da4d684241450e8a36630e42799652c8d72b596ec252e4",
-    "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/chirps/metadata.json": "c1560a6c420081bbf1199a348e92432c36fa33fb4a7ea8855a5ade9a5e0f0f1f",
-    "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/temperature/metadata.json": "b3a75c67b09af9f155421748f9475a8814c4ec9e13fefbfa871a1f2ab4afe1d0",
-    "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/topography/metadata.json": "34adc857dd532f5e4a0a4eb602a098474e819342e63ed6b352563eb945de30d4"
+    "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/chirps/metadata.json": "735b444c482645663a0e979c3273d05eb3108bf7d40e52cd2f4133d097d70eea",
+    "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/temperature/metadata.json": "a595cd342ae2f5434bc509181f2423650b948dd5a0dbeed74b474ec975154239",
+    "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/topography/metadata.json": "2e01aec9c2f3b2f39cf471f015fe5f88d040231ee1cefc142167ebfd9cc1f35c"
   },
   "temperature_source": "TerraClimate THREDDS NCSS",
-  "temperature_accessed": "2026-01-13T19:23:54",
+  "temperature_accessed": "2026-01-13T20:13:25",
   "topography_source": "Copernicus DEM GLO-90 (COG 1x1 degree tiles)",
-  "topography_accessed": "2026-01-13T19:23:59"
+  "topography_accessed": "2026-01-13T20:13:29"
 }

@@ -56,6 +56,25 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+def count_sfa_sample(df: pd.DataFrame) -> int:
+    df = df.copy()
+    for col in ["valor_total", "area_total_ha", "diversificacion_area"]:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+    df = df[(df["valor_total"] > 0) & (df["area_total_ha"] > 0)]
+    df = df[df["diversificacion_area"].notna() & df["size_cat"].notna() & df["region_natural"].notna()]
+    return int(len(df))
+
+
+def count_logit_sample(df: pd.DataFrame) -> int:
+    df = df.copy()
+    for col in ["practice_any", "diversificacion_area", "weight", "area_total_ha"]:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+    df = df[df["practice_any"].notna() & df["diversificacion_area"].notna() & df["weight"].notna()]
+    return int(len(df))
+
+
 def main() -> None:
     OUTPUT_TABLES.mkdir(parents=True, exist_ok=True)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -397,6 +416,36 @@ def main() -> None:
         if path.exists():
             external_hashes[path.as_posix()] = sha256(path)
 
+    model_samples = {}
+    if model_path.exists():
+        model_samples["sfa_main"] = count_sfa_sample(model)
+        model_samples["logit_main"] = count_logit_sample(model)
+
+    if plus_geo_path.exists():
+        geo = pd.read_parquet(plus_geo_path)
+        if "prcp_total_z" in geo.columns:
+            geo_prcp = geo[geo["prcp_total_z"].notna()]
+            model_samples["sfa_geo_prcp"] = count_sfa_sample(geo_prcp)
+            model_samples["logit_geo_prcp"] = count_logit_sample(geo_prcp)
+
+    if plus_controls_path.exists():
+        controls_df = pd.read_parquet(plus_controls_path)
+        model_samples["sfa_controls_ena"] = count_sfa_sample(controls_df)
+        model_samples["logit_controls_ena"] = count_logit_sample(controls_df)
+
+    if plus_geo2_path.exists():
+        geo2_df = pd.read_parquet(plus_geo2_path)
+        geo2_core = geo2_df
+        if "tmean_2024" in geo2_df.columns and "elev_m" in geo2_df.columns:
+            geo2_core = geo2_df[geo2_df["tmean_2024"].notna() & geo2_df["elev_m"].notna()]
+        model_samples["sfa_temp_topo"] = count_sfa_sample(geo2_core)
+        model_samples["logit_temp_topo"] = count_logit_sample(geo2_core)
+
+    plot_outputs = []
+    plots_dir = REPO_ROOT / "outputs" / "plots"
+    if plots_dir.exists():
+        plot_outputs = sorted([path.relative_to(REPO_ROOT).as_posix() for path in plots_dir.rglob("*.png")])
+
     manifest = {
         "timestamp": dt.datetime.now().isoformat(timespec="seconds"),
         "git_hash": git_hash(),
@@ -436,6 +485,8 @@ def main() -> None:
         "output_tables_csv": output_tables_csv,
         "output_tables_md": output_tables_md,
         "data_outputs": data_outputs,
+        "model_samples": model_samples,
+        "plot_outputs": plot_outputs,
         "key_hashes": key_hashes,
         "external_hashes": external_hashes,
         "temperature_source": temp_meta.get("source"),

@@ -64,3 +64,11 @@
 - Added `docs/ROBUSTNESS_SUMMARY.md` and updated `docs/REPRODUCIBILITY.md` for new datasets and caching.
 - Ran full pipeline with `./scripts/run_all.sh` (log: `logs/run_all_20260113_192318.log`).
 - Regenerated report and manifest with `./venv/bin/python src/report/build_report.py`.
+- Saved repo tree snapshot to `docs/REPO_TREE.txt`.
+- Ran full baseline pipeline via `bash scripts/run_all.sh | tee logs/run_all_baseline.log`.
+- Added plotting dependencies (`matplotlib`, `seaborn`) to `requirements.txt` and installed in venv.
+- Added plot pack generator `scripts/plot_pack.py` and produced plots in `outputs/plots/**` with manifest at `outputs/plots/00_index/plot_manifest.md`.
+- Added audit documentation: `docs/DEEP_AUDIT_REPORT.md`, `docs/ERROR_LEDGER.md`, `docs/INTUITION_VS_RESULTS.md`, `docs/SURVEY_DESIGN_AUDIT.md`, `docs/SFA_INTERPRETATION_AUDIT.md`, `docs/VARIABLE_DEFINITIONS_AUDIT.md`, `docs/GEO_CLIMATE_AUDIT.md`.
+- Extended `src/report/build_report.py` to include model sample sizes and plot outputs in `outputs/manifest.json`, then regenerated the report and manifest.
+- Ran experiment `experiments/X01_strict_practice_any` (strict practice_any subset), compared logit outputs, and reverted to baseline definition.
+- Ran experiment `experiments/X02_standardize_sfa_z` (standardized SFA Z variables), found no convergence improvement, and reverted to baseline specification.

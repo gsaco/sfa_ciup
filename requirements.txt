@@ -6,3 +6,5 @@ pytest
 tabulate
 openpyxl
 rasterio
+matplotlib
+seaborn

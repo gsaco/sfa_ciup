@@ -1,0 +1,13 @@
+"model","term","estimate","std_error","p_value"
+"main_area","Z_diversificacion_area",-14.9304684948489,1.82061667484801,2.22044604925031e-16
+"main_area","Z_diversif_mediano",174.792973320382,23.9792556468119,3.11528580709819e-13
+"main_area","Z_diversif_grande",-69.9012745457344,10.2342328146334,8.4829920865559e-12
+"controls_ena","Z_diversificacion_area",-14.8603345225047,1.39404490755473,0
+"controls_ena","Z_diversif_mediano",166.964890325601,22.2132134563285,5.61772850460329e-14
+"controls_ena","Z_diversif_grande",-61.3101178102593,6.0533770344328,0
+"temp_topo","Z_diversificacion_area",-35.0556587445892,9.83690247290901,0.000365679519481965
+"temp_topo","Z_diversif_mediano",115.56889022491,35.2324371333116,0.00103739262581914
+"temp_topo","Z_diversif_grande",-28.4176229884461,7.02664741307476,5.24875637755162e-05
+"controls_temp_topo","Z_diversificacion_area",-102.121933710775,9.48270958283966,0
+"controls_temp_topo","Z_diversif_mediano",309.207916561103,29.0573553441349,0
+"controls_temp_topo","Z_diversif_grande",-52.7931680647935,3.83261325353552,0

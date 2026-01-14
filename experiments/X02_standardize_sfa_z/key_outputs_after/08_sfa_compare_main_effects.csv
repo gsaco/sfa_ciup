@@ -1,0 +1,10 @@
+"model","term","estimate","std_error","p_value"
+"main_area","Z_diversificacion_area_std",-2.04715521486257,0.219613454041745,0
+"main_area","Z_diversif_mediano_std",32.8060581615267,4.23571815006661,9.54791801177635e-15
+"main_area","Z_diversif_grande_std",-17.30022917499,2.02677208311272,0
+"xgeo_prcp","Z_diversificacion_area_std",-0.758241199367757,0.210499029569541,0.000315641623101381
+"xgeo_prcp","Z_diversif_mediano_std",25.8790755902344,6.58824986734974,8.56319681288298e-05
+"xgeo_prcp","Z_diversif_grande_std",-14.2660003167208,3.14454559698683,5.7129216628482e-06
+"zgeo_prcp","Z_diversificacion_area_std",1.35563431981944,0.0674214906224557,0
+"zgeo_prcp","Z_diversif_mediano_std",26.5211914181344,3.65487744938647,3.97681887420731e-13
+"zgeo_prcp","Z_diversif_grande_std",-15.6702041953992,1.6014639578099,0

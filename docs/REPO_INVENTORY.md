@@ -1,6 +1,6 @@
 # Repo Inventory
 
-- Generated: 2026-01-13T19:23:18
+- Generated: 2026-01-13T20:12:50
 - Repo root: `/Users/gabrielsaco/Documents/GitHub/sfa_ciup`
 
 ## Tree (depth <= 3)
@@ -52,6 +52,7 @@
   docs/
     CHANGELOG.md
     CHIRPS_FEATURES.md
+    COMMANDS_RUN.md
     DATA_GAPS.md
     DATA_STRUCTURE.md
     DIVERSIFICATION_INDEX.md
@@ -63,6 +64,7 @@
     MODELS.md
     REPO_AUDIT.md
     REPO_INVENTORY.md
+    REPO_TREE.txt
     REPRODUCIBILITY.md
     RESULTS_INTERPRETATION.md
     ROBUSTNESS_SUMMARY.md
@@ -82,6 +84,7 @@
     load_and_profile_20260113_174005.log
     load_and_profile_20260113_180802.log
     load_and_profile_20260113_192106.log
+    load_and_profile_20260113_192318.log
     run_all_20260113_085420.log
     run_all_20260113_092850.log
     run_all_20260113_112209.log
@@ -90,6 +93,8 @@
     run_all_20260113_180802.log
     run_all_20260113_192105.log
     run_all_20260113_192318.log
+    run_all_20260113_201250.log
+    run_all_baseline.log
   outputs/
     baseline_manifest.json
     manifest.json
