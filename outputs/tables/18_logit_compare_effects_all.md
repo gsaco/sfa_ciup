@@ -1,0 +1,14 @@
+| model | term | estimate | std_error | z_value | p_value | odds_ratio | 
+| --- | --- | --- | --- | --- | --- | --- | 
+ | main | diversificacion_area |  2.7379459 | 0.5720020 |  4.7866017 | 1.758159e-06 | 15.4552053 |
+| main | diversificacion_area:size_catmediano_2_5ha | -0.3240044 | 0.7803323 | -0.4152133 | 6.780082e-01 |  0.7232471 |
+| main | diversificacion_area:size_catpequeno_<2ha | -0.8807614 | 0.8227013 | -1.0705725 | 2.844269e-01 |  0.4144672 |
+| controls_ena | diversificacion_area |  2.6452317 | 0.5771254 |  4.5834610 | 4.714530e-06 | 14.0867085 |
+| controls_ena | diversificacion_area:size_catmediano_2_5ha | -0.2248060 | 0.7625876 | -0.2947937 | 7.681670e-01 |  0.7986711 |
+| controls_ena | diversificacion_area:size_catpequeno_<2ha | -0.8061641 | 0.8100392 | -0.9952162 | 3.196920e-01 |  0.4465678 |
+| temp_topo | diversificacion_area |  2.4872841 | 0.6475925 |  3.8408166 | 1.245475e-04 | 12.0285638 |
+| temp_topo | diversificacion_area:size_catmediano_2_5ha | -0.3468760 | 0.8687989 | -0.3992592 | 6.897238e-01 |  0.7068930 |
+| temp_topo | diversificacion_area:size_catpequeno_<2ha | -0.8352864 | 0.8787459 | -0.9505437 | 3.418941e-01 |  0.4337502 |
+| controls_temp_topo | diversificacion_area |  2.3834605 | 0.6426040 |  3.7090659 | 2.108865e-04 | 10.8423576 |
+| controls_temp_topo | diversificacion_area:size_catmediano_2_5ha | -0.1845791 | 0.8264038 | -0.2233522 | 8.232730e-01 |  0.8314542 |
+| controls_temp_topo | diversificacion_area:size_catpequeno_<2ha | -0.7950145 | 0.8761884 | -0.9073556 | 3.642742e-01 |  0.4515747 |

@@ -1,6 +1,6 @@
 # ENA 2024 Variable Dictionary (Mapped)
 
-- Generated: 2026-01-13T11:22:18
+- Generated: 2026-01-13T19:23:28
 - Source: `/Users/gabrielsaco/Documents/GitHub/sfa_ciup/DICCIONARIO DE DATOS ENA-2024.pdf`
 
 | Variable original | Nombre estandarizado | Definicion | Unidad | Notas |
@@ -61,3 +61,27 @@
 | P301A_15 | practica_usar_plaguicidas | COMO PRODUCTOR/A INDEPENDIENTE ¿UD. REALIZA LA PRÁCTICA AGRÍCOLA DE: Usar plaguicidas como: Insecticidas, fungicidas, herbicidas, acaricidas, bactericidas, nematicidas, rodenticidas, molusquicidas, etc.? |  | Agricultural practice. |
 | P301A_16 | practica_control_biologico | COMO PRODUCTOR/A INDEPENDIENTE ¿UD. REALIZA LA PRÁCTICA AGRÍCOLA DE: Usar control biológico? |  | Agricultural practice. |
 | P301A_17 | practica_manejo_integrado_plagas | COMO PRODUCTOR/A INDEPENDIENTE ¿UD. REALIZA LA PRÁCTICA AGRÍCOLA DE: Usar manejo integrado de plagas? |  | Agricultural practice. |
+| P212 | water_source | PRINCIPALMENTE, ¿DE DÓNDE PROCEDE EL AGUA PARA REGAR EL CULTIVO DE……? |  | Water source for irrigation (crop-level). |
+| P213 | irrigation_system | ¿QUÉ SISTEMA DE RIEGO UTILIZÓ? |  | Irrigation system used (crop-level). |
+| P214 | seed_certified | PARA LA SIEMBRA DE ………. UTILIZÓ SEMILLA: |  | Certified seed indicator (crop-level). |
+| P235_VAL | gasto_semilla | EN LOS ÚLTIMOS 12 MESES, DE ………… A …………, ¿CUÁNTO GASTÓ EN SEMILLA? VALOR S/ (Enteros) | S/ | Seed expenditure (crop-level). |
+| P235A_4 | semilla_semillero | PARA LA SIEMBRA DE …………, ¿LAS SEMILLAS FUERON: Compradas a semilleros? |  | Seed source: semillero (crop-level). |
+| P235A_9 | semilla_comercial | PARA LA SIEMBRA DE …………, ¿LAS SEMILLAS FUERON: Compradas en establecimientos comerciales? |  | Seed source: commercial establishment (crop-level). |
+| P236 | usa_abono | EN LOS ÚLTIMOS 12 MESES, DE ………… A …………, ¿CUÁNTO GASTÓ EN ABONO? EN LOS ÚLTIMOS 12 MESES, DE…A…. , ¿UTILIZÓ ABONO? |  | Used organic fertilizer (crop-level). |
+| P238 | usa_fertilizantes | EN LOS ÚLTIMOS 12 MESES, DE…A…. , ¿UTILIZÓ FERTILIZANTES? |  | Used fertilizers (crop-level). |
+| P1001A_3 | gasto_agua_riego | DURANTE LOS ÚLTIMOS 12 MESES, DE...A..., ¿CUÁNTO GASTÓ EN: Agua de riego para sus cultivos? |  | Irrigation water expenditure (agri). |
+| P1001A_4 | gasto_asistencia_agricola | DURANTE LOS ÚLTIMOS 12 MESES, DE...A..., ¿CUÁNTO GASTÓ EN: Asistencia técnica agrícola? |  | Agricultural technical assistance expenditure. |
+| P1001A_5A | gasto_compra_equipos | DURANTE LOS ÚLTIMOS 12 MESES, DE...A..., ¿CUÁNTO GASTÓ EN: Compra de equipos agrícolas? |  | Equipment purchase expenditure (agri). |
+| P1001A_5B | gasto_compra_maquinaria | DURANTE LOS ÚLTIMOS 12 MESES, DE...A..., ¿CUÁNTO GASTÓ EN: Compra de maquinaria agrícola? |  | Machinery purchase expenditure (agri). |
+| P1001A_6A | gasto_alquiler_mant_equipos | DURANTE LOS ÚLTIMOS 12 MESES, DE...A..., ¿CUÁNTO GASTÓ EN: Alquiler y/o mantenimiento de equipos agrícolas? |  | Equipment rental/maintenance expenditure (agri). |
+| P1206 | uso_maquinaria | ¿EN LOS ÚLTIMOS 12 MESES DE ……….. A ……….., UD. HA UTILIZADO MAQUINARIA Y/O EQUIPO PARA DESARROLLAR SU ACTIVIDAD AGROPECUARIA? |  | Used machinery/equipment (agri). |
+| P1207_N | num_maquinaria_equipo | NÚMERO DE MAQUINARIA Y/O EQUIPO |  | Number of machinery/equipment items. |
+| P1207_TIPO | tipo_maquinaria_equipo | ¿QUÉ MAQUINARIA Y/O EQUIPO HA UTILIZADO? TIPO |  | Machinery/equipment type. |
+| P701 | capacitacion_recibida | EN LOS ÚLTIMOS 3 AÑOS, DE ……………… A ………………, ¿UD. HA RECIBIDO CAPACITACIÓN? (Mínimo 4 horas): | year | Training received (last 3 years). |
+| P704 | asistencia_tecnica_recibida | EN LOS ÚLTIMOS 3 AÑOS, DE ……………… A ………………, ¿ UD. HA RECIBIDO ASISTENCIA TÉCNICA? | year | Technical assistance received (last 3 years). |
+| P901 | credito_solicitado | EN LOS ÚLTIMOS 12 MESES, DE…..A……, ¿UD. SOLICITÓ ALGÚN CRÉDITO? |  | Requested credit (last 12 months). |
+| P902 | credito_obtenido | ¿OBTUVO EL CRÉDITO QUE SOLICITÓ? |  | Obtained credit (last 12 months). |
+| P1105 | nivel_educacion | ¿CUÁL ES EL NIVEL DE EDUCACIÓN ALCANZADO? |  | Educational attainment level. |
+| P801 | asociacion_miembro | ¿UD. PERTENECE A ALGUNA ASOCIACIÓN, COOPERATIVA Y/O COMITÉ DE PRODUCTORES/AS AGROPECUARIOS/AS? |  | Member of association/cooperative. |
+| P801_1 | asociacion_num | ¿UD. PERTENECE A ALGUNA ASOCIACIÓN, COOPERATIVA Y/O COMITÉ DE PRODUCTORES/AS AGROPECUARIOS/AS? ¿A CUÁNTAS PERTENECE? |  | Number of associations. |
+| P810 | usuario_agua | ¿UD. O EL PROPIETARIO/A DE LA/S PARCELA/S O CHACRA/S ES USUARIO DE AGUA O PERTENECE A UNA/UN COMISIÓN/COMITÉ DE USUARIOS? |  | Water user committee membership. |

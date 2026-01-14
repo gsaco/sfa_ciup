@@ -1,0 +1,26 @@
+| model | term | estimate | std_error | z_value | p_value | component | 
+| --- | --- | --- | --- | --- | --- | --- | 
+ | controls_ena | (Intercept) |    8.67787649 | 2.385583e-02 |  363.7633895 | 0.000000e+00 | frontier |
+| controls_ena | log_land |    0.76004592 | 5.388211e-03 |  141.0571881 | 0.000000e+00 | frontier |
+| controls_ena | log_labor |    0.22796869 | 5.822969e-03 |   39.1499035 | 0.000000e+00 | frontier |
+| controls_ena | log_inputs |    0.10568179 | 2.428492e-03 |   43.5174567 | 0.000000e+00 | frontier |
+| controls_ena | region_natural2 |   -0.71516353 | 1.693544e-02 |  -42.2288099 | 0.000000e+00 | frontier |
+| controls_ena | region_natural3 |    0.00297901 | 2.302372e-02 |    0.1293887 | 8.970501e-01 | frontier |
+| controls_ena | log_seed |   -0.04697006 | 2.180708e-03 |  -21.5389009 | 0.000000e+00 | frontier |
+| controls_ena | log_irrigation_cost |    0.04847155 | 2.578596e-03 |   18.7976531 | 0.000000e+00 | frontier |
+| controls_ena | log_capital |    0.01315481 | 2.293398e-03 |    5.7359468 | 9.696910e-09 | frontier |
+| controls_ena | riego_tecnificado_any |    0.04705091 | 1.466374e-02 |    3.2086578 | 1.333561e-03 | frontier |
+| controls_ena | Z_(Intercept) | -381.05273943 | 4.791440e+01 |   -7.9527808 | 1.776357e-15 | inefficiency |
+| controls_ena | Z_diversificacion_area |  -14.86033452 | 1.394045e+00 |  -10.6598679 | 0.000000e+00 | inefficiency |
+| controls_ena | Z_size_mediano |  -18.45895312 | 3.321192e+00 |   -5.5579309 | 2.729914e-08 | inefficiency |
+| controls_ena | Z_size_grande |  223.78953244 | 2.639327e+01 |    8.4790385 | 0.000000e+00 | inefficiency |
+| controls_ena | Z_diversif_mediano |  166.96489033 | 2.221321e+01 |    7.5164672 | 5.617729e-14 | inefficiency |
+| controls_ena | Z_diversif_grande |  -61.31011781 | 6.053377e+00 |  -10.1282503 | 0.000000e+00 | inefficiency |
+| controls_ena | Z_nivel_educacion |   -2.11934863 | 1.547520e-01 |  -13.6951328 | 0.000000e+00 | inefficiency |
+| controls_ena | Z_credito_obtenido |  -49.41225411 | 6.234458e+00 |   -7.9256691 | 2.220446e-15 | inefficiency |
+| controls_ena | Z_capacitacion_recibida |   -3.89003760 | 1.160145e-01 |  -33.5306090 | 0.000000e+00 | inefficiency |
+| controls_ena | Z_asistencia_tecnica_recibida |  -89.34677154 | 1.150913e+01 |   -7.7631212 | 8.215650e-15 | inefficiency |
+| controls_ena | Z_usuario_agua |  -60.45972575 | 7.353610e+00 |   -8.2217752 | 2.220446e-16 | inefficiency |
+| controls_ena | Z_asociacion_miembro |   27.76742921 | 3.898151e+00 |    7.1232313 | 1.054268e-12 | inefficiency |
+| controls_ena | sigmaSq |  333.57743515 | 4.148932e+01 |    8.0400801 | 8.881784e-16 | variance |
+| controls_ena | gamma |    0.99854166 | 1.972739e-04 | 5061.7021429 | 0.000000e+00 | variance |

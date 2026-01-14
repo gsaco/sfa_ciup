@@ -11,6 +11,9 @@ source venv/bin/activate
 ./scripts/run_all.sh
 ```
 
+The pipeline downloads external climate/topography sources and caches them under
+`data/external/raw/`. Re-running will reuse cached files when present.
+
 ## CHIRPS baseline window
 By default, the pipeline uses a reduced baseline window (2015–2020) for CHIRPS due to download constraints. You can override via:
 ```bash
@@ -27,6 +30,7 @@ Logs are written to `logs/run_all_YYYYMMDD_HHMMSS.log`.
 - Final report: `reports/reporte_final.md`
 - Tables: `outputs/tables/*.csv` and `outputs/tables/*.md`
 - Manifest: `outputs/manifest.json`
+- Processed datasets: `data/processed/model_data_ena2024_plus_controls.*` and `data/processed/model_data_ena2024_plus_geo2.*`
 
 ## Versions
 - R 4.5.1 and packages: `frontier`, `survey`, `broom`

@@ -4,7 +4,7 @@
   "baseline_start": 2015,
   "baseline_end": 2020,
   "baseline_note": "fallback_baseline_2015_2020_due_to_download_size",
-  "accessed_at": "2026-01-13T12:11:30",
+  "accessed_at": "2026-01-13T19:23:41",
   "plan_used": "B",
   "files": {
     "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/chirps/monthly_tifs/2015/chirps-v2.0.2015.01.tif.gz": "607edb881a29283889cbe53c8abc7ba35e067fb9b8fb5a0bc737af4beddab0da",

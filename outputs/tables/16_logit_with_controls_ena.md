@@ -1,0 +1,17 @@
+| model | term | estimate | std_error | z_value | p_value | odds_ratio | 
+| --- | --- | --- | --- | --- | --- | --- | 
+ | controls_ena | (Intercept) |  0.84007045 | 0.58608058 |  1.4333702 | 1.518311e-01 |   2.3165302 |
+| controls_ena | diversificacion_area |  2.64523170 | 0.57712539 |  4.5834610 | 4.714530e-06 |  14.0867085 |
+| controls_ena | size_catmediano_2_5ha |  0.39033685 | 0.38608524 |  1.0110121 | 3.120725e-01 |   1.4774784 |
+| controls_ena | size_catpequeno_<2ha |  0.33458704 | 0.46760654 |  0.7155311 | 4.743231e-01 |   1.3973632 |
+| controls_ena | log_area | -0.07476799 | 0.16836720 | -0.4440769 | 6.570113e-01 |   0.9279588 |
+| controls_ena | region_natural2 |  2.10733053 | 0.46607065 |  4.5214831 | 6.320508e-06 |   8.2262522 |
+| controls_ena | region_natural3 | -1.15579489 | 0.38834314 | -2.9762207 | 2.935916e-03 |   0.3148072 |
+| controls_ena | nivel_educacion |  0.10278247 | 0.03401848 |  3.0213717 | 2.532419e-03 |   1.1082503 |
+| controls_ena | credito_obtenido |  0.79622859 | 0.29301704 |  2.7173457 | 6.609434e-03 |   2.2171633 |
+| controls_ena | capacitacion_recibida |  1.43651941 | 0.33092237 |  4.3409559 | 1.454112e-05 |   4.2060308 |
+| controls_ena | asistencia_tecnica_recibida | -0.11298698 | 0.47744698 | -0.2366482 | 8.129420e-01 |   0.8931623 |
+| controls_ena | usuario_agua |  5.06563777 | 0.71068902 |  7.1277839 | 1.206591e-12 | 158.4814838 |
+| controls_ena | asociacion_miembro |  0.62724300 | 0.32241755 |  1.9454369 | 5.179314e-02 |   1.8724411 |
+| controls_ena | diversificacion_area:size_catmediano_2_5ha | -0.22480601 | 0.76258763 | -0.2947937 | 7.681670e-01 |   0.7986711 |
+| controls_ena | diversificacion_area:size_catpequeno_<2ha | -0.80616414 | 0.81003923 | -0.9952162 | 3.196920e-01 |   0.4465678 |

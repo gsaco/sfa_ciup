@@ -36,3 +36,31 @@
 - Re-ran `./scripts/setup.sh` to install new Python dependencies (openpyxl, rasterio).
 - Verified producer/crop key duplication patterns in `CARATULA.csv`, `USOSTIERRA.csv`, and `03_CAP200AB.csv` and documented counts in `docs/DATA_STRUCTURE.md`.
 - Updated `docs/RESULTS_INTERPRETATION.md` to include geo/climate model interpretation and improvement notes.
+- Re-ran baseline pipeline via `./scripts/run_all.sh` and saved `logs/baseline_run.log`.
+- Saved baseline manifest snapshot to `outputs/manifest_baseline.json`.
+- Created `docs/ECONOMIC_VIABILITY.md` with feasibility analysis for ENA controls, temperature, and topography.
+- Expanded ENA variable mapping in `src/ena/02_build_schema_from_dictionary.py` and regenerated dictionary outputs via `python src/ena/02_build_schema_from_dictionary.py`.
+- Extended `src/ena/03_apply_schema.py` to include irrigation/seed fields (P212/P213/P214) and re-ran it.
+- Added ENA control feature builders in `src/features/ena_controls.py`.
+- Added `src/ena/06_build_model_data_plus_controls.py` to build `data/processed/model_data_ena2024_plus_controls.*` and `outputs/tables/11_controls_ena_coverage.*`.
+- Added `src/tests/test_ena_controls.py` and validated with `pytest -q`.
+- Documented new ENA controls mapping in `docs/ENA_CONTROLS_MAPPING.md`.
+- Re-ran full pipeline via `./scripts/run_all.sh` after schema/control updates.
+- Regenerated plus-controls dataset and coverage table via `python src/ena/06_build_model_data_plus_controls.py`.
+- Added TerraClimate source discovery script `src/external/temperature/find_source_and_document.py` and generated `docs/TEMPERATURE_FEATURES.md`.
+- Downloaded TerraClimate 2023-2024 subsets via `python src/external/temperature/download_temperature_2023_2024.py` into `data/external/raw/temperature/`.
+- Extracted district temperature features with `python src/external/temperature/extract_temperature_points.py`.
+- Merged temperature features into `data/processed/model_data_ena2024_plus_controls_temp.*` with `src/features/merge_temperature_features.py` and wrote `outputs/tables/12_temp_topo_coverage.*`.
+- Added `src/tests/test_temperature_features.py` and validated with `pytest -q`.
+- Added topography source selection script `src/external/topography/find_source_and_document.py` and generated `docs/TOPOGRAPHY_FEATURES.md`.
+- Downloaded Copernicus DEM GLO-90 tiles via `python src/external/topography/download_dem.py` into `data/external/raw/topography/`.
+- Extracted district elevation/slope/ruggedness with `python src/external/topography/extract_topography_points.py`.
+- Merged topography, temperature, and geo features into `data/processed/model_data_ena2024_plus_geo2.*` via `src/features/merge_geo2_features.py` and refreshed `outputs/tables/12_temp_topo_coverage.*`.
+- Added `src/tests/test_topography_features.py` and validated with `pytest -q`.
+- Extended `R/01_sfa_main.R` and `R/02_logit_practices.R` to estimate ENA-controls and temp/topo models and generated tables 13–18.
+- Added `src/qa/sample_loss_analysis.py` and wrote `outputs/tables/sample_loss_analysis.*`.
+- Updated `scripts/run_all.sh` to include ENA controls, temperature, topography, geo2 merge, sample loss QA, and moved tests after data builds.
+- Expanded `src/report/build_report.py` with new report sections (tables 11–18), richer manifest fields, and R version capture.
+- Added `docs/ROBUSTNESS_SUMMARY.md` and updated `docs/REPRODUCIBILITY.md` for new datasets and caching.
+- Ran full pipeline with `./scripts/run_all.sh` (log: `logs/run_all_20260113_192318.log`).
+- Regenerated report and manifest with `./venv/bin/python src/report/build_report.py`.

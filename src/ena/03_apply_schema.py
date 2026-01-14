@@ -72,6 +72,9 @@ def main() -> None:
         "P220_2_VAL",
         "P220_3A_VAL",
         "P220_3B_VAL",
+        "P212",
+        "P213",
+        "P214",
     ]
 
     caratula = read_csv(caratula_path, usecols=caratula_cols, low_memory=False)

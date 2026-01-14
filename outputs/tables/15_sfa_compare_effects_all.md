@@ -1,0 +1,14 @@
+| model | term | estimate | std_error | p_value | 
+| --- | --- | --- | --- | --- | 
+ | main_area | Z_diversificacion_area |  -14.93047 |  1.820617 | 2.220446e-16 |
+| main_area | Z_diversif_mediano |  174.79297 | 23.979256 | 3.115286e-13 |
+| main_area | Z_diversif_grande |  -69.90127 | 10.234233 | 8.482992e-12 |
+| controls_ena | Z_diversificacion_area |  -14.86033 |  1.394045 | 0.000000e+00 |
+| controls_ena | Z_diversif_mediano |  166.96489 | 22.213213 | 5.617729e-14 |
+| controls_ena | Z_diversif_grande |  -61.31012 |  6.053377 | 0.000000e+00 |
+| temp_topo | Z_diversificacion_area |  -35.05566 |  9.836902 | 3.656795e-04 |
+| temp_topo | Z_diversif_mediano |  115.56889 | 35.232437 | 1.037393e-03 |
+| temp_topo | Z_diversif_grande |  -28.41762 |  7.026647 | 5.248756e-05 |
+| controls_temp_topo | Z_diversificacion_area | -102.12193 |  9.482710 | 0.000000e+00 |
+| controls_temp_topo | Z_diversif_mediano |  309.20792 | 29.057355 | 0.000000e+00 |
+| controls_temp_topo | Z_diversif_grande |  -52.79317 |  3.832613 | 0.000000e+00 |
