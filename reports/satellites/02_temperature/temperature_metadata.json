@@ -1,0 +1,25 @@
+{
+  "source": "TerraClimate THREDDS NCSS",
+  "years": [
+    2023,
+    2024
+  ],
+  "target_year": 2024,
+  "baseline_years": [
+    2023
+  ],
+  "units": {
+    "tmax": "degC",
+    "tmin": "degC",
+    "tmean": "degC",
+    "tmean_anom": "degC",
+    "tmean_z": "z-score"
+  },
+  "quarterly_means": false,
+  "nodata": -32768.0,
+  "crs": "None",
+  "resolution": [
+    0.041666666666666664,
+    0.04166666666666664
+  ]
+}

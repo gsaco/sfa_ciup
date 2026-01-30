@@ -1,0 +1,121 @@
+{
+  "row_count": 1892,
+  "ubigeo_unique": true,
+  "missing_keys": [],
+  "missing_key_count": 0,
+  "missingness": [
+    {
+      "column": "prcp_2024_total",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "prcp_2024_wet",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "prcp_2024_dry",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "prcp_baseline_mean",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "prcp_baseline_sd",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "prcp_total_anom",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "prcp_total_z",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "ubigeo6",
+      "missing_count": 0,
+      "missing_pct": 0.0
+    }
+  ],
+  "summary_stats": [
+    {
+      "feature": "prcp_2024_total",
+      "min": 4.228915638028921,
+      "max": 5052.282718658447,
+      "mean": 746.4690375118233,
+      "std": 575.1319496755182
+    },
+    {
+      "feature": "prcp_2024_wet",
+      "min": 0.0,
+      "max": 3754.2831115722656,
+      "mean": 516.7465089517406,
+      "std": 361.67107530758324
+    },
+    {
+      "feature": "prcp_2024_dry",
+      "min": 3.4618729216617794e-08,
+      "max": 1687.8872833251953,
+      "mean": 120.18857625860997,
+      "std": 167.30571691489627
+    },
+    {
+      "feature": "prcp_baseline_mean",
+      "min": 4.230170268850515,
+      "max": 4893.279374440511,
+      "mean": 813.9631156513354,
+      "std": 613.0766534534973
+    },
+    {
+      "feature": "prcp_baseline_sd",
+      "min": 0.3057191626072438,
+      "max": 899.7915914207324,
+      "mean": 122.64564729087365,
+      "std": 97.33782294969231
+    },
+    {
+      "feature": "prcp_total_anom",
+      "min": -1109.0303293863935,
+      "max": 685.919278462728,
+      "mean": -67.49407813951221,
+      "std": 150.85582264807863
+    },
+    {
+      "feature": "prcp_total_z",
+      "min": -4.915672119852838,
+      "max": 3.5229382650120677,
+      "mean": -0.3684409286351837,
+      "std": 0.8645895493816704
+    }
+  ],
+  "coverage": [
+    {
+      "metric": "ubigeo_total",
+      "value": 1892
+    },
+    {
+      "metric": "feature_rows",
+      "value": 1892
+    },
+    {
+      "metric": "matched_keys",
+      "value": 1892
+    },
+    {
+      "metric": "missing_keys",
+      "value": 0
+    },
+    {
+      "metric": "extra_keys",
+      "value": 0
+    }
+  ]
+}

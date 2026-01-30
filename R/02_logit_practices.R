@@ -134,11 +134,16 @@ if (file.exists(controls_path)) {
     "area_total_ha",
     "weight",
     "nivel_educacion",
-    "credito_obtenido",
     "capacitacion_recibida",
     "asistencia_tecnica_recibida",
     "usuario_agua",
-    "asociacion_miembro"
+    "asociacion_miembro",
+    "riego_any",
+    "uso_maquinaria",
+    "usa_abono",
+    "usa_fertilizantes",
+    "semilla_semillero_any",
+    "semilla_comercial_any"
   )
   for (v in controls_numeric) {
     if (v %in% names(controls)) {
@@ -162,16 +167,18 @@ if (file.exists(controls_path)) {
   )
 
   controls_formula <- practice_any ~ diversificacion_area * size_cat + log_area + region_natural +
-    nivel_educacion + credito_obtenido + capacitacion_recibida + asistencia_tecnica_recibida +
-    usuario_agua + asociacion_miembro
+    nivel_educacion + capacitacion_recibida + asistencia_tecnica_recibida +
+    usuario_agua + asociacion_miembro + riego_any + uso_maquinaria +
+    usa_abono + usa_fertilizantes + semilla_semillero_any + semilla_comercial_any
   controls_res <- tryCatch(
     {
       fit_logit(controls_formula, design_controls, "controls_ena")
     },
     error = function(e) {
       alt_formula <- practice_any ~ diversificacion_area * size_cat + log_area +
-        nivel_educacion + credito_obtenido + capacitacion_recibida + asistencia_tecnica_recibida +
-        usuario_agua + asociacion_miembro
+        nivel_educacion + capacitacion_recibida + asistencia_tecnica_recibida +
+        usuario_agua + asociacion_miembro + riego_any + uso_maquinaria +
+        usa_abono + usa_fertilizantes + semilla_semillero_any + semilla_comercial_any
       fit_logit(alt_formula, design_controls, "controls_ena_no_region")
     }
   )
@@ -207,11 +214,16 @@ if (file.exists(geo2_path)) {
     "slope_deg",
     "ruggedness",
     "nivel_educacion",
-    "credito_obtenido",
     "capacitacion_recibida",
     "asistencia_tecnica_recibida",
     "usuario_agua",
-    "asociacion_miembro"
+    "asociacion_miembro",
+    "riego_any",
+    "uso_maquinaria",
+    "usa_abono",
+    "usa_fertilizantes",
+    "semilla_semillero_any",
+    "semilla_comercial_any"
   )
   for (v in geo2_numeric) {
     if (v %in% names(geo2)) {
@@ -250,8 +262,9 @@ if (file.exists(geo2_path)) {
 
   controls_temp_formula <- practice_any ~ diversificacion_area * size_cat + log_area + region_natural +
     tmean_2024 + delta_tmean_24_23 + elev_m + slope_deg + ruggedness + prcp_total_z +
-    nivel_educacion + credito_obtenido + capacitacion_recibida + asistencia_tecnica_recibida +
-    usuario_agua + asociacion_miembro
+    nivel_educacion + capacitacion_recibida + asistencia_tecnica_recibida +
+    usuario_agua + asociacion_miembro + riego_any + uso_maquinaria +
+    usa_abono + usa_fertilizantes + semilla_semillero_any + semilla_comercial_any
   controls_temp_topo_res <- tryCatch(
     {
       fit_logit(controls_temp_formula, design_geo2, "controls_temp_topo")
@@ -259,8 +272,9 @@ if (file.exists(geo2_path)) {
     error = function(e) {
       alt_formula <- practice_any ~ diversificacion_area * size_cat + log_area +
         tmean_2024 + delta_tmean_24_23 + elev_m + slope_deg + ruggedness + prcp_total_z +
-        nivel_educacion + credito_obtenido + capacitacion_recibida + asistencia_tecnica_recibida +
-        usuario_agua + asociacion_miembro
+        nivel_educacion + capacitacion_recibida + asistencia_tecnica_recibida +
+        usuario_agua + asociacion_miembro + riego_any + uso_maquinaria +
+        usa_abono + usa_fertilizantes + semilla_semillero_any + semilla_comercial_any
       fit_logit(alt_formula, design_geo2, "controls_temp_topo_no_region")
     }
   )

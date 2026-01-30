@@ -1,16 +1,16 @@
-| model | term | estimate | std_error | z_value | p_value | component | 
-| --- | --- | --- | --- | --- | --- | --- | 
- | main_area | (Intercept) |    8.7389376 | 2.136255e-02 |  409.077456 | 0.000000e+00 | frontier |
-| main_area | log_land |    0.7321364 | 4.863750e-03 |  150.529207 | 0.000000e+00 | frontier |
-| main_area | log_labor |    0.2396973 | 5.821649e-03 |   41.173440 | 0.000000e+00 | frontier |
-| main_area | log_inputs |    0.1113705 | 2.407959e-03 |   46.250986 | 0.000000e+00 | frontier |
-| main_area | region_natural2 |   -1.0062810 | 1.468704e-02 |  -68.514905 | 0.000000e+00 | frontier |
-| main_area | region_natural3 |   -0.1579736 | 2.016540e-02 |   -7.833894 | 4.662937e-15 | frontier |
-| main_area | Z_(Intercept) | -417.6695560 | 5.426450e+01 |   -7.696920 | 1.398881e-14 | inefficiency |
-| main_area | Z_diversificacion_area |  -14.9304685 | 1.820617e+00 |   -8.200775 | 2.220446e-16 | inefficiency |
-| main_area | Z_size_mediano |  -19.2780162 | 3.638200e+00 |   -5.298779 | 1.165796e-07 | inefficiency |
-| main_area | Z_size_grande |  228.3013445 | 2.984120e+01 |    7.650543 | 1.998401e-14 | inefficiency |
-| main_area | Z_diversif_mediano |  174.7929733 | 2.397926e+01 |    7.289341 | 3.115286e-13 | inefficiency |
-| main_area | Z_diversif_grande |  -69.9012745 | 1.023423e+01 |   -6.830143 | 8.482992e-12 | inefficiency |
-| main_area | sigmaSq |  323.0055372 | 4.225682e+01 |    7.643868 | 2.109424e-14 | variance |
-| main_area | gamma |    0.9983073 | 2.389178e-04 | 4178.454385 | 0.000000e+00 | variance |
+| model | term | estimate | std_error | z_value | p_value | component | inference_note | n_total | n_valid | share_dropped | gamma | gamma_near_boundary | cov_singular | cov_rank | cov_cond | cov_rcond | input_cost_var | ineffDecrease | truncNorm | timeEffect | 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+ | main_area | (Intercept) |   8.40419653 | 0.051174008 | 164.227834 | 0.0000000 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | log_land |   0.90386454 | 0.005995433 | 150.758835 | 0.0000000 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | log_labor |   0.25382833 | 0.007286540 |  34.835234 | 0.0000000 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | log_inputs |   0.07007366 | 0.006689028 |  10.475910 | 0.0000000 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_(Intercept) | -16.81278496 | 1.069054594 | -15.726779 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_diversificacion_area |   1.92937853 | 0.200791530 |   9.608864 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_size_mediano |   2.33356342 | 0.213122398 |  10.949405 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_size_grande |   8.84211634 | 0.390458332 |  22.645480 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_diversif_mediano |  -0.19952180 | 0.242915799 |  -0.821362 | 0.4114401 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_diversif_grande |  -5.54253932 | 0.289242038 | -19.162288 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_region_natural2 |  12.53650400 | 0.708688739 |  17.689718 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_region_natural3 |   8.34711817 | 0.565194002 |  14.768589 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | sigmaSq |   7.03430138 | 0.333929212 |  21.065247 | 0.0000000 | variance |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | gamma |   0.93268439 | 0.003293945 | 283.151207 | 0.0000000 | variance |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |

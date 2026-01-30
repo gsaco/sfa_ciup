@@ -50,7 +50,7 @@ def main() -> None:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    df["valor_total_cultivo"] = df[value_cols].sum(axis=1, skipna=True)
+    df["valor_total_cultivo"] = df[value_cols].sum(axis=1, min_count=1)
 
     area_div = compute_diversification(
         df=df,

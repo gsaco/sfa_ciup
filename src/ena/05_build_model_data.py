@@ -10,13 +10,47 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.append(str(REPO_ROOT / "src"))
 
 from ena.io import normalize_columns, read_csv
+from ena.missingness import component_missingness, sum_components
 
 
 RAW_DIR = REPO_ROOT / "data" / "raw" / "ENA_2024"
 PROCESSED_DIR = REPO_ROOT / "data" / "processed"
 INTERMEDIATE_DIR = REPO_ROOT / "data" / "intermediate"
+OUTPUT_TABLES = REPO_ROOT / "outputs" / "tables"
 
 ID_COLS = ["anio", "ccdd", "ccpp", "ccdi", "psu", "id_prod", "ua"]
+FEATURE_COLS = ID_COLS + [
+    "region_natural",
+    "estrato",
+    "weight",
+    "departamento",
+    "provincia",
+    "distrito",
+    "latitud",
+    "longitud",
+    "hhi_area",
+    "diversificacion_area",
+    "shannon_area",
+    "num_crops_area",
+    "area_total_ha",
+    "hhi_valor",
+    "diversificacion_valor",
+    "shannon_valor",
+    "num_crops_valor",
+    "valor_total",
+]
+PRACTICE_ANY_VARS = [
+    "P301A_1",
+    "P301A_2",
+    "P301A_3",
+    "P301A_4",
+    "P301A_4A",
+    "P301A_4B",
+    "P301A_4C",
+    "P301A_11",
+    "P301A_16",
+    "P301A_17",
+]
 
 
 def coerce_keys(df: pd.DataFrame, keys: list[str]) -> pd.DataFrame:
@@ -34,7 +68,14 @@ def main() -> None:
 
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-    features = pd.read_parquet(features_path)
+    try:
+        features = pd.read_parquet(features_path)
+    except Exception as exc:
+        fallback_path = PROCESSED_DIR / "model_data_ena2024.csv"
+        if not fallback_path.exists():
+            raise
+        print(f"Warning: failed to read {features_path} ({exc}); using {fallback_path} as fallback.")
+        features = pd.read_csv(fallback_path, usecols=[c for c in FEATURE_COLS if c])
     features = coerce_keys(features, ID_COLS)
 
     cap1000_path = RAW_DIR / "973-Modulo1910" / "18_CAP1000.csv"
@@ -110,7 +151,7 @@ def main() -> None:
         cap200e[col] = pd.to_numeric(cap200e[col], errors="coerce")
     cap200e_agg = (
         cap200e.groupby(ID_COLS, dropna=False)[["gasto_abono", "gasto_fertilizantes", "gasto_plaguicidas"]]
-        .sum()
+        .sum(min_count=1)
         .reset_index()
     )
 
@@ -122,29 +163,7 @@ def main() -> None:
         "NSEGM",
         "ID_PROD",
         "UA",
-        "P301A_1",
-        "P301A_2",
-        "P301A_3",
-        "P301A_4",
-        "P301A_4A",
-        "P301A_4B",
-        "P301A_4C",
-        "P301A_5",
-        "P301A_6",
-        "P301A_7",
-        "P301A_8",
-        "P301A_9",
-        "P301A_10",
-        "P301A_11",
-        "P301A_12",
-        "P301A_12A",
-        "P301A_12B",
-        "P301A_12C",
-        "P301A_13",
-        "P301A_14",
-        "P301A_15",
-        "P301A_16",
-        "P301A_17",
+        *PRACTICE_ANY_VARS,
     ]
     cap300 = read_csv(cap300_path, usecols=practice_cols, low_memory=False)
     cap300 = normalize_columns(cap300)
@@ -160,11 +179,19 @@ def main() -> None:
         }
     )
     cap300 = coerce_keys(cap300, ID_COLS)
-    practice_vars = [c for c in cap300.columns if c.startswith("P301A_")]
+    practice_vars = PRACTICE_ANY_VARS
+    missing_practice_vars = [col for col in practice_vars if col not in cap300.columns]
+    if missing_practice_vars:
+        missing_list = ", ".join(missing_practice_vars)
+        raise ValueError(f"Missing practice variables in CAP300: {missing_list}")
     for col in practice_vars:
         cap300[col] = pd.to_numeric(cap300[col], errors="coerce")
-    cap300["num_practices"] = cap300[practice_vars].eq(1).sum(axis=1)
-    cap300["practice_any"] = (cap300["num_practices"] > 0).astype(int)
+    practice_matrix = cap300[practice_vars]
+    practice_missingness = component_missingness(cap300, practice_vars)
+    num_practices = practice_matrix.eq(1).sum(axis=1, min_count=1)
+    practice_any = num_practices.gt(0).where(num_practices.notna())
+    cap300["num_practices"] = num_practices
+    cap300["practice_any"] = practice_any.astype("Int64")
     cap300 = cap300[ID_COLS + ["practice_any", "num_practices"]]
 
     model = (
@@ -178,8 +205,8 @@ def main() -> None:
         if col in model.columns:
             model[col] = pd.to_numeric(model[col], errors="coerce")
 
-    model["labor_total"] = model[labor_cols].sum(axis=1, skipna=True)
-    model["input_costs"] = model[["gasto_abono", "gasto_fertilizantes", "gasto_plaguicidas"]].sum(axis=1, skipna=True)
+    model["labor_total"] = sum_components(model, labor_cols)
+    model["input_costs"] = sum_components(model, ["gasto_abono", "gasto_fertilizantes", "gasto_plaguicidas"])
     model["size_cat"] = pd.cut(
         model["area_total_ha"],
         bins=[-float("inf"), 2, 5, float("inf")],
@@ -217,6 +244,42 @@ def main() -> None:
         "neg_input_costs": int((model["input_costs"] < 0).sum()),
     }
     print(f"Range checks: {checks}")
+
+    OUTPUT_TABLES.mkdir(parents=True, exist_ok=True)
+    audit_rows = []
+    audit_rows.append(
+        {
+            "variable": "labor_total",
+            "components": ",".join(labor_cols),
+            **component_missingness(model, labor_cols),
+        }
+    )
+    input_cols = ["gasto_abono", "gasto_fertilizantes", "gasto_plaguicidas"]
+    audit_rows.append(
+        {
+            "variable": "input_costs",
+            "components": ",".join(input_cols),
+            **component_missingness(model, input_cols),
+        }
+    )
+    audit_rows.append(
+        {
+            "variable": "practice_any",
+            "components": ",".join(practice_vars),
+            **practice_missingness,
+        }
+    )
+    audit_rows.append(
+        {
+            "variable": "num_practices",
+            "components": ",".join(practice_vars),
+            **practice_missingness,
+        }
+    )
+    audit = pd.DataFrame(audit_rows)
+    audit_csv = OUTPUT_TABLES / "19_missingness_audit.csv"
+    audit.to_csv(audit_csv, index=False)
+    print(f"Wrote {audit_csv}")
 
 
 if __name__ == "__main__":

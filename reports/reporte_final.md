@@ -12,14 +12,14 @@ Fuente: ENA 2024 (INEI). Diseno muestral con pesos (FACTOR_PRODUCTOR), estratos 
 
 | group_type   | group         |     n |       weight_sum |   mean_area_ha |   mean_valor_total |   mean_diversif |   mean_practice_any |
 |:-------------|:--------------|------:|-----------------:|---------------:|-------------------:|----------------:|--------------------:|
-| overall      | overall       | 35187 |      2.12001e+06 |       4.59897  |           28857.5  |        0.504382 |            0.952934 |
-| region       | 1             |  8263 | 261788           |       4.29902  |           70773.2  |        0.422817 |            0.990922 |
-| region       | 2             | 20601 |      1.54026e+06 |       1.85572  |            7172.15 |        0.567544 |            0.992476 |
-| region       | 3             |  6323 | 317957           |      14.0166   |           46391    |        0.394723 |            0.774474 |
-| size         | grande_>5ha   |  5840 | 232992           |      20.6877   |          119622    |        0.532199 |            0.89589  |
-| size         | mediano_2_5ha |  6278 | 355684           |       3.20459  |           29777.7  |        0.541143 |            0.953011 |
-| size         | pequeno_<2ha  | 21957 |      1.53022e+06 |       0.718452 |            5667.01 |        0.486473 |            0.966888 |
-| size         | nan           |  1112 |   1112           |     nan        |             nan    |      nan        |            0.976598 |
+| overall      | overall       | 35187 |      2.12001e+06 |       4.59897  |           28857.5  |        0.504382 |            0.776069 |
+| region       | 1             |  8263 | 261788           |       4.29902  |           70773.2  |        0.422817 |            0.784919 |
+| region       | 2             | 20601 |      1.54026e+06 |       1.85572  |            7172.15 |        0.567544 |            0.906408 |
+| region       | 3             |  6323 | 317957           |      14.0166   |           46391    |        0.394723 |            0.33987  |
+| size         | grande_>5ha   |  5840 | 232992           |      20.6877   |          119622    |        0.532199 |            0.565068 |
+| size         | mediano_2_5ha |  6278 | 355684           |       3.20459  |           29777.7  |        0.541143 |            0.739248 |
+| size         | pequeno_<2ha  | 21957 |      1.53022e+06 |       0.718452 |            5667.01 |        0.486473 |            0.83599  |
+| size         | nan           |  1112 |   1112           |     nan        |             nan    |      nan        |            0.909091 |
 
 ## Indice de diversificacion (HHI)
 
@@ -36,119 +36,113 @@ Fuente: ENA 2024 (INEI). Diseno muestral con pesos (FACTOR_PRODUCTOR), estratos 
 
 ## Resultados SFA
 
-| model | term | estimate | std_error | z_value | p_value | component | 
-| --- | --- | --- | --- | --- | --- | --- | 
- | main_area | (Intercept) |    8.7389376 | 2.136255e-02 |  409.077456 | 0.000000e+00 | frontier |
-| main_area | log_land |    0.7321364 | 4.863750e-03 |  150.529207 | 0.000000e+00 | frontier |
-| main_area | log_labor |    0.2396973 | 5.821649e-03 |   41.173440 | 0.000000e+00 | frontier |
-| main_area | log_inputs |    0.1113705 | 2.407959e-03 |   46.250986 | 0.000000e+00 | frontier |
-| main_area | region_natural2 |   -1.0062810 | 1.468704e-02 |  -68.514905 | 0.000000e+00 | frontier |
-| main_area | region_natural3 |   -0.1579736 | 2.016540e-02 |   -7.833894 | 4.662937e-15 | frontier |
-| main_area | Z_(Intercept) | -417.6695560 | 5.426450e+01 |   -7.696920 | 1.398881e-14 | inefficiency |
-| main_area | Z_diversificacion_area |  -14.9304685 | 1.820617e+00 |   -8.200775 | 2.220446e-16 | inefficiency |
-| main_area | Z_size_mediano |  -19.2780162 | 3.638200e+00 |   -5.298779 | 1.165796e-07 | inefficiency |
-| main_area | Z_size_grande |  228.3013445 | 2.984120e+01 |    7.650543 | 1.998401e-14 | inefficiency |
-| main_area | Z_diversif_mediano |  174.7929733 | 2.397926e+01 |    7.289341 | 3.115286e-13 | inefficiency |
-| main_area | Z_diversif_grande |  -69.9012745 | 1.023423e+01 |   -6.830143 | 8.482992e-12 | inefficiency |
-| main_area | sigmaSq |  323.0055372 | 4.225682e+01 |    7.643868 | 2.109424e-14 | variance |
-| main_area | gamma |    0.9983073 | 2.389178e-04 | 4178.454385 | 0.000000e+00 | variance |
+| model | term | estimate | std_error | z_value | p_value | component | inference_note | n_total | n_valid | share_dropped | gamma | gamma_near_boundary | cov_singular | cov_rank | cov_cond | cov_rcond | input_cost_var | ineffDecrease | truncNorm | timeEffect | 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+ | main_area | (Intercept) |   8.40419653 | 0.051174008 | 164.227834 | 0.0000000 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | log_land |   0.90386454 | 0.005995433 | 150.758835 | 0.0000000 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | log_labor |   0.25382833 | 0.007286540 |  34.835234 | 0.0000000 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | log_inputs |   0.07007366 | 0.006689028 |  10.475910 | 0.0000000 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_(Intercept) | -16.81278496 | 1.069054594 | -15.726779 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_diversificacion_area |   1.92937853 | 0.200791530 |   9.608864 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_size_mediano |   2.33356342 | 0.213122398 |  10.949405 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_size_grande |   8.84211634 | 0.390458332 |  22.645480 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_diversif_mediano |  -0.19952180 | 0.242915799 |  -0.821362 | 0.4114401 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_diversif_grande |  -5.54253932 | 0.289242038 | -19.162288 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_region_natural2 |  12.53650400 | 0.708688739 |  17.689718 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | Z_region_natural3 |   8.34711817 | 0.565194002 |  14.768589 | 0.0000000 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | sigmaSq |   7.03430138 | 0.333929212 |  21.065247 | 0.0000000 | variance |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| main_area | gamma |   0.93268439 | 0.003293945 | 283.151207 | 0.0000000 | variance |  | 31824 | 26594 | 0.1643414 | 0.9326844 | FALSE | FALSE | 14 | 5668883 | 1.764016e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
 
 
 ### Robustez SFA
 
-| model | term | estimate | std_error | z_value | p_value | component | 
-| --- | --- | --- | --- | --- | --- | --- | 
- | alt_shannon | (Intercept) |    8.73208342 | 2.170209e-02 |  402.3614024 | 0.000000e+00 | frontier |
-| alt_shannon | log_land |    0.73449120 | 4.982121e-03 |  147.4253930 | 0.000000e+00 | frontier |
-| alt_shannon | log_labor |    0.23855860 | 5.457640e-03 |   43.7109447 | 0.000000e+00 | frontier |
-| alt_shannon | log_inputs |    0.11170024 | 2.380441e-03 |   46.9241860 | 0.000000e+00 | frontier |
-| alt_shannon | region_natural2 |   -0.99585398 | 1.460241e-02 |  -68.1979122 | 0.000000e+00 | frontier |
-| alt_shannon | region_natural3 |   -0.15771467 | 1.697409e-02 |   -9.2914941 | 0.000000e+00 | frontier |
-| alt_shannon | Z_(Intercept) | -550.80037589 | 8.454616e+01 |   -6.5147885 | 7.279222e-11 | inefficiency |
-| alt_shannon | Z_diversif_alt |    5.84565201 | 1.477524e+00 |    3.9563829 | 7.609316e-05 | inefficiency |
-| alt_shannon | Z_size_mediano |  -10.55388864 | 2.666040e+00 |   -3.9586393 | 7.537799e-05 | inefficiency |
-| alt_shannon | Z_size_grande |  277.12685226 | 4.181613e+01 |    6.6272713 | 3.419487e-11 | inefficiency |
-| alt_shannon | Z_diversif_alt_med |   88.94439844 | 1.360415e+01 |    6.5380353 | 6.233214e-11 | inefficiency |
-| alt_shannon | Z_diversif_alt_gra |  -29.26086292 | 4.398592e+00 |   -6.6523255 | 2.884981e-11 | inefficiency |
-| alt_shannon | sigmaSq |  413.66648492 | 6.320315e+01 |    6.5450296 | 5.948353e-11 | variance |
-| alt_shannon | gamma |    0.99867653 | 2.175634e-04 | 4590.2784955 | 0.000000e+00 | variance |
-| alt_num_crops | (Intercept) |    8.73447555 | 2.186604e-02 |  399.4539777 | 0.000000e+00 | frontier |
-| alt_num_crops | log_land |    0.73118912 | 4.882116e-03 |  149.7688810 | 0.000000e+00 | frontier |
-| alt_num_crops | log_labor |    0.24012325 | 5.704234e-03 |   42.0956143 | 0.000000e+00 | frontier |
-| alt_num_crops | log_inputs |    0.11176612 | 2.334938e-03 |   47.8668381 | 0.000000e+00 | frontier |
-| alt_num_crops | region_natural2 |   -1.00731086 | 1.458153e-02 |  -69.0812656 | 0.000000e+00 | frontier |
-| alt_num_crops | region_natural3 |   -0.16330941 | 1.990764e-02 |   -8.2033544 | 2.220446e-16 | frontier |
-| alt_num_crops | Z_(Intercept) | -138.28060723 | 1.254125e+01 |  -11.0260664 | 0.000000e+00 | inefficiency |
-| alt_num_crops | Z_diversif_alt2 |   -0.01591934 | 1.680842e-02 |   -0.9471049 | 3.435853e-01 | inefficiency |
-| alt_num_crops | Z_size_mediano |   10.45352291 | 6.150321e-01 |   16.9967124 | 0.000000e+00 | inefficiency |
-| alt_num_crops | Z_size_grande |   45.82898543 | 4.845374e+00 |    9.4582966 | 0.000000e+00 | inefficiency |
-| alt_num_crops | Z_diversif_alt2_med |    3.83589023 | 4.295665e-01 |    8.9296766 | 0.000000e+00 | inefficiency |
-| alt_num_crops | Z_diversif_alt2_gra |    3.85938611 | 1.293876e-01 |   29.8281083 | 0.000000e+00 | inefficiency |
-| alt_num_crops | sigmaSq |  105.55980964 | 9.750960e+00 |   10.8255814 | 0.000000e+00 | variance |
-| alt_num_crops | gamma |    0.99479080 | 5.338044e-04 | 1863.5867238 | 0.000000e+00 | variance |
-| small_only | (Intercept) |    8.69261598 | 2.827201e-02 |  307.4636286 | 0.000000e+00 | frontier |
-| small_only | log_land |    0.74018452 | 6.908090e-03 |  107.1474977 | 0.000000e+00 | frontier |
-| small_only | log_labor |    0.21227448 | 7.250609e-03 |   29.2767807 | 0.000000e+00 | frontier |
-| small_only | log_inputs |    0.10136816 | 3.125114e-03 |   32.4366269 | 0.000000e+00 | frontier |
-| small_only | region_natural2 |   -0.88959983 | 1.733231e-02 |  -51.3260931 | 0.000000e+00 | frontier |
-| small_only | region_natural3 |   -0.07516587 | 2.735723e-02 |   -2.7475681 | 6.003903e-03 | frontier |
-| small_only | Z_(Intercept) | -125.92897218 | 3.269362e+01 |   -3.8517905 | 1.172573e-04 | inefficiency |
-| small_only | Z_diversificacion_area |    6.03125518 | 9.066250e-01 |    6.6524255 | 2.883027e-11 | inefficiency |
-| small_only | sigmaSq |   89.50415767 | 2.216741e+01 |    4.0376468 | 5.399006e-05 | variance |
-| small_only | gamma |    0.99351725 | 1.625641e-03 |  611.1541455 | 0.000000e+00 | variance |
+| model | term | estimate | std_error | z_value | p_value | component | inference_note | n_total | n_valid | share_dropped | gamma | gamma_near_boundary | cov_singular | cov_rank | cov_cond | cov_rcond | input_cost_var | ineffDecrease | truncNorm | timeEffect | 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+ | alt_shannon | (Intercept) |   7.95240784 |  0.051755816 | 153.652450 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | log_land |   0.88986530 |  0.006255305 | 142.257697 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | log_labor |   0.29746931 |  0.008562729 |  34.740012 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | log_inputs |   0.10889603 |  0.006979520 |  15.602224 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_(Intercept) | -59.83156927 |  8.661869179 |  -6.907466 | 4.933831e-12 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_diversif_alt |  12.83486988 |  1.623545658 |   7.905457 | 2.664535e-15 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_size_mediano |  -0.73288659 |  0.601284709 |  -1.218868 | 2.228944e-01 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_size_grande |  33.34767559 |  4.371592069 |   7.628268 | 2.375877e-14 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_diversif_alt_med |   4.98643039 |  0.868962570 |   5.738372 | 9.559103e-09 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_diversif_alt_gra | -11.93816652 |  1.714295353 |  -6.963891 | 3.310019e-12 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | sigmaSq |  46.83065905 |  6.996507318 |   6.693434 | 2.179945e-11 | variance |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | gamma |   0.98870996 |  0.001802724 | 548.453452 | 0.000000e+00 | variance |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | (Intercept) |   7.99664086 |  0.053289916 | 150.059175 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | log_land |   0.88360814 |  0.006127905 | 144.194166 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | log_labor |   0.30438413 |  0.008691257 |  35.021878 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | log_inputs |   0.10227467 |  0.007107526 |  14.389630 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_(Intercept) | -54.73606967 | 10.360969364 |  -5.282910 | 1.271478e-07 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_diversif_alt2 |   1.46812128 |  0.329802690 |   4.451514 | 8.526698e-06 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_size_mediano |   5.31520736 |  1.222746081 |   4.346943 | 1.380482e-05 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_size_grande |  18.18949045 |  3.686522747 |   4.934051 | 8.054148e-07 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_diversif_alt2_med |   0.43687430 |  0.129213776 |   3.381020 | 7.221741e-04 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_diversif_alt2_gra |   0.52549662 |  0.151281036 |   3.473645 | 5.134398e-04 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | sigmaSq |  50.14243971 |  8.661405960 |   5.789180 | 7.073079e-09 | variance |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | gamma |   0.98934727 |  0.001869797 | 529.120075 | 0.000000e+00 | variance |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | (Intercept) |   8.57923204 |  0.073837442 | 116.190808 | 0.000000e+00 | frontier |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | log_land |   0.88505348 |  0.008604260 | 102.862247 | 0.000000e+00 | frontier |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | log_labor |   0.26972741 |  0.011957468 |  22.557234 | 0.000000e+00 | frontier |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | log_inputs |   0.03719875 |  0.008980297 |   4.142262 | 3.438969e-05 | frontier |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | Z_(Intercept) |  -2.87601424 |  0.707487219 |  -4.065111 | 4.800956e-05 | inefficiency |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | Z_diversificacion_area |   2.70549534 |  0.379984060 |   7.120023 | 1.079137e-12 | inefficiency |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | sigmaSq |   3.68577065 |  0.414921256 |   8.883061 | 0.000000e+00 | variance |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | gamma |   0.84403600 |  0.015092434 |  55.924446 | 0.000000e+00 | variance |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
 
 
 ## Resultados logit (practicas sostenibles)
 
 | model | term | estimate | std_error | z_value | p_value | odds_ratio | 
 | --- | --- | --- | --- | --- | --- | --- | 
- | main | (Intercept) |  2.46486908 | 0.5276047 |  4.6718100 | 3.084632e-06 | 11.7619422 |
-| main | diversificacion_area |  2.73794586 | 0.5720020 |  4.7866017 | 1.758159e-06 | 15.4552053 |
-| main | size_catmediano_2_5ha |  0.46187418 | 0.3743250 |  1.2338856 | 2.173187e-01 |  1.5870456 |
-| main | size_catpequeno_<2ha |  0.32227160 | 0.4506583 |  0.7151130 | 4.745813e-01 |  1.3802596 |
-| main | log_area |  0.02367428 | 0.1649711 |  0.1435056 | 8.858982e-01 |  1.0239567 |
-| main | region_natural2 |  1.36863254 | 0.4756456 |  2.8774210 | 4.030836e-03 |  3.9299729 |
-| main | region_natural3 | -2.18825347 | 0.3700672 | -5.9131241 | 3.640053e-09 |  0.1121124 |
-| main | diversificacion_area:size_catmediano_2_5ha | -0.32400438 | 0.7803323 | -0.4152133 | 6.780082e-01 |  0.7232471 |
-| main | diversificacion_area:size_catpequeno_<2ha | -0.88076139 | 0.8227013 | -1.0705725 | 2.844269e-01 |  0.4144672 |
+ | main | (Intercept) |  0.0149381886 | 0.4369383 |  0.034188325 | 9.727287e-01 | 1.0150503 |
+| main | diversificacion_area |  1.3818975540 | 0.3352644 |  4.121813565 | 3.835921e-05 | 3.9824514 |
+| main | size_catmediano_2_5ha |  0.2393949845 | 0.3058043 |  0.782837197 | 4.337695e-01 | 1.2704803 |
+| main | size_catpequeno_<2ha |  0.3695917757 | 0.3834822 |  0.963778295 | 3.352159e-01 | 1.4471437 |
+| main | log_area | -0.0009314792 | 0.1503100 | -0.006197055 | 9.950558e-01 | 0.9990690 |
+| main | region_natural2 |  1.1784446547 | 0.1751995 |  6.726301967 | 1.989392e-11 | 3.2493165 |
+| main | region_natural3 | -1.1739101930 | 0.1402366 | -8.370924121 | 7.832356e-17 | 0.3091557 |
+| main | diversificacion_area:size_catmediano_2_5ha |  0.1066186030 | 0.4350723 |  0.245059497 | 8.064231e-01 | 1.1125099 |
+| main | diversificacion_area:size_catpequeno_<2ha |  0.1168454834 | 0.4562331 |  0.256109154 | 7.978798e-01 | 1.1239457 |
 
 
 ### Robustez logit
 
 | model | term | estimate | std_error | z_value | p_value | odds_ratio | 
 | --- | --- | --- | --- | --- | --- | --- | 
- | alt_shannon | (Intercept) |  2.636871817 | 0.53551157 |  4.924023969 | 8.823690e-07 | 13.9694362 |
-| alt_shannon | diversif_alt |  1.342079458 | 0.36116539 |  3.715969148 | 2.052187e-04 |  3.8269933 |
-| alt_shannon | size_catmediano_2_5ha |  0.305467512 | 0.39186282 |  0.779526644 | 4.357161e-01 |  1.3572594 |
-| alt_shannon | size_catpequeno_<2ha |  0.172378209 | 0.46132545 |  0.373658573 | 7.086783e-01 |  1.1881271 |
-| alt_shannon | log_area |  0.001594283 | 0.16273653 |  0.009796715 | 9.921840e-01 |  1.0015956 |
-| alt_shannon | region_natural2 |  1.322915679 | 0.47621568 |  2.777975896 | 5.495612e-03 |  3.7543519 |
-| alt_shannon | region_natural3 | -2.184579525 | 0.37075233 | -5.892288042 | 4.125704e-09 |  0.1125250 |
-| alt_shannon | diversif_alt:size_catmediano_2_5ha |  0.037746114 | 0.45826585 |  0.082367285 | 9.343588e-01 |  1.0384675 |
-| alt_shannon | diversif_alt:size_catpequeno_<2ha | -0.327011121 | 0.47661361 | -0.686113686 | 4.926816e-01 |  0.7210757 |
-| alt_num_crops | (Intercept) |  2.973650469 | 0.54411794 |  5.465084409 | 4.911486e-08 | 19.5632043 |
-| alt_num_crops | diversif_alt2 |  0.240812922 | 0.07423817 |  3.243788614 | 1.189299e-03 |  1.2722830 |
-| alt_num_crops | size_catmediano_2_5ha |  0.203312273 | 0.42437803 |  0.479082935 | 6.319061e-01 |  1.2254551 |
-| alt_num_crops | size_catpequeno_<2ha | -0.254642172 | 0.45230907 | -0.562982678 | 5.734785e-01 |  0.7751938 |
-| alt_num_crops | log_area | -0.011945058 | 0.16248640 | -0.073514203 | 9.414007e-01 |  0.9881260 |
-| alt_num_crops | region_natural2 |  1.539091120 | 0.46670263 |  3.297798284 | 9.830571e-04 |  4.6603526 |
-| alt_num_crops | region_natural3 | -2.233666270 | 0.36963367 | -6.042918802 | 1.652968e-09 |  0.1071349 |
-| alt_num_crops | diversif_alt2:size_catmediano_2_5ha |  0.001107500 | 0.11262427 |  0.009833584 | 9.921546e-01 |  1.0011081 |
-| alt_num_crops | diversif_alt2:size_catpequeno_<2ha |  0.018960766 | 0.10958780 |  0.173018948 | 8.626454e-01 |  1.0191417 |
-| alt_outcome_two_plus | (Intercept) |  1.600686742 | 0.54039783 |  2.962052470 | 3.074112e-03 |  4.9564350 |
-| alt_outcome_two_plus | diversificacion_area |  2.693405124 | 0.48547176 |  5.548016091 | 3.078032e-08 | 14.7819246 |
-| alt_outcome_two_plus | size_catmediano_2_5ha |  0.552738161 | 0.36368210 |  1.519838765 | 1.286313e-01 |  1.7380054 |
-| alt_outcome_two_plus | size_catpequeno_<2ha |  0.270666269 | 0.44551842 |  0.607531045 | 5.435334e-01 |  1.3108375 |
-| alt_outcome_two_plus | log_area |  0.006725764 | 0.15484875 |  0.043434412 | 9.653574e-01 |  1.0067484 |
-| alt_outcome_two_plus | region_natural2 |  1.563494330 | 0.42039206 |  3.719133817 | 2.026736e-04 |  4.7754792 |
-| alt_outcome_two_plus | region_natural3 | -2.026641996 | 0.27338591 | -7.413117995 | 1.500154e-13 |  0.1317773 |
-| alt_outcome_two_plus | diversificacion_area:size_catmediano_2_5ha | -0.650007110 | 0.60378876 | -1.076547218 | 2.817481e-01 |  0.5220421 |
-| alt_outcome_two_plus | diversificacion_area:size_catpequeno_<2ha | -0.872244531 | 0.63129680 | -1.381671070 | 1.671506e-01 |  0.4180123 |
-| small_only | (Intercept) |  2.311131663 | 0.50310873 |  4.593702152 | 4.547673e-06 | 10.0858320 |
-| small_only | diversificacion_area |  1.601767721 | 0.62424517 |  2.565927310 | 1.034182e-02 |  4.9617957 |
-| small_only | log_area |  0.808244887 | 0.51450896 |  1.570905375 | 1.163180e-01 |  2.2439661 |
-| small_only | region_natural2 |  1.983788693 | 0.57787714 |  3.432890074 | 6.058852e-04 |  7.2702356 |
-| small_only | region_natural3 | -2.212016148 | 0.47755771 | -4.631934771 | 3.788633e-06 |  0.1094797 |
+ | alt_shannon | (Intercept) |  0.16670782 | 0.42216332 |  0.39488939 | 6.929458e-01 | 1.1814090 |
+| alt_shannon | diversif_alt |  0.64128120 | 0.14909690 |  4.30110346 | 1.740442e-05 | 1.8989122 |
+| alt_shannon | size_catmediano_2_5ha |  0.10475439 | 0.28398544 |  0.36887240 | 7.122425e-01 | 1.1104378 |
+| alt_shannon | size_catpequeno_<2ha |  0.27920199 | 0.36825217 |  0.75818152 | 4.483874e-01 | 1.3220744 |
+| alt_shannon | log_area | -0.02724144 | 0.15014454 | -0.18143479 | 8.560356e-01 | 0.9731263 |
+| alt_shannon | region_natural2 |  1.12993130 | 0.17581286 |  6.42689788 | 1.456711e-10 | 3.0954438 |
+| alt_shannon | region_natural3 | -1.16455847 | 0.14003384 | -8.31626481 | 1.233829e-16 | 0.3120604 |
+| alt_shannon | diversif_alt:size_catmediano_2_5ha |  0.16732324 | 0.19620468 |  0.85279943 | 3.938221e-01 | 1.1821363 |
+| alt_shannon | diversif_alt:size_catpequeno_<2ha |  0.12879302 | 0.21385469 |  0.60224547 | 5.470452e-01 | 1.1374547 |
+| alt_num_crops | (Intercept) |  0.27431214 | 0.41298965 |  0.66421071 | 5.065941e-01 | 1.3156254 |
+| alt_num_crops | diversif_alt2 |  0.11723844 | 0.03057719 |  3.83417931 | 1.279408e-04 | 1.1243875 |
+| alt_num_crops | size_catmediano_2_5ha | -0.06072619 | 0.27754463 | -0.21879793 | 8.268187e-01 | 0.9410809 |
+| alt_num_crops | size_catpequeno_<2ha | -0.01177693 | 0.36640028 | -0.03214225 | 9.743602e-01 | 0.9882921 |
+| alt_num_crops | log_area |  0.01624820 | 0.14673231 |  0.11073361 | 9.118332e-01 | 1.0163809 |
+| alt_num_crops | region_natural2 |  1.29877816 | 0.16898417 |  7.68579771 | 1.904695e-14 | 3.6648161 |
+| alt_num_crops | region_natural3 | -1.24345724 | 0.14104997 | -8.81572169 | 1.748950e-18 | 0.2883855 |
+| alt_num_crops | diversif_alt2:size_catmediano_2_5ha |  0.08780090 | 0.04468441 |  1.96491132 | 4.949426e-02 | 1.0917707 |
+| alt_num_crops | diversif_alt2:size_catpequeno_<2ha |  0.11419478 | 0.05699517 |  2.00358699 | 4.518228e-02 | 1.1209704 |
+| alt_outcome_two_plus | (Intercept) | -1.09284853 | 0.45394138 | -2.40746621 | 1.610908e-02 | 0.3352601 |
+| alt_outcome_two_plus | diversificacion_area |  1.28989653 | 0.36019035 |  3.58115234 | 3.461878e-04 | 3.6324107 |
+| alt_outcome_two_plus | size_catmediano_2_5ha |  0.40787714 | 0.34250823 |  1.19085355 | 2.337824e-01 | 1.5036224 |
+| alt_outcome_two_plus | size_catpequeno_<2ha |  0.19202980 | 0.44021512 |  0.43621809 | 6.627023e-01 | 1.2117066 |
+| alt_outcome_two_plus | log_area | -0.17169296 | 0.15973623 | -1.07485297 | 2.825060e-01 | 0.8422377 |
+| alt_outcome_two_plus | region_natural2 |  1.12916560 | 0.13004151 |  8.68311670 | 5.538594e-18 | 3.0930746 |
+| alt_outcome_two_plus | region_natural3 | -1.16760938 | 0.14555738 | -8.02164323 | 1.361905e-15 | 0.3111098 |
+| alt_outcome_two_plus | diversificacion_area:size_catmediano_2_5ha | -0.26496175 | 0.60998109 | -0.43437700 | 6.640383e-01 | 0.7672353 |
+| alt_outcome_two_plus | diversificacion_area:size_catpequeno_<2ha |  0.08601866 | 0.49457697 |  0.17392371 | 8.619343e-01 | 1.0898267 |
+| small_only | (Intercept) | -0.00397690 | 0.23070252 | -0.01723822 | 9.862478e-01 | 0.9960310 |
+| small_only | diversificacion_area |  1.36222065 | 0.32221070 |  4.22773254 | 2.436455e-05 | 3.9048550 |
+| small_only | log_area |  0.33770246 | 0.32881962 |  1.02701433 | 3.045027e-01 | 1.4017234 |
+| small_only | region_natural2 |  1.53104146 | 0.21153692 |  7.23770336 | 5.871784e-13 | 4.6229890 |
+| small_only | region_natural3 | -0.78789128 | 0.21622328 | -3.64387817 | 2.734567e-04 | 0.4548028 |
 
 
 ## Mejoras con datos externos (UBIGEO + CHIRPS)
@@ -166,83 +160,83 @@ Se incorporaron coordenadas y area distrital, y precipitacion CHIRPS como contro
 
 ### Tabla 07. SFA con controles geo/clima
 
-| model | term | estimate | std_error | z_value | p_value | component | 
-| --- | --- | --- | --- | --- | --- | --- | 
- | xgeo_prcp | (Intercept) |    8.66619978 | 4.129273e-02 |  209.8722763 | 0.000000e+00 | frontier |
-| xgeo_prcp | log_land |    0.73118445 | 5.056946e-03 |  144.5901177 | 0.000000e+00 | frontier |
-| xgeo_prcp | log_labor |    0.23945529 | 5.907768e-03 |   40.5322797 | 0.000000e+00 | frontier |
-| xgeo_prcp | log_inputs |    0.11104136 | 2.484275e-03 |   44.6976936 | 0.000000e+00 | frontier |
-| xgeo_prcp | region_natural2 |   -1.00494983 | 1.402775e-02 |  -71.6401334 | 0.000000e+00 | frontier |
-| xgeo_prcp | region_natural3 |   -0.16403178 | 2.064174e-02 |   -7.9466070 | 1.998401e-15 | frontier |
-| xgeo_prcp | log_surface_km2 |    0.01446090 | 5.408218e-03 |    2.6738755 | 7.498029e-03 | frontier |
-| xgeo_prcp | prcp_total_z |    0.01455123 | 7.216358e-03 |    2.0164229 | 4.375577e-02 | frontier |
-| xgeo_prcp | Z_(Intercept) | -315.05932210 | 3.034157e+01 |  -10.3837499 | 0.000000e+00 | inefficiency |
-| xgeo_prcp | Z_diversificacion_area |  -10.32626883 | 1.232804e+00 |   -8.3762431 | 0.000000e+00 | inefficiency |
-| xgeo_prcp | Z_size_mediano |  -31.08852658 | 1.275193e+00 |  -24.3794709 | 0.000000e+00 | inefficiency |
-| xgeo_prcp | Z_size_grande |  174.24048611 | 1.824269e+01 |    9.5512472 | 0.000000e+00 | inefficiency |
-| xgeo_prcp | Z_diversif_mediano |  155.63581183 | 1.051659e+01 |   14.7990738 | 0.000000e+00 | inefficiency |
-| xgeo_prcp | Z_diversif_grande |  -58.85856996 | 9.973392e+00 |   -5.9015598 | 3.600808e-09 | inefficiency |
-| xgeo_prcp | sigmaSq |  245.55241096 | 2.283592e+01 |   10.7529025 | 0.000000e+00 | variance |
-| xgeo_prcp | gamma |    0.99778149 | 2.224445e-04 | 4485.5294404 | 0.000000e+00 | variance |
-| zgeo_prcp | (Intercept) |    8.66519932 | 4.024360e-02 |  215.3186689 | 0.000000e+00 | frontier |
-| zgeo_prcp | log_land |    0.73320076 | 5.255855e-03 |  139.5016994 | 0.000000e+00 | frontier |
-| zgeo_prcp | log_labor |    0.23481199 | 5.898053e-03 |   39.8117811 | 0.000000e+00 | frontier |
-| zgeo_prcp | log_inputs |    0.11132296 | 2.509702e-03 |   44.3570427 | 0.000000e+00 | frontier |
-| zgeo_prcp | region_natural2 |   -1.00035964 | 1.545413e-02 |  -64.7308748 | 0.000000e+00 | frontier |
-| zgeo_prcp | region_natural3 |   -0.14528044 | 2.076859e-02 |   -6.9952006 | 2.648770e-12 | frontier |
-| zgeo_prcp | log_surface_km2 |    0.01292904 | 5.307003e-03 |    2.4362229 | 1.484154e-02 | frontier |
-| zgeo_prcp | Z_(Intercept) | -142.91725346 | 1.987679e+01 |   -7.1901594 | 6.472600e-13 | inefficiency |
-| zgeo_prcp | Z_diversificacion_area |   -0.17454426 | 4.207120e-01 |   -0.4148783 | 6.782310e-01 | inefficiency |
-| zgeo_prcp | Z_size_mediano |  -15.09597425 | 3.799652e+00 |   -3.9729888 | 7.097639e-05 | inefficiency |
-| zgeo_prcp | Z_size_grande |   69.51060255 | 9.900570e+00 |    7.0208686 | 2.204903e-12 | inefficiency |
-| zgeo_prcp | Z_diversif_mediano |   69.03718986 | 1.228076e+01 |    5.6215729 | 1.892266e-08 | inefficiency |
-| zgeo_prcp | Z_diversif_grande |  -23.37312740 | 3.707608e+00 |   -6.3040982 | 2.898768e-10 | inefficiency |
-| zgeo_prcp | Z_prcp_total_z |  -11.83888695 | 1.657252e+00 |   -7.1436840 | 9.086065e-13 | inefficiency |
-| zgeo_prcp | sigmaSq |  106.26869466 | 1.494298e+01 |    7.1116135 | 1.146860e-12 | variance |
-| zgeo_prcp | gamma |    0.99486304 | 7.861645e-04 | 1265.4642825 | 0.000000e+00 | variance |
+| model | term | estimate | std_error | z_value | p_value | component | inference_note | n_total | n_valid | share_dropped | gamma | gamma_near_boundary | cov_singular | cov_rank | cov_cond | cov_rcond | input_cost_var | ineffDecrease | truncNorm | timeEffect | 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+ | xgeo_prcp | (Intercept) |  8.203741e+00 | 0.060699858 | 135.1525558 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | log_land |  9.006359e-01 | 0.006045910 | 148.9661359 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | log_labor |  2.576675e-01 | 0.007920127 |  32.5332595 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | log_inputs |  6.970296e-02 | 0.006780131 |  10.2804732 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | log_surface_km2 |  3.179726e-02 | 0.005753679 |   5.5264222 | 3.268271e-08 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | prcp_total_z | -2.269706e-04 | 0.008738814 |  -0.0259727 | 9.792791e-01 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_(Intercept) | -1.759011e+01 | 1.250742054 | -14.0637395 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_diversificacion_area |  1.926751e+00 | 0.185106469 |  10.4088819 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_size_mediano |  2.461598e+00 | 0.280967783 |   8.7611401 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_size_grande |  9.141758e+00 | 0.488847168 |  18.7006468 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_diversif_mediano | -2.080866e-01 | 0.281648634 |  -0.7388161 | 4.600186e-01 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_diversif_grande | -5.670511e+00 | 0.363747276 | -15.5891500 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_region_natural2 |  1.298194e+01 | 0.833601522 |  15.5733196 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_region_natural3 |  8.791813e+00 | 0.641999871 |  13.6944152 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | sigmaSq |  7.325154e+00 | 0.392894264 |  18.6440836 | 0.000000e+00 | variance |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | gamma |  9.352408e-01 | 0.003304719 | 283.0016281 | 0.000000e+00 | variance |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | (Intercept) |  8.201175e+00 | 0.060948709 | 134.5586305 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | log_land |  9.042981e-01 | 0.005970480 | 151.4615419 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | log_labor |  2.460347e-01 | 0.007836322 |  31.3967095 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | log_inputs |  7.255563e-02 | 0.006907014 |  10.5046306 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | log_surface_km2 |  3.253513e-02 | 0.005526509 |   5.8871026 | 3.930247e-09 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_(Intercept) | -1.740252e+01 | 1.074701481 | -16.1928878 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_diversificacion_area |  2.100153e+00 | 0.198608266 |  10.5743464 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_size_mediano |  2.327524e+00 | 0.251043840 |   9.2713856 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_size_grande |  8.756853e+00 | 0.457493223 |  19.1409456 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_diversif_mediano | -1.469793e-01 | 0.280870060 |  -0.5233001 | 6.007654e-01 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_diversif_grande | -5.593843e+00 | 0.350757207 | -15.9479068 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_prcp_total_z | -7.150248e-01 | 0.047791262 | -14.9614122 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_region_natural2 |  1.264605e+01 | 0.683397796 |  18.5046733 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_region_natural3 |  8.165664e+00 | 0.509567746 |  16.0246867 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | sigmaSq |  7.144010e+00 | 0.341139483 |  20.9416087 | 0.000000e+00 | variance |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | gamma |  9.340107e-01 | 0.003116903 | 299.6598555 | 0.000000e+00 | variance |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
 
 
 ### Tabla 08. Comparacion efectos SFA
 
 | model | term | estimate | std_error | p_value | 
 | --- | --- | --- | --- | --- | 
- | main_area | Z_diversificacion_area | -14.9304685 |  1.820617 | 2.220446e-16 |
-| main_area | Z_diversif_mediano | 174.7929733 | 23.979256 | 3.115286e-13 |
-| main_area | Z_diversif_grande | -69.9012745 | 10.234233 | 8.482992e-12 |
-| xgeo_prcp | Z_diversificacion_area | -10.3262688 |  1.232804 | 0.000000e+00 |
-| xgeo_prcp | Z_diversif_mediano | 155.6358118 | 10.516591 | 0.000000e+00 |
-| xgeo_prcp | Z_diversif_grande | -58.8585700 |  9.973392 | 3.600808e-09 |
-| zgeo_prcp | Z_diversificacion_area |  -0.1745443 |  0.420712 | 6.782310e-01 |
-| zgeo_prcp | Z_diversif_mediano |  69.0371899 | 12.280760 | 1.892266e-08 |
-| zgeo_prcp | Z_diversif_grande | -23.3731274 |  3.707608 | 2.898768e-10 |
+ | main_area | Z_diversificacion_area |  1.9293785 | 0.2007915 | 0.0000000 |
+| main_area | Z_diversif_mediano | -0.1995218 | 0.2429158 | 0.4114401 |
+| main_area | Z_diversif_grande | -5.5425393 | 0.2892420 | 0.0000000 |
+| xgeo_prcp | Z_diversificacion_area |  1.9267514 | 0.1851065 | 0.0000000 |
+| xgeo_prcp | Z_diversif_mediano | -0.2080866 | 0.2816486 | 0.4600186 |
+| xgeo_prcp | Z_diversif_grande | -5.6705108 | 0.3637473 | 0.0000000 |
+| zgeo_prcp | Z_diversificacion_area |  2.1001526 | 0.1986083 | 0.0000000 |
+| zgeo_prcp | Z_diversif_mediano | -0.1469793 | 0.2808701 | 0.6007654 |
+| zgeo_prcp | Z_diversif_grande | -5.5938432 | 0.3507572 | 0.0000000 |
 
 
 ### Tabla 09. Logit con controles geo/clima
 
 | model | term | estimate | std_error | z_value | p_value | odds_ratio | 
 | --- | --- | --- | --- | --- | --- | --- | 
- | main_geo | (Intercept) |  2.7251941 | 0.5556447 |  4.9045625 | 9.739317e-07 | 15.2593751 |
-| main_geo | diversificacion_area |  2.7232890 | 0.6104945 |  4.4607918 | 8.392251e-06 | 15.2303331 |
-| main_geo | size_catmediano_2_5ha |  0.4624174 | 0.4009134 |  1.1534098 | 2.488118e-01 |  1.5879080 |
-| main_geo | size_catpequeno_<2ha |  0.3330951 | 0.4617783 |  0.7213314 | 4.707482e-01 |  1.3952801 |
-| main_geo | log_area |  0.1109765 | 0.1633812 |  0.6792487 | 4.970200e-01 |  1.1173686 |
-| main_geo | region_natural2 |  1.4024037 | 0.4710133 |  2.9774186 | 2.924471e-03 |  4.0649591 |
-| main_geo | region_natural3 | -1.8989866 | 0.3854254 | -4.9269884 | 8.691812e-07 |  0.1497203 |
-| main_geo | prcp_total_z |  0.6373037 | 0.1302650 |  4.8923645 | 1.035909e-06 |  1.8913742 |
-| main_geo | diversificacion_area:size_catmediano_2_5ha | -0.4173759 | 0.8206206 | -0.5086101 | 6.110539e-01 |  0.6587732 |
-| main_geo | diversificacion_area:size_catpequeno_<2ha | -0.9244165 | 0.8339937 | -1.1084214 | 2.677471e-01 |  0.3967629 |
+ | main_geo | (Intercept) |  0.1903851531 | 0.42310271 |  0.44997385 | 6.527539e-01 | 1.2097154 |
+| main_geo | diversificacion_area |  1.4002741293 | 0.35351810 |  3.96096868 | 7.595851e-05 | 4.0563118 |
+| main_geo | size_catmediano_2_5ha |  0.2474332392 | 0.30653160 |  0.80720304 | 4.195980e-01 | 1.2807339 |
+| main_geo | size_catpequeno_<2ha |  0.4478786604 | 0.38273484 |  1.17020615 | 2.419884e-01 | 1.5649888 |
+| main_geo | log_area |  0.0564980289 | 0.14611835 |  0.38665937 | 6.990292e-01 | 1.0581245 |
+| main_geo | region_natural2 |  1.1921981089 | 0.16527567 |  7.21339146 | 6.506623e-13 | 3.2943145 |
+| main_geo | region_natural3 | -0.9830809765 | 0.14141779 | -6.95160767 | 4.205064e-12 | 0.3741566 |
+| main_geo | prcp_total_z |  0.5501213448 | 0.07951153 |  6.91876187 | 5.290165e-12 | 1.7334634 |
+| main_geo | diversificacion_area:size_catmediano_2_5ha |  0.0807410756 | 0.44271967 |  0.18237517 | 8.552976e-01 | 1.0840902 |
+| main_geo | diversificacion_area:size_catpequeno_<2ha |  0.0008807157 | 0.46929701 |  0.00187667 | 9.985027e-01 | 1.0008811 |
 
 
 ### Tabla 10. Comparacion efectos logit
 
 | model | term | estimate | std_error | z_value | p_value | odds_ratio | 
 | --- | --- | --- | --- | --- | --- | --- | 
- | main | diversificacion_area |  2.7379459 | 0.5720020 |  4.7866017 | 1.758159e-06 | 15.4552053 |
-| main | diversificacion_area:size_catmediano_2_5ha | -0.3240044 | 0.7803323 | -0.4152133 | 6.780082e-01 |  0.7232471 |
-| main | diversificacion_area:size_catpequeno_<2ha | -0.8807614 | 0.8227013 | -1.0705725 | 2.844269e-01 |  0.4144672 |
-| main_geo | diversificacion_area |  2.7232890 | 0.6104945 |  4.4607918 | 8.392251e-06 | 15.2303331 |
-| main_geo | diversificacion_area:size_catmediano_2_5ha | -0.4173759 | 0.8206206 | -0.5086101 | 6.110539e-01 |  0.6587732 |
-| main_geo | diversificacion_area:size_catpequeno_<2ha | -0.9244165 | 0.8339937 | -1.1084214 | 2.677471e-01 |  0.3967629 |
+ | main | diversificacion_area | 1.3818975540 | 0.3352644 | 4.12181357 | 3.835921e-05 | 3.982451 |
+| main | diversificacion_area:size_catmediano_2_5ha | 0.1066186030 | 0.4350723 | 0.24505950 | 8.064231e-01 | 1.112510 |
+| main | diversificacion_area:size_catpequeno_<2ha | 0.1168454834 | 0.4562331 | 0.25610915 | 7.978798e-01 | 1.123946 |
+| main_geo | diversificacion_area | 1.4002741293 | 0.3535181 | 3.96096868 | 7.595851e-05 | 4.056312 |
+| main_geo | diversificacion_area:size_catmediano_2_5ha | 0.0807410756 | 0.4427197 | 0.18237517 | 8.552976e-01 | 1.084090 |
+| main_geo | diversificacion_area:size_catpequeno_<2ha | 0.0008807157 | 0.4692970 | 0.00187667 | 9.985027e-01 | 1.000881 |
 
 
 ## Controles ENA adicionales
@@ -254,247 +248,255 @@ Se incorporan controles de capital, riego, semillas, asistencia tecnica, credito
 | group_type   | group         | variable                    |   missing_pct |           mean |         p50 |           p90 |
 |:-------------|:--------------|:----------------------------|--------------:|---------------:|------------:|--------------:|
 | overall      | overall       | riego_any                   |   0           |      0.596811  |    1        |      1        |
-| overall      | overall       | riego_share                 |   0           |      0.506854  |    0.5      |      1        |
-| overall      | overall       | riego_tecnificado_any       |   0           |      0.186887  |    0        |      1        |
-| overall      | overall       | riego_tecnificado_share     |   0           |      0.120354  |    0        |      0.6      |
-| overall      | overall       | usuario_agua                |   0           |      0.42763   |    0        |      1        |
-| overall      | overall       | gasto_agua_riego            |   0           |   9862.88      |    0        |    700        |
-| overall      | overall       | uso_maquinaria              |   8.52588e-05 |      0.715894  |    1        |      1        |
-| overall      | overall       | num_maquinaria_equipo       |   8.52588e-05 |      2.54121   |    1        |      6        |
-| overall      | overall       | gasto_compra_equipos        |   8.52588e-05 |   1194.53      |    0        |      0        |
-| overall      | overall       | gasto_compra_maquinaria     |   8.52588e-05 |   2910.9       |    0        |      0        |
-| overall      | overall       | gasto_alquiler_mant_equipos |   8.52588e-05 |   4172.13      |    0        |    240        |
-| overall      | overall       | gasto_semilla               |   5.68392e-05 |   3500.58      |  175        |   2430        |
+| overall      | overall       | riego_share                 |   0           |      0.506873  |    0.5      |      1        |
+| overall      | overall       | riego_tecnificado_any       |   0.403189    |      0.313143  |    0        |      1        |
+| overall      | overall       | riego_tecnificado_share     |   0.403189    |      0.26256   |    0        |      1        |
+| overall      | overall       | usuario_agua                |   0.0495353   |      0.449916  |    0        |      1        |
+| overall      | overall       | gasto_agua_riego            |   0.000198937 |   9864.84      |    0        |    700        |
+| overall      | overall       | uso_maquinaria              |   0.000113678 |      0.715914  |    1        |      1        |
+| overall      | overall       | num_maquinaria_equipo       |   0.284167    |      3.54971   |    1        |      6        |
+| overall      | overall       | gasto_compra_equipos        |   0.000198937 |   1194.66      |    0        |      0        |
+| overall      | overall       | gasto_compra_maquinaria     |   0.000198937 |   2911.23      |    0        |      0        |
+| overall      | overall       | gasto_alquiler_mant_equipos |   0.000198937 |   4172.6       |    0        |    240        |
+| overall      | overall       | gasto_semilla               |   0.315685    |   5115.16      |  445        |   3900        |
 | overall      | overall       | usa_abono                   |   5.68392e-05 |      0.607333  |    1        |      1        |
 | overall      | overall       | usa_fertilizantes           |   5.68392e-05 |      0.587012  |    1        |      1        |
 | overall      | overall       | semilla_semillero_any       |   5.68392e-05 |      0.12241   |    0        |      1        |
 | overall      | overall       | semilla_comercial_any       |   5.68392e-05 |      0.273327  |    0        |      1        |
-| overall      | overall       | semilla_certificada_any     |   5.68392e-05 |      0.102885  |    0        |      1        |
-| overall      | overall       | semilla_certificada_share   |   5.68392e-05 |      0.0838824 |    0        |      0.2      |
+| overall      | overall       | semilla_certificada_any     |   0.286498    |      0.144189  |    0        |      1        |
+| overall      | overall       | semilla_certificada_share   |   0.286498    |      0.117558  |    0        |      0.666667 |
 | overall      | overall       | capacitacion_recibida       |   8.52588e-05 |      0.0976296 |    0        |      0        |
 | overall      | overall       | asistencia_tecnica_recibida |   8.52588e-05 |      0.0573272 |    0        |      0        |
-| overall      | overall       | credito_obtenido            |   8.52588e-05 |      0.124943  |    0        |      1        |
+| overall      | overall       | credito_obtenido            |   0.86603     |      0.932541  |    1        |      1        |
 | overall      | overall       | nivel_educacion             |   0.031631    |      4.5444    |    4        |      8        |
 | overall      | overall       | asociacion_miembro          |   8.52588e-05 |      0.0795248 |    0        |      0        |
 | overall      | overall       | asociacion_num              |   8.52588e-05 |      0.0836744 |    0        |      0        |
 | region       | 1             | riego_any                   |   0           |      0.95849   |    1        |      1        |
-| region       | 1             | riego_share                 |   0           |      0.949674  |    1        |      1        |
-| region       | 1             | riego_tecnificado_any       |   0           |      0.229336  |    0        |      1        |
-| region       | 1             | riego_tecnificado_share     |   0           |      0.19264   |    0        |      1        |
-| region       | 1             | usuario_agua                |   0           |      0.665981  |    1        |      1        |
-| region       | 1             | gasto_agua_riego            |   0           |  41716.2       |  400        |   6000        |
-| region       | 1             | uso_maquinaria              |   0.000121021 |      0.837812  |    1        |      1        |
-| region       | 1             | num_maquinaria_equipo       |   0.000121021 |      4.29472   |    3        |     10        |
-| region       | 1             | gasto_compra_equipos        |   0.000121021 |   4631.17      |    0        |      0        |
-| region       | 1             | gasto_compra_maquinaria     |   0.000121021 |  11515         |    0        |      0        |
-| region       | 1             | gasto_alquiler_mant_equipos |   0.000121021 |  16568.9       |    0        |   1000        |
-| region       | 1             | gasto_semilla               |   0.000121021 |  12007.6       |   50        |   9200        |
+| region       | 1             | riego_share                 |   0           |      0.949754  |    1        |      1        |
+| region       | 1             | riego_tecnificado_any       |   0.0415103   |      0.239268  |    0        |      1        |
+| region       | 1             | riego_tecnificado_share     |   0.0415103   |      0.202277  |    0        |      1        |
+| region       | 1             | usuario_agua                |   0.108435    |      0.74698   |    1        |      1        |
+| region       | 1             | gasto_agua_riego            |   0.000605107 |  41741.5       |  400        |   6000        |
+| region       | 1             | uso_maquinaria              |   0.000242043 |      0.837913  |    1        |      1        |
+| region       | 1             | num_maquinaria_equipo       |   0.16229     |      5.12612   |    3        |     10        |
+| region       | 1             | gasto_compra_equipos        |   0.000605107 |   4633.41      |    0        |      0        |
+| region       | 1             | gasto_compra_maquinaria     |   0.000605107 |  11520.6       |    0        |      0        |
+| region       | 1             | gasto_alquiler_mant_equipos |   0.000605107 |  16576.9       |    0        |   1000        |
+| region       | 1             | gasto_semilla               |   0.462302    |  22328.7       | 1500        |  18473.2      |
 | region       | 1             | usa_abono                   |   0.000121021 |      0.447954  |    0        |      1        |
 | region       | 1             | usa_fertilizantes           |   0.000121021 |      0.853788  |    1        |      1        |
 | region       | 1             | semilla_semillero_any       |   0.000121021 |      0.171871  |    0        |      1        |
 | region       | 1             | semilla_comercial_any       |   0.000121021 |      0.302832  |    0        |      1        |
-| region       | 1             | semilla_certificada_any     |   0.000121021 |      0.291697  |    0        |      1        |
-| region       | 1             | semilla_certificada_share   |   0.000121021 |      0.247379  |    0        |      1        |
+| region       | 1             | semilla_certificada_any     |   0.437371    |      0.518391  |    1        |      1        |
+| region       | 1             | semilla_certificada_share   |   0.437371    |      0.439631  |    0.285714 |      1        |
 | region       | 1             | capacitacion_recibida       |   0.000121021 |      0.122004  |    0        |      1        |
 | region       | 1             | asistencia_tecnica_recibida |   0.000121021 |      0.110022  |    0        |      1        |
-| region       | 1             | credito_obtenido            |   0.000121021 |      0.228395  |    0        |      1        |
+| region       | 1             | credito_obtenido            |   0.758199    |      0.944444  |    1        |      1        |
 | region       | 1             | nivel_educacion             |   0.0936706   |      5.41755   |    6        |      9        |
 | region       | 1             | asociacion_miembro          |   0.000121021 |      0.0876301 |    0        |      0        |
 | region       | 1             | asociacion_num              |   0.000121021 |      0.0984023 |    0        |      0        |
 | region       | 2             | riego_any                   |   0           |      0.593515  |    1        |      1        |
 | region       | 2             | riego_share                 |   0           |      0.4517    |    0.333333 |      1        |
-| region       | 2             | riego_tecnificado_any       |   0           |      0.219989  |    0        |      1        |
-| region       | 2             | riego_tecnificado_share     |   0           |      0.12419   |    0        |      0.571429 |
-| region       | 2             | usuario_agua                |   0           |      0.442163  |    0        |      1        |
-| region       | 2             | gasto_agua_riego            |   0           |     50.9527    |    0        |    100        |
+| region       | 2             | riego_tecnificado_any       |   0.406485    |      0.370655  |    0        |      1        |
+| region       | 2             | riego_tecnificado_share     |   0.406485    |      0.30998   |    0        |      1        |
+| region       | 2             | usuario_agua                |   0.0290763   |      0.455404  |    0        |      1        |
+| region       | 2             | gasto_agua_riego            |   4.85413e-05 |     50.9551    |    0        |    100        |
 | region       | 2             | uso_maquinaria              |   4.85413e-05 |      0.660922  |    1        |      1        |
-| region       | 2             | num_maquinaria_equipo       |   4.85413e-05 |      1.77748   |    1        |      3        |
+| region       | 2             | num_maquinaria_equipo       |   0.33911     |      2.68939   |    1        |      6        |
 | region       | 2             | gasto_compra_equipos        |   4.85413e-05 |     47.8061    |    0        |      0        |
 | region       | 2             | gasto_compra_maquinaria     |   4.85413e-05 |     50.3641    |    0        |      0        |
 | region       | 2             | gasto_alquiler_mant_equipos |   4.85413e-05 |     53.1662    |    0        |     60        |
-| region       | 2             | gasto_semilla               |   4.85413e-05 |    816.552     |  290        |   1705        |
+| region       | 2             | gasto_semilla               |   0.14907     |    959.554     |  390        |   1900        |
 | region       | 2             | usa_abono                   |   4.85413e-05 |      0.782816  |    1        |      1        |
 | region       | 2             | usa_fertilizantes           |   4.85413e-05 |      0.522282  |    1        |      1        |
 | region       | 2             | semilla_semillero_any       |   4.85413e-05 |      0.100777  |    0        |      1        |
 | region       | 2             | semilla_comercial_any       |   4.85413e-05 |      0.301117  |    0        |      1        |
-| region       | 2             | semilla_certificada_any     |   4.85413e-05 |      0.0260194 |    0        |      0        |
-| region       | 2             | semilla_certificada_share   |   4.85413e-05 |      0.0143977 |    0        |      0        |
+| region       | 2             | semilla_certificada_any     |   0.13213     |      0.0299793 |    0        |      0        |
+| region       | 2             | semilla_certificada_share   |   0.13213     |      0.0165889 |    0        |      0        |
 | region       | 2             | capacitacion_recibida       |   4.85413e-05 |      0.0721845 |    0        |      0        |
 | region       | 2             | asistencia_tecnica_recibida |   4.85413e-05 |      0.026699  |    0        |      0        |
-| region       | 2             | credito_obtenido            |   4.85413e-05 |      0.0786408 |    0        |      0        |
+| region       | 2             | credito_obtenido            |   0.916023    |      0.936416  |    1        |      1        |
 | region       | 2             | nivel_educacion             |   0.00961118  |      4.22624   |    4        |      6        |
 | region       | 2             | asociacion_miembro          |   4.85413e-05 |      0.0636893 |    0        |      0        |
 | region       | 2             | asociacion_num              |   4.85413e-05 |      0.0658738 |    0        |      0        |
 | region       | 3             | riego_any                   |   0           |      0.134904  |    0        |      1        |
 | region       | 3             | riego_share                 |   0           |      0.107868  |    0        |      0.612308 |
-| region       | 3             | riego_tecnificado_any       |   0           |      0.0235648 |    0        |      0        |
-| region       | 3             | riego_tecnificado_share     |   0           |      0.0133947 |    0        |      0        |
-| region       | 3             | usuario_agua                |   0           |      0.0687965 |    0        |      0        |
-| region       | 3             | gasto_agua_riego            |   0           |    204.663     |    0        |      0        |
+| region       | 3             | riego_tecnificado_any       |   0.865096    |      0.174678  |    0        |      1        |
+| region       | 3             | riego_tecnificado_share     |   0.865096    |      0.14256   |    0        |      1        |
+| region       | 3             | usuario_agua                |   0.0392219   |      0.0716049 |    0        |      0        |
+| region       | 3             | gasto_agua_riego            |   0.000158153 |    204.696     |    0        |      0        |
 | region       | 3             | uso_maquinaria              |   0.000158153 |      0.735685  |    1        |      1        |
-| region       | 3             | num_maquinaria_equipo       |   0.000158153 |      2.73822   |    1        |      6        |
+| region       | 3             | num_maquinaria_equipo       |   0.264431    |      3.722     |    3        |     10        |
 | region       | 3             | gasto_compra_equipos        |   0.000158153 |    439.842     |    0        |    750        |
 | region       | 3             | gasto_compra_maquinaria     |   0.000158153 |    987.403     |    0        |      0        |
 | region       | 3             | gasto_alquiler_mant_equipos |   0.000158153 |   1392.75      |    0        |    350        |
-| region       | 3             | gasto_semilla               |   0           |   1129.31      |    0        |   1274        |
+| region       | 3             | gasto_semilla               |   0.66693     |   3390.62      |  300        |   6422.5      |
 | region       | 3             | usa_abono                   |   0           |      0.243872  |    0        |      1        |
 | region       | 3             | usa_fertilizantes           |   0           |      0.449312  |    0        |      1        |
 | region       | 3             | semilla_semillero_any       |   0           |      0.128262  |    0        |      1        |
 | region       | 3             | semilla_comercial_any       |   0           |      0.144235  |    0        |      1        |
-| region       | 3             | semilla_certificada_any     |   0           |      0.106595  |    0        |      1        |
-| region       | 3             | semilla_certificada_share   |   0           |      0.0966259 |    0        |      0.5      |
+| region       | 3             | semilla_certificada_any     |   0.592282    |      0.261443  |    0        |      1        |
+| region       | 3             | semilla_certificada_share   |   0.592282    |      0.236992  |    0        |      1        |
 | region       | 3             | capacitacion_recibida       |   0.000158153 |      0.148687  |    0        |      1        |
 | region       | 3             | asistencia_tecnica_recibida |   0.000158153 |      0.0882632 |    0        |      0        |
-| region       | 3             | credito_obtenido            |   0.000158153 |      0.14062   |    0        |      1        |
+| region       | 3             | credito_obtenido            |   0.844061    |      0.901623  |    1        |      1        |
 | region       | 3             | nivel_educacion             |   0.0222995   |      4.53672   |    4        |      7        |
 | region       | 3             | asociacion_miembro          |   0.000158153 |      0.120531  |    0        |      1        |
 | region       | 3             | asociacion_num              |   0.000158153 |      0.12243   |    0        |      1        |
 | size         | grande_>5ha   | riego_any                   |   0           |      0.467123  |    0        |      1        |
 | size         | grande_>5ha   | riego_share                 |   0           |      0.416134  |    0        |      1        |
-| size         | grande_>5ha   | riego_tecnificado_any       |   0           |      0.120719  |    0        |      1        |
-| size         | grande_>5ha   | riego_tecnificado_share     |   0           |      0.0765176 |    0        |      0.2      |
-| size         | grande_>5ha   | usuario_agua                |   0           |      0.376541  |    0        |      1        |
+| size         | grande_>5ha   | riego_tecnificado_any       |   0.532877    |      0.258431  |    0        |      1        |
+| size         | grande_>5ha   | riego_tecnificado_share     |   0.532877    |      0.201002  |    0        |      1        |
+| size         | grande_>5ha   | usuario_agua                |   0.0126712   |      0.381374  |    0        |      1        |
 | size         | grande_>5ha   | gasto_agua_riego            |   0           |   1348.39      |    0        |   2971        |
 | size         | grande_>5ha   | uso_maquinaria              |   0           |      0.839384  |    1        |      1        |
-| size         | grande_>5ha   | num_maquinaria_equipo       |   0           |      3.92414   |    3        |     10        |
+| size         | grande_>5ha   | num_maquinaria_equipo       |   0.160616    |      4.67503   |    3        |     10        |
 | size         | grande_>5ha   | gasto_compra_equipos        |   0           |    291.88      |    0        |    800        |
 | size         | grande_>5ha   | gasto_compra_maquinaria     |   0           |    415.087     |    0        |      0        |
 | size         | grande_>5ha   | gasto_alquiler_mant_equipos |   0           |    555.397     |    0        |    720        |
-| size         | grande_>5ha   | gasto_semilla               |   0           |   5150.1       |  370        |  12454        |
+| size         | grande_>5ha   | gasto_semilla               |   0.393664    |   8493.82      | 2860        |  20590        |
 | size         | grande_>5ha   | usa_abono                   |   0           |      0.400856  |    0        |      1        |
 | size         | grande_>5ha   | usa_fertilizantes           |   0           |      0.635445  |    1        |      1        |
 | size         | grande_>5ha   | semilla_semillero_any       |   0           |      0.200171  |    0        |      1        |
 | size         | grande_>5ha   | semilla_comercial_any       |   0           |      0.355137  |    0        |      1        |
-| size         | grande_>5ha   | semilla_certificada_any     |   0           |      0.270719  |    0        |      1        |
-| size         | grande_>5ha   | semilla_certificada_share   |   0           |      0.224082  |    0        |      1        |
+| size         | grande_>5ha   | semilla_certificada_any     |   0.352397    |      0.418033  |    0        |      1        |
+| size         | grande_>5ha   | semilla_certificada_share   |   0.352397    |      0.346018  |    0        |      1        |
 | size         | grande_>5ha   | capacitacion_recibida       |   0           |      0.132021  |    0        |      1        |
 | size         | grande_>5ha   | asistencia_tecnica_recibida |   0           |      0.0936644 |    0        |      0        |
-| size         | grande_>5ha   | credito_obtenido            |   0           |      0.254623  |    0        |      1        |
+| size         | grande_>5ha   | credito_obtenido            |   0.731507    |      0.948342  |    1        |      1        |
 | size         | grande_>5ha   | nivel_educacion             |   0           |      5.10788   |    5        |      9        |
 | size         | grande_>5ha   | asociacion_miembro          |   0           |      0.12226   |    0        |      1        |
 | size         | grande_>5ha   | asociacion_num              |   0           |      0.125685  |    0        |      1        |
 | size         | mediano_2_5ha | riego_any                   |   0           |      0.584263  |    1        |      1        |
 | size         | mediano_2_5ha | riego_share                 |   0           |      0.496715  |    0.5      |      1        |
-| size         | mediano_2_5ha | riego_tecnificado_any       |   0           |      0.180471  |    0        |      1        |
-| size         | mediano_2_5ha | riego_tecnificado_share     |   0           |      0.110612  |    0        |      0.5      |
-| size         | mediano_2_5ha | usuario_agua                |   0           |      0.447754  |    0        |      1        |
+| size         | mediano_2_5ha | riego_tecnificado_any       |   0.415737    |      0.308888  |    0        |      1        |
+| size         | mediano_2_5ha | riego_tecnificado_share     |   0.415737    |      0.247583  |    0        |      1        |
+| size         | mediano_2_5ha | usuario_agua                |   0.0146543   |      0.454413  |    0        |      1        |
 | size         | mediano_2_5ha | gasto_agua_riego            |   0           |    393.752     |    0        |    931.6      |
 | size         | mediano_2_5ha | uso_maquinaria              |   0           |      0.800733  |    1        |      1        |
-| size         | mediano_2_5ha | num_maquinaria_equipo       |   0           |      2.68159   |    1        |      6        |
+| size         | mediano_2_5ha | num_maquinaria_equipo       |   0.199267    |      3.34892   |    3        |      6        |
 | size         | mediano_2_5ha | gasto_compra_equipos        |   0           |    122.543     |    0        |      0        |
 | size         | mediano_2_5ha | gasto_compra_maquinaria     |   0           |     73.7416    |    0        |      0        |
 | size         | mediano_2_5ha | gasto_alquiler_mant_equipos |   0           |    117.817     |    0        |    300        |
-| size         | mediano_2_5ha | gasto_semilla               |   0           |   1445.32      |  460        |   3480        |
+| size         | mediano_2_5ha | gasto_semilla               |   0.316661    |   2115.09      | 1040        |   4800        |
 | size         | mediano_2_5ha | usa_abono                   |   0           |      0.58028   |    1        |      1        |
 | size         | mediano_2_5ha | usa_fertilizantes           |   0           |      0.662631  |    1        |      1        |
 | size         | mediano_2_5ha | semilla_semillero_any       |   0           |      0.152596  |    0        |      1        |
 | size         | mediano_2_5ha | semilla_comercial_any       |   0           |      0.295954  |    0        |      1        |
-| size         | mediano_2_5ha | semilla_certificada_any     |   0           |      0.139853  |    0        |      1        |
-| size         | mediano_2_5ha | semilla_certificada_share   |   0           |      0.112422  |    0        |      0.666667 |
+| size         | mediano_2_5ha | semilla_certificada_any     |   0.291494    |      0.197392  |    0        |      1        |
+| size         | mediano_2_5ha | semilla_certificada_share   |   0.291494    |      0.158674  |    0        |      1        |
 | size         | mediano_2_5ha | capacitacion_recibida       |   0           |      0.11596   |    0        |      1        |
 | size         | mediano_2_5ha | asistencia_tecnica_recibida |   0           |      0.0672189 |    0        |      0        |
-| size         | mediano_2_5ha | credito_obtenido            |   0           |      0.176171  |    0        |      1        |
+| size         | mediano_2_5ha | credito_obtenido            |   0.811246    |      0.933333  |    1        |      1        |
 | size         | mediano_2_5ha | nivel_educacion             |   0           |      4.73622   |    4        |      8        |
 | size         | mediano_2_5ha | asociacion_miembro          |   0           |      0.104173  |    0        |      1        |
 | size         | mediano_2_5ha | asociacion_num              |   0           |      0.105925  |    0        |      1        |
 | size         | missing       | riego_any                   |   0           |      0.868705  |    1        |      1        |
-| size         | missing       | riego_share                 |   0           |      0.838309  |    1        |      1        |
-| size         | missing       | riego_tecnificado_any       |   0           |      0.542266  |    1        |      1        |
-| size         | missing       | riego_tecnificado_share     |   0           |      0.489406  |    0.5      |      1        |
-| size         | missing       | usuario_agua                |   0           |      0         |    0        |      0        |
-| size         | missing       | gasto_agua_riego            |   0           | 299934         | 2730        | 179694        |
-| size         | missing       | uso_maquinaria              |   0.00179856  |      0.93964   |    1        |      1        |
-| size         | missing       | num_maquinaria_equipo       |   0.00179856  |     15.7694    |    6        |     36        |
-| size         | missing       | gasto_compra_equipos        |   0.00179856  |  34974         |    0        |  10000        |
-| size         | missing       | gasto_compra_maquinaria     |   0.00179856  |  89300.3       |    0        |      0        |
-| size         | missing       | gasto_alquiler_mant_equipos |   0.00179856  | 128053         | 1000        | 120214        |
-| size         | missing       | gasto_semilla               |   0.000899281 |  67966.5       |    0        |  19482        |
+| size         | missing       | riego_share                 |   0           |      0.838909  |    1        |      1        |
+| size         | missing       | riego_tecnificado_any       |   0.131295    |      0.624224  |    1        |      1        |
+| size         | missing       | riego_tecnificado_share     |   0.131295    |      0.573508  |    1        |      1        |
+| size         | missing       | usuario_agua                |   1           |    nan         |  nan        |    nan        |
+| size         | missing       | gasto_agua_riego            |   0.00539568  | 301561         | 2800        | 180000        |
+| size         | missing       | uso_maquinaria              |   0.00269784  |      0.940487  |    1        |      1        |
+| size         | missing       | num_maquinaria_equipo       |   0.0620504   |     16.7824    |    6        |     36        |
+| size         | missing       | gasto_compra_equipos        |   0.00539568  |  35100.4       |    0        |  10000        |
+| size         | missing       | gasto_compra_maquinaria     |   0.00539568  |  89623.2       |    0        |      0        |
+| size         | missing       | gasto_alquiler_mant_equipos |   0.00539568  | 128516         | 1000        | 121071        |
+| size         | missing       | gasto_semilla               |   0.667266    | 204083         | 4500        | 232066        |
 | size         | missing       | usa_abono                   |   0.000899281 |      0.517552  |    1        |      1        |
 | size         | missing       | usa_fertilizantes           |   0.000899281 |      0.825383  |    1        |      1        |
 | size         | missing       | semilla_semillero_any       |   0.000899281 |      0.184518  |    0        |      1        |
 | size         | missing       | semilla_comercial_any       |   0.000899281 |      0.244824  |    0        |      1        |
-| size         | missing       | semilla_certificada_any     |   0.000899281 |      0.171017  |    0        |      1        |
-| size         | missing       | semilla_certificada_share   |   0.000899281 |      0.149304  |    0        |      1        |
+| size         | missing       | semilla_certificada_any     |   0.659173    |      0.501319  |    1        |      1        |
+| size         | missing       | semilla_certificada_share   |   0.659173    |      0.437668  |    0.1      |      1        |
 | size         | missing       | capacitacion_recibida       |   0.00179856  |      0.478378  |    0        |      1        |
 | size         | missing       | asistencia_tecnica_recibida |   0.00179856  |      0.357658  |    0        |      1        |
-| size         | missing       | credito_obtenido            |   0.00179856  |      0.296396  |    0        |      1        |
+| size         | missing       | credito_obtenido            |   0.693345    |      0.964809  |    1        |      1        |
 | size         | missing       | nivel_educacion             |   1           |    nan         |  nan        |    nan        |
 | size         | missing       | asociacion_miembro          |   0.00179856  |      0.258559  |    0        |      1        |
 | size         | missing       | asociacion_num              |   0.00179856  |      0.333333  |    0        |      1        |
 | size         | pequeno_<2ha  | riego_any                   |   0           |      0.621123  |    1        |      1        |
 | size         | pequeno_<2ha  | riego_share                 |   0           |      0.517096  |    0.5      |      1        |
-| size         | pequeno_<2ha  | riego_tecnificado_any       |   0           |      0.188323  |    0        |      1        |
-| size         | pequeno_<2ha  | riego_tecnificado_share     |   0           |      0.116109  |    0        |      0.5      |
-| size         | pequeno_<2ha  | usuario_agua                |   0           |      0.457121  |    0        |      1        |
-| size         | pequeno_<2ha  | gasto_agua_riego            |   0           |    144.478     |    0        |    190.8      |
+| size         | pequeno_<2ha  | riego_tecnificado_any       |   0.378877    |      0.303197  |    0        |      1        |
+| size         | pequeno_<2ha  | riego_tecnificado_share     |   0.378877    |      0.256877  |    0        |      1        |
+| size         | pequeno_<2ha  | usuario_agua                |   0.0211778   |      0.467011  |    0        |      1        |
+| size         | pequeno_<2ha  | gasto_agua_riego            |   4.55436e-05 |    144.484     |    0        |    191        |
 | size         | pequeno_<2ha  | uso_maquinaria              |   4.55436e-05 |      0.647477  |    1        |      1        |
-| size         | pequeno_<2ha  | num_maquinaria_equipo       |   4.55436e-05 |      1.46447   |    1        |      3        |
+| size         | pequeno_<2ha  | num_maquinaria_equipo       |   0.352553    |      2.26182   |    1        |      6        |
 | size         | pequeno_<2ha  | gasto_compra_equipos        |   4.55436e-05 |     33.3931    |    0        |      0        |
 | size         | pequeno_<2ha  | gasto_compra_maquinaria     |   4.55436e-05 |     18.528     |    0        |      0        |
 | size         | pequeno_<2ha  | gasto_alquiler_mant_equipos |   4.55436e-05 |     30.5194    |    0        |     80        |
-| size         | pequeno_<2ha  | gasto_semilla               |   4.55436e-05 |    387.453     |  150        |    960        |
+| size         | pequeno_<2ha  | gasto_semilla               |   0.276859    |    535.768     |  294.5      |   1200        |
 | size         | pequeno_<2ha  | usa_abono                   |   4.55436e-05 |      0.674531  |    1        |      1        |
 | size         | pequeno_<2ha  | usa_fertilizantes           |   4.55436e-05 |      0.540445  |    1        |      1        |
 | size         | pequeno_<2ha  | semilla_semillero_any       |   4.55436e-05 |      0.0899526 |    0        |      0        |
 | size         | pequeno_<2ha  | semilla_comercial_any       |   4.55436e-05 |      0.246539  |    0        |      1        |
-| size         | pequeno_<2ha  | semilla_certificada_any     |   4.55436e-05 |      0.0442248 |    0        |      0        |
-| size         | pequeno_<2ha  | semilla_certificada_share   |   4.55436e-05 |      0.0351202 |    0        |      0        |
+| size         | pequeno_<2ha  | semilla_certificada_any     |   0.248668    |      0.0588592 |    0        |      0        |
+| size         | pequeno_<2ha  | semilla_certificada_share   |   0.248668    |      0.0467418 |    0        |      0        |
 | size         | pequeno_<2ha  | capacitacion_recibida       |   4.55436e-05 |      0.0639916 |    0        |      0        |
 | size         | pequeno_<2ha  | asistencia_tecnica_recibida |   4.55436e-05 |      0.0296502 |    0        |      0        |
-| size         | pequeno_<2ha  | credito_obtenido            |   4.55436e-05 |      0.0671343 |    0        |      0        |
+| size         | pequeno_<2ha  | credito_obtenido            |   0.926219    |      0.909877  |    1        |      1        |
 | size         | pequeno_<2ha  | nivel_educacion             |   4.55436e-05 |      4.33968   |    4        |      6        |
 | size         | pequeno_<2ha  | asociacion_miembro          |   4.55436e-05 |      0.0520587 |    0        |      0        |
 | size         | pequeno_<2ha  | asociacion_num              |   4.55436e-05 |      0.0535161 |    0        |      0        |
 
 ### Tabla 13. SFA con controles ENA
 
-| model | term | estimate | std_error | z_value | p_value | component | 
-| --- | --- | --- | --- | --- | --- | --- | 
- | controls_ena | (Intercept) |    8.67787649 | 2.385583e-02 |  363.7633895 | 0.000000e+00 | frontier |
-| controls_ena | log_land |    0.76004592 | 5.388211e-03 |  141.0571881 | 0.000000e+00 | frontier |
-| controls_ena | log_labor |    0.22796869 | 5.822969e-03 |   39.1499035 | 0.000000e+00 | frontier |
-| controls_ena | log_inputs |    0.10568179 | 2.428492e-03 |   43.5174567 | 0.000000e+00 | frontier |
-| controls_ena | region_natural2 |   -0.71516353 | 1.693544e-02 |  -42.2288099 | 0.000000e+00 | frontier |
-| controls_ena | region_natural3 |    0.00297901 | 2.302372e-02 |    0.1293887 | 8.970501e-01 | frontier |
-| controls_ena | log_seed |   -0.04697006 | 2.180708e-03 |  -21.5389009 | 0.000000e+00 | frontier |
-| controls_ena | log_irrigation_cost |    0.04847155 | 2.578596e-03 |   18.7976531 | 0.000000e+00 | frontier |
-| controls_ena | log_capital |    0.01315481 | 2.293398e-03 |    5.7359468 | 9.696910e-09 | frontier |
-| controls_ena | riego_tecnificado_any |    0.04705091 | 1.466374e-02 |    3.2086578 | 1.333561e-03 | frontier |
-| controls_ena | Z_(Intercept) | -381.05273943 | 4.791440e+01 |   -7.9527808 | 1.776357e-15 | inefficiency |
-| controls_ena | Z_diversificacion_area |  -14.86033452 | 1.394045e+00 |  -10.6598679 | 0.000000e+00 | inefficiency |
-| controls_ena | Z_size_mediano |  -18.45895312 | 3.321192e+00 |   -5.5579309 | 2.729914e-08 | inefficiency |
-| controls_ena | Z_size_grande |  223.78953244 | 2.639327e+01 |    8.4790385 | 0.000000e+00 | inefficiency |
-| controls_ena | Z_diversif_mediano |  166.96489033 | 2.221321e+01 |    7.5164672 | 5.617729e-14 | inefficiency |
-| controls_ena | Z_diversif_grande |  -61.31011781 | 6.053377e+00 |  -10.1282503 | 0.000000e+00 | inefficiency |
-| controls_ena | Z_nivel_educacion |   -2.11934863 | 1.547520e-01 |  -13.6951328 | 0.000000e+00 | inefficiency |
-| controls_ena | Z_credito_obtenido |  -49.41225411 | 6.234458e+00 |   -7.9256691 | 2.220446e-15 | inefficiency |
-| controls_ena | Z_capacitacion_recibida |   -3.89003760 | 1.160145e-01 |  -33.5306090 | 0.000000e+00 | inefficiency |
-| controls_ena | Z_asistencia_tecnica_recibida |  -89.34677154 | 1.150913e+01 |   -7.7631212 | 8.215650e-15 | inefficiency |
-| controls_ena | Z_usuario_agua |  -60.45972575 | 7.353610e+00 |   -8.2217752 | 2.220446e-16 | inefficiency |
-| controls_ena | Z_asociacion_miembro |   27.76742921 | 3.898151e+00 |    7.1232313 | 1.054268e-12 | inefficiency |
-| controls_ena | sigmaSq |  333.57743515 | 4.148932e+01 |    8.0400801 | 8.881784e-16 | variance |
-| controls_ena | gamma |    0.99854166 | 1.972739e-04 | 5061.7021429 | 0.000000e+00 | variance |
+| model | term | estimate | std_error | z_value | p_value | component | inference_note | n_total | n_valid | share_dropped | gamma | gamma_near_boundary | cov_singular | cov_rank | cov_cond | cov_rcond | input_cost_var | ineffDecrease | truncNorm | timeEffect | 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+ | controls_ena | (Intercept) |  8.88961932 | 0.050245162 | 176.924880 | 0.000000e+00 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | log_land |  0.90192284 | 0.005861943 | 153.860721 | 0.000000e+00 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | log_labor |  0.22316323 | 0.007588724 |  29.407215 | 0.000000e+00 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | log_inputs | -0.01193091 | 0.006777077 |  -1.760479 | 7.832655e-02 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | log_irrigation_cost |  0.07254403 | 0.002653471 |  27.339294 | 0.000000e+00 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | log_capital |  0.04080565 | 0.002622328 |  15.560848 | 0.000000e+00 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_(Intercept) | -6.90350723 | 0.399877624 | -17.264050 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_diversificacion_area |  0.91670758 | 0.133699894 |   6.856457 | 7.059020e-12 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_size_mediano |  1.13041577 | 0.176237015 |   6.414179 | 1.415839e-10 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_size_grande |  6.12371889 | 0.268576181 |  22.800678 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_diversif_mediano |  0.71785667 | 0.250950146 |   2.860555 | 4.229003e-03 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_diversif_grande | -3.64536812 | 0.252212574 | -14.453554 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_region_natural2 |  5.98311143 | 0.243268368 |  24.594696 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_region_natural3 |  2.12589207 | 0.167157140 |  12.717926 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_nivel_educacion | -0.02592597 | 0.011532055 |  -2.248165 | 2.456564e-02 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_capacitacion_recibida | -0.23538285 | 0.085961758 |  -2.738227 | 6.177133e-03 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_asistencia_tecnica_recibida | -0.81587837 | 0.123937375 |  -6.582989 | 4.610845e-11 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_usuario_agua |  0.51349448 | 0.073681031 |   6.969154 | 3.188561e-12 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_asociacion_miembro |  0.03818231 | 0.085434148 |   0.446921 | 6.549321e-01 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_riego_any | -1.57459886 | 0.089045336 | -17.683114 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_uso_maquinaria |  0.49097620 | 0.057370090 |   8.558052 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_usa_abono | -0.05774677 | 0.054529094 |  -1.059008 | 2.895959e-01 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_usa_fertilizantes | -2.53419504 | 0.099991071 | -25.344213 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_semilla_semillero_any |  0.12357561 | 0.070798833 |   1.745447 | 8.090710e-02 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_semilla_comercial_any |  1.37948121 | 0.066863812 |  20.631208 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | sigmaSq |  4.97594424 | 0.191637825 |  25.965355 | 0.000000e+00 | variance |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | gamma |  0.91452002 | 0.003665908 | 249.466142 | 0.000000e+00 | variance |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
 
 
 ### Tabla 16. Logit con controles ENA
 
 | model | term | estimate | std_error | z_value | p_value | odds_ratio | 
 | --- | --- | --- | --- | --- | --- | --- | 
- | controls_ena | (Intercept) |  0.84007045 | 0.58608058 |  1.4333702 | 1.518311e-01 |   2.3165302 |
-| controls_ena | diversificacion_area |  2.64523170 | 0.57712539 |  4.5834610 | 4.714530e-06 |  14.0867085 |
-| controls_ena | size_catmediano_2_5ha |  0.39033685 | 0.38608524 |  1.0110121 | 3.120725e-01 |   1.4774784 |
-| controls_ena | size_catpequeno_<2ha |  0.33458704 | 0.46760654 |  0.7155311 | 4.743231e-01 |   1.3973632 |
-| controls_ena | log_area | -0.07476799 | 0.16836720 | -0.4440769 | 6.570113e-01 |   0.9279588 |
-| controls_ena | region_natural2 |  2.10733053 | 0.46607065 |  4.5214831 | 6.320508e-06 |   8.2262522 |
-| controls_ena | region_natural3 | -1.15579489 | 0.38834314 | -2.9762207 | 2.935916e-03 |   0.3148072 |
-| controls_ena | nivel_educacion |  0.10278247 | 0.03401848 |  3.0213717 | 2.532419e-03 |   1.1082503 |
-| controls_ena | credito_obtenido |  0.79622859 | 0.29301704 |  2.7173457 | 6.609434e-03 |   2.2171633 |
-| controls_ena | capacitacion_recibida |  1.43651941 | 0.33092237 |  4.3409559 | 1.454112e-05 |   4.2060308 |
-| controls_ena | asistencia_tecnica_recibida | -0.11298698 | 0.47744698 | -0.2366482 | 8.129420e-01 |   0.8931623 |
-| controls_ena | usuario_agua |  5.06563777 | 0.71068902 |  7.1277839 | 1.206591e-12 | 158.4814838 |
-| controls_ena | asociacion_miembro |  0.62724300 | 0.32241755 |  1.9454369 | 5.179314e-02 |   1.8724411 |
-| controls_ena | diversificacion_area:size_catmediano_2_5ha | -0.22480601 | 0.76258763 | -0.2947937 | 7.681670e-01 |   0.7986711 |
-| controls_ena | diversificacion_area:size_catpequeno_<2ha | -0.80616414 | 0.81003923 | -0.9952162 | 3.196920e-01 |   0.4465678 |
+ | controls_ena | (Intercept) | -1.039885577 | 0.47922813 | -2.169917660 | 3.007300e-02 | 0.3534951 |
+| controls_ena | diversificacion_area |  0.781186788 | 0.31945556 |  2.445369239 | 1.451413e-02 | 2.1840627 |
+| controls_ena | size_catmediano_2_5ha |  0.008855540 | 0.29630225 |  0.029886848 | 9.761588e-01 | 1.0088949 |
+| controls_ena | size_catpequeno_<2ha |  0.351688074 | 0.36072920 |  0.974936531 | 3.296519e-01 | 1.4214651 |
+| controls_ena | log_area | -0.113752133 | 0.13568650 | -0.838345247 | 4.018880e-01 | 0.8924791 |
+| controls_ena | region_natural2 |  1.121043170 | 0.18956654 |  5.913718683 | 3.630480e-09 | 3.0680530 |
+| controls_ena | region_natural3 | -0.692261072 | 0.20511333 | -3.375017388 | 7.452902e-04 | 0.5004433 |
+| controls_ena | nivel_educacion | -0.014291392 | 0.02941412 | -0.485868419 | 6.270876e-01 | 0.9858102 |
+| controls_ena | capacitacion_recibida |  0.749689195 | 0.21463041 |  3.492930991 | 4.830333e-04 | 2.1163421 |
+| controls_ena | asistencia_tecnica_recibida |  0.006557223 | 0.32908408 |  0.019925676 | 9.841037e-01 | 1.0065788 |
+| controls_ena | usuario_agua |  0.467182143 | 0.16214522 |  2.881257532 | 3.982445e-03 | 1.5954920 |
+| controls_ena | asociacion_miembro |  0.000861925 | 0.24712237 |  0.003487847 | 9.972173e-01 | 1.0008623 |
+| controls_ena | riego_any |  0.299243343 | 0.16708058 |  1.791012171 | 7.336853e-02 | 1.3488378 |
+| controls_ena | uso_maquinaria |  0.504194028 | 0.17342131 |  2.907336124 | 3.665683e-03 | 1.6556506 |
+| controls_ena | usa_abono |  1.481706752 | 0.16962639 |  8.735119216 | 3.546472e-18 | 4.4004498 |
+| controls_ena | usa_fertilizantes |  0.097907104 | 0.17038865 |  0.574610482 | 5.655878e-01 | 1.1028603 |
+| controls_ena | semilla_semillero_any | -0.041546968 | 0.15809884 | -0.262791105 | 7.927254e-01 | 0.9593043 |
+| controls_ena | semilla_comercial_any |  0.471542748 | 0.14299258 |  3.297672918 | 9.835961e-04 | 1.6024645 |
+| controls_ena | diversificacion_area:size_catmediano_2_5ha |  0.239077548 | 0.43702133 |  0.547061505 | 5.843676e-01 | 1.2700770 |
+| controls_ena | diversificacion_area:size_catpequeno_<2ha | -0.073983959 | 0.45799636 | -0.161538313 | 8.716778e-01 | 0.9286866 |
 
 
 ## Temperatura 2023-2024 y topografia
@@ -512,102 +514,108 @@ Se agregan controles exogenos de temperatura (2023-2024) y topografia a nivel di
 
 ### Tabla 14. SFA con temperatura/topografia
 
-| model | term | estimate | std_error | z_value | p_value | component | 
-| --- | --- | --- | --- | --- | --- | --- | 
- | temp_topo | (Intercept) |  8.842702e+00 | 1.001070e-01 |    88.3324917 | 0.000000e+00 | frontier |
-| temp_topo | log_land |  7.161754e-01 | 5.098636e-03 |   140.4641180 | 0.000000e+00 | frontier |
-| temp_topo | log_labor |  2.372393e-01 | 5.847673e-03 |    40.5698631 | 0.000000e+00 | frontier |
-| temp_topo | log_inputs |  1.108855e-01 | 2.447129e-03 |    45.3124813 | 0.000000e+00 | frontier |
-| temp_topo | region_natural2 | -4.268370e-01 | 2.603259e-02 |   -16.3962559 | 0.000000e+00 | frontier |
-| temp_topo | region_natural3 |  7.033720e-02 | 2.572959e-02 |     2.7337084 | 6.262547e-03 | frontier |
-| temp_topo | log_surface_km2 |  2.065734e-03 | 5.531651e-03 |     0.3734390 | 7.088217e-01 | frontier |
-| temp_topo | tmean_2024 | -7.281565e-03 | 3.637348e-03 |    -2.0018881 | 4.529677e-02 | frontier |
-| temp_topo | delta_tmean_24_23 | -1.861242e-01 | 1.575189e-02 |   -11.8159919 | 0.000000e+00 | frontier |
-| temp_topo | elev_m | -2.794247e-04 | 1.583783e-05 |   -17.6428604 | 0.000000e+00 | frontier |
-| temp_topo | slope_deg | -5.434740e-04 | 4.803333e-03 |    -0.1131452 | 9.099155e-01 | frontier |
-| temp_topo | ruggedness |  1.043831e-02 | 3.483081e-03 |     2.9968622 | 2.727740e-03 | frontier |
-| temp_topo | prcp_total_z |  3.734642e-02 | 7.523820e-03 |     4.9637570 | 6.914246e-07 | frontier |
-| temp_topo | Z_(Intercept) | -2.206611e+02 | 5.445123e+01 |    -4.0524533 | 5.068334e-05 | inefficiency |
-| temp_topo | Z_diversificacion_area | -3.505566e+01 | 9.836902e+00 |    -3.5636888 | 3.656795e-04 | inefficiency |
-| temp_topo | Z_size_mediano | -2.259315e+01 | 9.586730e+00 |    -2.3567113 | 1.843758e-02 | inefficiency |
-| temp_topo | Z_size_grande |  1.226119e+02 | 3.062377e+01 |     4.0038147 | 6.232921e-05 | inefficiency |
-| temp_topo | Z_diversif_mediano |  1.155689e+02 | 3.523244e+01 |     3.2801844 | 1.037393e-03 | inefficiency |
-| temp_topo | Z_diversif_grande | -2.841762e+01 | 7.026647e+00 |    -4.0442648 | 5.248756e-05 | inefficiency |
-| temp_topo | sigmaSq |  1.776173e+02 | 4.434168e+01 |     4.0056507 | 6.184698e-05 | variance |
-| temp_topo | gamma |  9.969742e-01 | 7.883305e-04 |  1264.6652122 | 0.000000e+00 | variance |
-| controls_temp_topo | (Intercept) |  8.679295e+00 | 9.986626e-02 |    86.9091825 | 0.000000e+00 | frontier |
-| controls_temp_topo | log_land |  7.428318e-01 | 5.119993e-03 |   145.0845280 | 0.000000e+00 | frontier |
-| controls_temp_topo | log_labor |  2.258908e-01 | 5.788279e-03 |    39.0255533 | 0.000000e+00 | frontier |
-| controls_temp_topo | log_inputs |  1.056489e-01 | 2.512471e-03 |    42.0497913 | 0.000000e+00 | frontier |
-| controls_temp_topo | region_natural2 | -2.901242e-01 | 2.563603e-02 |   -11.3170476 | 0.000000e+00 | frontier |
-| controls_temp_topo | region_natural3 |  1.568146e-01 | 2.708866e-02 |     5.7889363 | 7.083355e-09 | frontier |
-| controls_temp_topo | log_surface_km2 |  6.099768e-03 | 5.257502e-03 |     1.1602027 | 2.459663e-01 | frontier |
-| controls_temp_topo | tmean_2024 | -3.536120e-03 | 3.516957e-03 |    -1.0054486 | 3.146809e-01 | frontier |
-| controls_temp_topo | delta_tmean_24_23 | -1.356429e-01 | 1.562190e-02 |    -8.6828642 | 0.000000e+00 | frontier |
-| controls_temp_topo | elev_m | -2.216548e-04 | 1.545843e-05 |   -14.3387716 | 0.000000e+00 | frontier |
-| controls_temp_topo | slope_deg |  2.339684e-03 | 4.681141e-03 |     0.4998107 | 6.172084e-01 | frontier |
-| controls_temp_topo | ruggedness |  8.914506e-03 | 3.383157e-03 |     2.6349667 | 8.414553e-03 | frontier |
-| controls_temp_topo | prcp_total_z |  2.906265e-02 | 7.253172e-03 |     4.0068881 | 6.152400e-05 | frontier |
-| controls_temp_topo | log_seed | -3.859766e-02 | 2.228249e-03 |   -17.3219692 | 0.000000e+00 | frontier |
-| controls_temp_topo | log_irrigation_cost |  4.325198e-02 | 2.683592e-03 |    16.1171976 | 0.000000e+00 | frontier |
-| controls_temp_topo | log_capital |  1.051663e-02 | 2.370920e-03 |     4.4356735 | 9.178485e-06 | frontier |
-| controls_temp_topo | riego_tecnificado_any |  5.073698e-02 | 1.469754e-02 |     3.4520726 | 5.562981e-04 | frontier |
-| controls_temp_topo | Z_(Intercept) | -5.939574e+02 | 5.400977e+01 |   -10.9972204 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_diversificacion_area | -1.021219e+02 | 9.482710e+00 |   -10.7692778 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_size_mediano | -3.838085e+01 | 4.032875e+00 |    -9.5169957 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_size_grande |  3.545403e+02 | 3.141340e+01 |    11.2862752 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_diversif_mediano |  3.092079e+02 | 2.905736e+01 |    10.6412959 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_diversif_grande | -5.279317e+01 | 3.832613e+00 |   -13.7747183 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_nivel_educacion | -4.952308e+00 | 4.509231e-01 |   -10.9826003 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_credito_obtenido | -8.171938e+01 | 7.730639e+00 |   -10.5708448 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_capacitacion_recibida | -1.437719e+01 | 5.907257e-01 |   -24.3381784 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_asistencia_tecnica_recibida | -1.453724e+02 | 1.298935e+01 |   -11.1916563 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_usuario_agua | -9.049769e+01 | 8.118412e+00 |   -11.1472150 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_asociacion_miembro |  3.367364e+01 | 2.245015e+00 |    14.9992895 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | sigmaSq |  5.378190e+02 | 4.924547e+01 |    10.9211881 | 0.000000e+00 | variance |
-| controls_temp_topo | gamma |  9.990890e-01 | 8.757231e-05 | 11408.7327499 | 0.000000e+00 | variance |
+| model | term | estimate | std_error | z_value | p_value | component | inference_note | n_total | n_valid | share_dropped | gamma | gamma_near_boundary | cov_singular | cov_rank | cov_cond | cov_rcond | input_cost_var | ineffDecrease | truncNorm | timeEffect | 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+ | temp_topo | (Intercept) |  7.080488e+00 | 0.070432797 | 100.52828762 | 0.000000e+00 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | log_land |  8.625234e-01 | 0.006357900 | 135.66167862 | 0.000000e+00 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | log_labor |  2.897297e-01 | 0.007900528 |  36.67219124 | 0.000000e+00 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | log_inputs |  4.608420e-02 | 0.006947909 |   6.63281572 | 3.293432e-11 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | log_surface_km2 |  7.662187e-03 | 0.005949867 |   1.28779115 | 1.978187e-01 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | tmean_2024 |  5.397771e-02 | 0.001796626 |  30.04392813 | 0.000000e+00 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | delta_tmean_24_23 | -3.995008e-01 | 0.015034171 | -26.57285415 | 0.000000e+00 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | slope_deg |  1.557744e-02 | 0.005440959 |   2.86299521 | 4.196569e-03 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | ruggedness | -7.494287e-03 | 0.003901240 |  -1.92100130 | 5.473154e-02 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | prcp_total_z | -6.543668e-03 | 0.008663238 |  -0.75533753 | 4.500465e-01 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_(Intercept) | -3.569833e+01 | 3.746103425 |  -9.52945536 | 0.000000e+00 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_diversificacion_area |  2.734332e-01 | 0.246436363 |   1.10954887 | 2.671935e-01 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_size_mediano |  4.099557e+00 | 0.763052003 |   5.37257940 | 7.761823e-08 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_size_grande |  1.750091e+01 | 1.648821885 |  10.61418969 | 0.000000e+00 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_diversif_mediano |  2.531471e+00 | 0.341521810 |   7.41232614 | 1.241229e-13 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_diversif_grande | -7.969953e+00 | 0.845918959 |  -9.42165082 | 0.000000e+00 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_region_natural2 |  2.112972e+01 | 2.038165752 |  10.36702885 | 0.000000e+00 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_region_natural3 |  1.471645e+01 | 1.613400013 |   9.12138911 | 0.000000e+00 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | sigmaSq |  1.634529e+01 | 1.534150169 |  10.65429434 | 0.000000e+00 | variance |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | gamma |  9.698759e-01 | 0.002757124 | 351.77088140 | 0.000000e+00 | variance |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | (Intercept) |  7.659935e+00 | 0.071009203 | 107.87243264 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_land |  8.635287e-01 | 0.006683444 | 129.20415036 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_labor |  2.535185e-01 | 0.007717720 |  32.84888307 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_inputs | -1.763810e-02 | 0.006982063 |  -2.52620134 | 1.153034e-02 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_surface_km2 |  2.503843e-02 | 0.005573287 |   4.49257911 | 7.036577e-06 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | tmean_2024 |  4.343187e-02 | 0.001767748 |  24.56904269 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | delta_tmean_24_23 | -2.575045e-01 | 0.015059312 | -17.09935413 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | slope_deg |  9.091418e-03 | 0.005197589 |   1.74916042 | 8.026329e-02 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | ruggedness |  8.464979e-05 | 0.003779286 |   0.02239836 | 9.821302e-01 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | prcp_total_z |  4.533240e-03 | 0.008028376 |   0.56465219 | 5.723104e-01 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_irrigation_cost |  6.961558e-02 | 0.002792168 |  24.93244310 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_capital |  3.141270e-02 | 0.002522056 |  12.45519573 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_(Intercept) | -8.493161e+00 | 0.608314178 | -13.96180042 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_diversificacion_area |  1.831940e-02 | 0.135322843 |   0.13537554 | 8.923150e-01 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_size_mediano |  1.115330e+00 | 0.168070396 |   6.63608661 | 3.221201e-11 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_size_grande |  7.537475e+00 | 0.364797792 |  20.66206181 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_diversif_mediano |  1.961124e+00 | 0.265404237 |   7.38919650 | 1.476597e-13 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_diversif_grande | -3.585455e+00 | 0.291684236 | -12.29224884 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_region_natural2 |  6.052384e+00 | 0.371088608 |  16.30980944 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_region_natural3 |  1.981968e+00 | 0.254420432 |   7.79012953 | 6.661338e-15 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_nivel_educacion | -4.145724e-02 | 0.018379322 |  -2.25564551 | 2.409284e-02 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_capacitacion_recibida | -3.399026e-01 | 0.102476488 |  -3.31688390 | 9.102743e-04 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_asistencia_tecnica_recibida | -1.134940e+00 | 0.140434493 |  -8.08163083 | 6.661338e-16 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_usuario_agua |  7.422440e-01 | 0.082776971 |   8.96679369 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_asociacion_miembro |  1.239295e-02 | 0.104859196 |   0.11818661 | 9.059198e-01 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_riego_any | -2.153776e+00 | 0.107224463 | -20.08661464 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_uso_maquinaria |  4.601973e-01 | 0.057918164 |   7.94564744 | 1.998401e-15 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_usa_abono | -3.744650e-01 | 0.058774620 |  -6.37120267 | 1.875515e-10 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_usa_fertilizantes | -3.736008e+00 | 0.171788120 | -21.74776959 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_semilla_semillero_any |  1.640101e-01 | 0.073209868 |   2.24027348 | 2.507317e-02 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_semilla_comercial_any |  1.945327e+00 | 0.093670993 |  20.76765502 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | sigmaSq |  7.095727e+00 | 0.317563944 |  22.34424587 | 0.000000e+00 | variance |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | gamma |  9.383766e-01 | 0.002806385 | 334.37195285 | 0.000000e+00 | variance |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
 
 
 ### Tabla 17. Logit con temperatura/topografia
 
 | model | term | estimate | std_error | z_value | p_value | odds_ratio | 
 | --- | --- | --- | --- | --- | --- | --- | 
- | temp_topo | (Intercept) |  9.0720490326 | 2.0761457119 |  4.36965911 | 1.276353e-05 | 8708.4494333 |
-| temp_topo | diversificacion_area |  2.4872841375 | 0.6475925267 |  3.84081662 | 1.245475e-04 |   12.0285638 |
-| temp_topo | size_catmediano_2_5ha |  0.4632275037 | 0.4225914424 |  1.09615921 | 2.730759e-01 |    1.5891948 |
-| temp_topo | size_catpequeno_<2ha |  0.3818096782 | 0.4682539291 |  0.81539023 | 4.148981e-01 |    1.4649332 |
-| temp_topo | log_area |  0.2347642107 | 0.1718295049 |  1.36626251 | 1.719343e-01 |    1.2646106 |
-| temp_topo | region_natural2 |  1.2851219562 | 0.8208168911 |  1.56566217 | 1.175078e-01 |    3.6151088 |
-| temp_topo | region_natural3 | -1.2511356970 | 0.5012137202 | -2.49621199 | 1.259318e-02 |    0.2861796 |
-| temp_topo | tmean_2024 | -0.2733252233 | 0.0783665385 | -3.48777971 | 4.923567e-04 |    0.7608453 |
-| temp_topo | delta_tmean_24_23 |  0.0934328286 | 0.2220735744 |  0.42072916 | 6.739757e-01 |    1.0979369 |
-| temp_topo | elev_m | -0.0008704977 | 0.0004415812 | -1.97131971 | 4.875696e-02 |    0.9991299 |
-| temp_topo | slope_deg |  0.0737956385 | 0.0878433779 |  0.84008198 | 4.009132e-01 |    1.0765868 |
-| temp_topo | ruggedness | -0.0344787834 | 0.0581672919 | -0.59275208 | 5.533810e-01 |    0.9661088 |
-| temp_topo | prcp_total_z |  0.4687199547 | 0.1128270062 |  4.15432413 | 3.331468e-05 |    1.5979474 |
-| temp_topo | diversificacion_area:size_catmediano_2_5ha | -0.3468759582 | 0.8687988834 | -0.39925921 | 6.897238e-01 |    0.7068930 |
-| temp_topo | diversificacion_area:size_catpequeno_<2ha | -0.8352864049 | 0.8787458872 | -0.95054374 | 3.418941e-01 |    0.4337502 |
-| controls_temp_topo | (Intercept) |  4.8398641804 | 2.2245150026 |  2.17569411 | 2.963728e-02 |  126.4521759 |
-| controls_temp_topo | diversificacion_area |  2.3834604632 | 0.6426039735 |  3.70906587 | 2.108865e-04 |   10.8423576 |
-| controls_temp_topo | size_catmediano_2_5ha |  0.2927797411 | 0.4183924213 |  0.69977305 | 4.841103e-01 |    1.3401476 |
-| controls_temp_topo | size_catpequeno_<2ha |  0.2547670074 | 0.4837459710 |  0.52665453 | 5.984631e-01 |    1.2901610 |
-| controls_temp_topo | log_area |  0.0925155232 | 0.1727677254 |  0.53549078 | 5.923407e-01 |    1.0969302 |
-| controls_temp_topo | region_natural2 |  1.5473146285 | 0.7036406488 |  2.19901257 | 2.793484e-02 |    4.6988351 |
-| controls_temp_topo | region_natural3 | -0.6465233037 | 0.4412451087 | -1.46522486 | 1.429392e-01 |    0.5238639 |
-| controls_temp_topo | tmean_2024 | -0.1665901549 | 0.0806735762 | -2.06499033 | 3.898907e-02 |    0.8465465 |
-| controls_temp_topo | delta_tmean_24_23 | -0.0256540920 | 0.2234248579 | -0.11482201 | 9.085920e-01 |    0.9746722 |
-| controls_temp_topo | elev_m | -0.0003527935 | 0.0004039784 | -0.87329805 | 3.825538e-01 |    0.9996473 |
-| controls_temp_topo | slope_deg |  0.0649061636 | 0.0855695214 |  0.75851965 | 4.481852e-01 |    1.0670589 |
-| controls_temp_topo | ruggedness | -0.0184034352 | 0.0559343691 | -0.32901838 | 7.421593e-01 |    0.9817649 |
-| controls_temp_topo | prcp_total_z |  0.3809936891 | 0.1043562199 |  3.65089584 | 2.647134e-04 |    1.4637384 |
-| controls_temp_topo | nivel_educacion |  0.1008337121 | 0.0357107949 |  2.82361993 | 4.772267e-03 |    1.1060927 |
-| controls_temp_topo | credito_obtenido |  0.7705945447 | 0.2934228950 |  2.62622501 | 8.667122e-03 |    2.1610507 |
-| controls_temp_topo | capacitacion_recibida |  1.3910934277 | 0.3330010820 |  4.17744417 | 3.011784e-05 |    4.0192424 |
-| controls_temp_topo | asistencia_tecnica_recibida | -0.0426940263 | 0.4551347652 | -0.09380524 | 9.252686e-01 |    0.9582045 |
-| controls_temp_topo | usuario_agua |  4.9467879460 | 0.6974915593 |  7.09225492 | 1.556425e-12 |  140.7222298 |
-| controls_temp_topo | asociacion_miembro |  0.5234464047 | 0.3258397016 |  1.60645373 | 1.082542e-01 |    1.6878346 |
-| controls_temp_topo | diversificacion_area:size_catmediano_2_5ha | -0.1845790751 | 0.8264037981 | -0.22335216 | 8.232730e-01 |    0.8314542 |
-| controls_temp_topo | diversificacion_area:size_catpequeno_<2ha | -0.7950144623 | 0.8761884178 | -0.90735559 | 3.642742e-01 |    0.4515747 |
+ | temp_topo | (Intercept) |  4.1257201926 | 0.9814590575 |  4.20366001 | 2.684421e-05 | 61.9123820 |
+| temp_topo | diversificacion_area |  1.2665810737 | 0.3862531738 |  3.27914736 | 1.050229e-03 |  3.5486991 |
+| temp_topo | size_catmediano_2_5ha |  0.2816251932 | 0.3171857565 |  0.88788726 | 3.746554e-01 |  1.3252819 |
+| temp_topo | size_catpequeno_<2ha |  0.6350395566 | 0.3887249953 |  1.63364735 | 1.024126e-01 |  1.8870968 |
+| temp_topo | log_area |  0.1986698008 | 0.1449493832 |  1.37061501 | 1.705728e-01 |  1.2197791 |
+| temp_topo | region_natural2 |  0.8145410459 | 0.2969463011 |  2.74305840 | 6.114427e-03 |  2.2581391 |
+| temp_topo | region_natural3 | -0.3958384670 | 0.2098865829 | -1.88596366 | 5.937310e-02 |  0.6731154 |
+| temp_topo | tmean_2024 | -0.1823545968 | 0.0397632970 | -4.58600294 | 4.657967e-06 |  0.8333058 |
+| temp_topo | delta_tmean_24_23 | -0.0661322208 | 0.1365083767 | -0.48445540 | 6.280895e-01 |  0.9360071 |
+| temp_topo | elev_m | -0.0003512511 | 0.0001793542 | -1.95842176 | 5.025077e-02 |  0.9996488 |
+| temp_topo | slope_deg |  0.1263770594 | 0.0564450240 |  2.23894066 | 2.521520e-02 |  1.1347099 |
+| temp_topo | ruggedness | -0.1142868121 | 0.0387131359 | -2.95214556 | 3.174308e-03 |  0.8920021 |
+| temp_topo | prcp_total_z |  0.4889854925 | 0.0817228215 |  5.98346317 | 2.378300e-09 |  1.6306611 |
+| temp_topo | diversificacion_area:size_catmediano_2_5ha |  0.2589707978 | 0.4616683966 |  0.56094547 | 5.748665e-01 |  1.2955960 |
+| temp_topo | diversificacion_area:size_catpequeno_<2ha |  0.0953936414 | 0.4667392401 |  0.20438316 | 8.380646e-01 |  1.1000918 |
+| controls_temp_topo | (Intercept) |  0.5998357070 | 1.1786568453 |  0.50891463 | 6.108408e-01 |  1.8218195 |
+| controls_temp_topo | diversificacion_area |  0.7910089964 | 0.3582162589 |  2.20818842 | 2.728901e-02 |  2.2056208 |
+| controls_temp_topo | size_catmediano_2_5ha |  0.0455111628 | 0.3084943353 |  0.14752674 | 8.827239e-01 |  1.0465627 |
+| controls_temp_topo | size_catpequeno_<2ha |  0.4497899769 | 0.3635729502 |  1.23713818 | 2.161101e-01 |  1.5679828 |
+| controls_temp_topo | log_area | -0.0127362013 | 0.1335226050 | -0.09538611 | 9.240130e-01 |  0.9873446 |
+| controls_temp_topo | region_natural2 |  0.9425532736 | 0.2983086572 |  3.15965779 | 1.591609e-03 |  2.5665261 |
+| controls_temp_topo | region_natural3 | -0.3624551088 | 0.2603261475 | -1.39231158 | 1.639073e-01 |  0.6959656 |
+| controls_temp_topo | tmean_2024 | -0.0709091281 | 0.0460223058 | -1.54075566 | 1.234572e-01 |  0.9315465 |
+| controls_temp_topo | delta_tmean_24_23 | -0.1434396929 | 0.1371529362 | -1.04583757 | 2.957007e-01 |  0.8663730 |
+| controls_temp_topo | elev_m | -0.0001122828 | 0.0001992130 | -0.56363216 | 5.730368e-01 |  0.9998877 |
+| controls_temp_topo | slope_deg |  0.0578248715 | 0.0548459386 |  1.05431456 | 2.918041e-01 |  1.0595294 |
+| controls_temp_topo | ruggedness | -0.0507654191 | 0.0371425003 | -1.36677441 | 1.717747e-01 |  0.9505016 |
+| controls_temp_topo | prcp_total_z |  0.2698078634 | 0.0738199186 |  3.65494664 | 2.606171e-04 |  1.3097128 |
+| controls_temp_topo | nivel_educacion | -0.0192769808 | 0.0309510258 | -0.62282203 | 5.334378e-01 |  0.9809076 |
+| controls_temp_topo | capacitacion_recibida |  0.7183133435 | 0.2227923847 |  3.22413777 | 1.273924e-03 |  2.0509710 |
+| controls_temp_topo | asistencia_tecnica_recibida | -0.0457107867 | 0.3337410570 | -0.13696483 | 8.910657e-01 |  0.9553182 |
+| controls_temp_topo | usuario_agua |  0.3965601337 | 0.1574538494 |  2.51858011 | 1.182253e-02 |  1.4867018 |
+| controls_temp_topo | asociacion_miembro |  0.0390626036 | 0.2483395731 |  0.15729512 | 8.750204e-01 |  1.0398356 |
+| controls_temp_topo | riego_any |  0.2451146492 | 0.1667702593 |  1.46977435 | 1.417034e-01 |  1.2777678 |
+| controls_temp_topo | uso_maquinaria |  0.4705954019 | 0.1699094243 |  2.76968393 | 5.637572e-03 |  1.6009471 |
+| controls_temp_topo | usa_abono |  1.3224571744 | 0.1640833214 |  8.05966849 | 1.007402e-15 |  3.7526309 |
+| controls_temp_topo | usa_fertilizantes |  0.1206975281 | 0.1606777961 |  0.75117739 | 4.525911e-01 |  1.1282836 |
+| controls_temp_topo | semilla_semillero_any |  0.0119060514 | 0.1547987535 |  0.07691310 | 9.386966e-01 |  1.0119772 |
+| controls_temp_topo | semilla_comercial_any |  0.4427833069 | 0.1476680838 |  2.99850378 | 2.730184e-03 |  1.5570349 |
+| controls_temp_topo | diversificacion_area:size_catmediano_2_5ha |  0.2752944681 | 0.4576928021 |  0.60148306 | 5.475532e-01 |  1.3169184 |
+| controls_temp_topo | diversificacion_area:size_catpequeno_<2ha | -0.0613191433 | 0.4475434725 | -0.13701271 | 8.910278e-01 |  0.9405230 |
 
 
 ## Comparaciones de robustez (controles + geo/clima)
@@ -618,74 +626,74 @@ Se comparan los coeficientes de diversificacion e interacciones en las especific
 
 | model | term | estimate | std_error | p_value | 
 | --- | --- | --- | --- | --- | 
- | main_area | Z_diversificacion_area |  -14.93047 |  1.820617 | 2.220446e-16 |
-| main_area | Z_diversif_mediano |  174.79297 | 23.979256 | 3.115286e-13 |
-| main_area | Z_diversif_grande |  -69.90127 | 10.234233 | 8.482992e-12 |
-| controls_ena | Z_diversificacion_area |  -14.86033 |  1.394045 | 0.000000e+00 |
-| controls_ena | Z_diversif_mediano |  166.96489 | 22.213213 | 5.617729e-14 |
-| controls_ena | Z_diversif_grande |  -61.31012 |  6.053377 | 0.000000e+00 |
-| temp_topo | Z_diversificacion_area |  -35.05566 |  9.836902 | 3.656795e-04 |
-| temp_topo | Z_diversif_mediano |  115.56889 | 35.232437 | 1.037393e-03 |
-| temp_topo | Z_diversif_grande |  -28.41762 |  7.026647 | 5.248756e-05 |
-| controls_temp_topo | Z_diversificacion_area | -102.12193 |  9.482710 | 0.000000e+00 |
-| controls_temp_topo | Z_diversif_mediano |  309.20792 | 29.057355 | 0.000000e+00 |
-| controls_temp_topo | Z_diversif_grande |  -52.79317 |  3.832613 | 0.000000e+00 |
+ | main_area | Z_diversificacion_area |  1.9293785 | 0.2007915 | 0.000000e+00 |
+| main_area | Z_diversif_mediano | -0.1995218 | 0.2429158 | 4.114401e-01 |
+| main_area | Z_diversif_grande | -5.5425393 | 0.2892420 | 0.000000e+00 |
+| controls_ena | Z_diversificacion_area |  0.9167076 | 0.1336999 | 7.059020e-12 |
+| controls_ena | Z_diversif_mediano |  0.7178567 | 0.2509501 | 4.229003e-03 |
+| controls_ena | Z_diversif_grande | -3.6453681 | 0.2522126 | 0.000000e+00 |
+| temp_topo | Z_diversificacion_area |  0.2734332 | 0.2464364 | 2.671935e-01 |
+| temp_topo | Z_diversif_mediano |  2.5314710 | 0.3415218 | 1.241229e-13 |
+| temp_topo | Z_diversif_grande | -7.9699531 | 0.8459190 | 0.000000e+00 |
+| controls_temp_topo | Z_diversificacion_area |  0.0183194 | 0.1353228 | 8.923150e-01 |
+| controls_temp_topo | Z_diversif_mediano |  1.9611241 | 0.2654042 | 1.476597e-13 |
+| controls_temp_topo | Z_diversif_grande | -3.5854552 | 0.2916842 | 0.000000e+00 |
 
 
 ### Tabla 18. Comparacion efectos logit
 
 | model | term | estimate | std_error | z_value | p_value | odds_ratio | 
 | --- | --- | --- | --- | --- | --- | --- | 
- | main | diversificacion_area |  2.7379459 | 0.5720020 |  4.7866017 | 1.758159e-06 | 15.4552053 |
-| main | diversificacion_area:size_catmediano_2_5ha | -0.3240044 | 0.7803323 | -0.4152133 | 6.780082e-01 |  0.7232471 |
-| main | diversificacion_area:size_catpequeno_<2ha | -0.8807614 | 0.8227013 | -1.0705725 | 2.844269e-01 |  0.4144672 |
-| controls_ena | diversificacion_area |  2.6452317 | 0.5771254 |  4.5834610 | 4.714530e-06 | 14.0867085 |
-| controls_ena | diversificacion_area:size_catmediano_2_5ha | -0.2248060 | 0.7625876 | -0.2947937 | 7.681670e-01 |  0.7986711 |
-| controls_ena | diversificacion_area:size_catpequeno_<2ha | -0.8061641 | 0.8100392 | -0.9952162 | 3.196920e-01 |  0.4465678 |
-| temp_topo | diversificacion_area |  2.4872841 | 0.6475925 |  3.8408166 | 1.245475e-04 | 12.0285638 |
-| temp_topo | diversificacion_area:size_catmediano_2_5ha | -0.3468760 | 0.8687989 | -0.3992592 | 6.897238e-01 |  0.7068930 |
-| temp_topo | diversificacion_area:size_catpequeno_<2ha | -0.8352864 | 0.8787459 | -0.9505437 | 3.418941e-01 |  0.4337502 |
-| controls_temp_topo | diversificacion_area |  2.3834605 | 0.6426040 |  3.7090659 | 2.108865e-04 | 10.8423576 |
-| controls_temp_topo | diversificacion_area:size_catmediano_2_5ha | -0.1845791 | 0.8264038 | -0.2233522 | 8.232730e-01 |  0.8314542 |
-| controls_temp_topo | diversificacion_area:size_catpequeno_<2ha | -0.7950145 | 0.8761884 | -0.9073556 | 3.642742e-01 |  0.4515747 |
+ | main | diversificacion_area |  1.38189755 | 0.3352644 |  4.1218136 | 3.835921e-05 | 3.9824514 |
+| main | diversificacion_area:size_catmediano_2_5ha |  0.10661860 | 0.4350723 |  0.2450595 | 8.064231e-01 | 1.1125099 |
+| main | diversificacion_area:size_catpequeno_<2ha |  0.11684548 | 0.4562331 |  0.2561092 | 7.978798e-01 | 1.1239457 |
+| controls_ena | diversificacion_area |  0.78118679 | 0.3194556 |  2.4453692 | 1.451413e-02 | 2.1840627 |
+| controls_ena | diversificacion_area:size_catmediano_2_5ha |  0.23907755 | 0.4370213 |  0.5470615 | 5.843676e-01 | 1.2700770 |
+| controls_ena | diversificacion_area:size_catpequeno_<2ha | -0.07398396 | 0.4579964 | -0.1615383 | 8.716778e-01 | 0.9286866 |
+| temp_topo | diversificacion_area |  1.26658107 | 0.3862532 |  3.2791474 | 1.050229e-03 | 3.5486991 |
+| temp_topo | diversificacion_area:size_catmediano_2_5ha |  0.25897080 | 0.4616684 |  0.5609455 | 5.748665e-01 | 1.2955960 |
+| temp_topo | diversificacion_area:size_catpequeno_<2ha |  0.09539364 | 0.4667392 |  0.2043832 | 8.380646e-01 | 1.1000918 |
+| controls_temp_topo | diversificacion_area |  0.79100900 | 0.3582163 |  2.2081884 | 2.728901e-02 | 2.2056208 |
+| controls_temp_topo | diversificacion_area:size_catmediano_2_5ha |  0.27529447 | 0.4576928 |  0.6014831 | 5.475532e-01 | 1.3169184 |
+| controls_temp_topo | diversificacion_area:size_catpequeno_<2ha | -0.06131914 | 0.4475435 | -0.1370127 | 8.910278e-01 | 0.9405230 |
 
 
 ### Analisis de perdida muestral
 
 | sample_type   | group_type   | group         |   n_base |   n_geo2 |   share_remaining |      weight_base |      weight_geo2 |
 |:--------------|:-------------|:--------------|---------:|---------:|------------------:|-----------------:|-----------------:|
-| logit         | overall      | overall       |    34074 |    34051 |          0.999325 |      2.11889e+06 |      2.11783e+06 |
+| logit         | overall      | overall       |    34074 |    34039 |          0.998973 |      2.11889e+06 |      2.11703e+06 |
 | logit         | region       | 1             |     7489 |     7489 |          1        | 261014           | 261014           |
 | logit         | region       | 2             |    20403 |    20380 |          0.998873 |      1.54006e+06 |      1.539e+06   |
-| logit         | region       | 3             |     6182 |     6182 |          1        | 317816           | 317816           |
-| logit         | size         | pequeno_<2ha  |    21956 |    21938 |          0.99918  |      1.53022e+06 |      1.52926e+06 |
-| logit         | size         | mediano_2_5ha |     6278 |     6275 |          0.999522 | 355684           | 355627           |
-| logit         | size         | grande_>5ha   |     5840 |     5838 |          0.999658 | 232992           | 232947           |
-| sfa           | overall      | overall       |    31824 |    31804 |          0.999372 |    nan           |    nan           |
-| sfa           | region       | 1             |     7289 |     7289 |          1        |    nan           |    nan           |
-| sfa           | region       | 2             |    18759 |    18739 |          0.998934 |    nan           |    nan           |
-| sfa           | region       | 3             |     5776 |     5776 |          1        |    nan           |    nan           |
-| sfa           | size         | pequeno_<2ha  |    20692 |    20677 |          0.999275 |    nan           |    nan           |
-| sfa           | size         | mediano_2_5ha |     5905 |     5902 |          0.999492 |    nan           |    nan           |
-| sfa           | size         | grande_>5ha   |     5227 |     5225 |          0.999617 |    nan           |    nan           |
+| logit         | region       | 3             |     6182 |     6170 |          0.998059 | 317816           | 317015           |
+| logit         | size         | pequeno_<2ha  |    21956 |    21932 |          0.998907 |      1.53022e+06 |      1.52888e+06 |
+| logit         | size         | mediano_2_5ha |     6278 |     6270 |          0.998726 | 355684           | 355235           |
+| logit         | size         | grande_>5ha   |     5840 |     5837 |          0.999486 | 232992           | 232920           |
+| sfa           | overall      | overall       |    26594 |    26546 |          0.998195 |    nan           |    nan           |
+| sfa           | region       | 1             |     6470 |     6470 |          1        |    nan           |    nan           |
+| sfa           | region       | 2             |    14805 |    14782 |          0.998446 |    nan           |    nan           |
+| sfa           | region       | 3             |     5319 |     5294 |          0.9953   |    nan           |    nan           |
+| sfa           | size         | pequeno_<2ha  |    16015 |    15990 |          0.998439 |    nan           |    nan           |
+| sfa           | size         | mediano_2_5ha |     5512 |     5498 |          0.99746  |    nan           |    nan           |
+| sfa           | size         | grande_>5ha   |     5067 |     5058 |          0.998224 |    nan           |    nan           |
 
 ## Definiciones de variables
 
-| variable             | definition                                                                       | notes                                 |
-|:---------------------|:---------------------------------------------------------------------------------|:--------------------------------------|
-| valor_total          | Sum of crop value components (P220_1_VAL, P220_2_VAL, P220_3A_VAL, P220_3B_VAL). | Output for SFA.                       |
-| area_total_ha        | ¿CUÁL FUE LA SUPERFICIE COSECHADA DE ……….? (Hectáreas)                           | Sum of harvested area across crops.   |
-| diversificacion_area | 1 - HHI based on harvested area shares.                                          | Main diversification index.           |
-| hhi_area             | Sum of squared harvested area shares.                                            | HHI concentration index.              |
-| shannon_area         | Shannon entropy using harvested area shares.                                     | Alternative diversification index.    |
-| num_crops_area       | Count of distinct crops (P204_COD).                                              | Alternative diversification measure.  |
-| labor_total          | Sum of permanent and seasonal workers (P1001A_2A_*C, P1001A_2B_*C).              | Labor input.                          |
-| input_costs          | Sum of expenditures on abono, fertilizantes, plaguicidas (P237_VAL, P239, P241). | Intermediate input proxy.             |
-| practice_any         | 1 if any agricultural practice P301A_* equals 1.                                 | Sustainable practices outcome.        |
-| size_cat             | Producer size categories based on area_total_ha.                                 | Small <2ha, Medium 2-5ha, Large >5ha. |
-| weight               | FACTOR DE EXPANSIÓN DE PRODUCTOR AGROPECUARIO                                    | Survey expansion weight.              |
-| psu                  | NÚMERO CORRELATIVO EN SECUENCIA SERPENTIN POR REGIÓN                             | Primary sampling unit.                |
-| estrato              | ESTRATO MUESTRAL                                                                 | Sampling stratum.                     |
+| variable             | definition                                                                                                           | notes                                 |
+|:---------------------|:---------------------------------------------------------------------------------------------------------------------|:--------------------------------------|
+| valor_total          | Sum of crop value components (P220_1_VAL, P220_2_VAL, P220_3A_VAL, P220_3B_VAL).                                     | Output for SFA.                       |
+| area_total_ha        | ¿CUÁL FUE LA SUPERFICIE COSECHADA DE ……….? (Hectáreas)                                                               | Sum of harvested area across crops.   |
+| diversificacion_area | 1 - HHI based on harvested area shares.                                                                              | Main diversification index.           |
+| hhi_area             | Sum of squared harvested area shares.                                                                                | HHI concentration index.              |
+| shannon_area         | Shannon entropy using harvested area shares.                                                                         | Alternative diversification index.    |
+| num_crops_area       | Count of distinct crops (P204_COD).                                                                                  | Alternative diversification measure.  |
+| labor_total          | Sum of permanent and seasonal workers (P1001A_2A_*C, P1001A_2B_*C).                                                  | Labor input.                          |
+| input_costs          | Sum of expenditures on abono, fertilizantes, plaguicidas (P237_VAL, P239, P241).                                     | Intermediate input proxy.             |
+| practice_any         | 1 if any of P301A_1, P301A_2, P301A_3, P301A_4, P301A_4A, P301A_4B, P301A_4C, P301A_11, P301A_16, P301A_17 equals 1. | Sustainable practices outcome.        |
+| size_cat             | Producer size categories based on area_total_ha.                                                                     | Small <2ha, Medium 2-5ha, Large >5ha. |
+| weight               | FACTOR DE EXPANSIÓN DE PRODUCTOR AGROPECUARIO                                                                        | Survey expansion weight.              |
+| psu                  | NÚMERO CORRELATIVO EN SECUENCIA SERPENTIN POR REGIÓN                                                                 | Primary sampling unit.                |
+| estrato              | ESTRATO MUESTRAL                                                                                                     | Sampling stratum.                     |
 
 ## Limitaciones
 

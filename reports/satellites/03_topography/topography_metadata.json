@@ -1,0 +1,16 @@
+{
+  "source": "Copernicus DEM GLO-90 (COG 1x1 degree tiles)",
+  "tiles": 116,
+  "missing_tiles": [],
+  "units": {
+    "elev_m": "meters",
+    "slope_deg": "degrees",
+    "ruggedness": "meters (std dev of 3x3 window)"
+  },
+  "nodata": null,
+  "crs": "GEOGCS[\"WGS 84\",DATUM[\"World Geodetic System 1984\",SPHEROID[\"WGS 84\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST]]",
+  "resolution": [
+    0.0008333333333333334,
+    0.0008333333333333334
+  ]
+}

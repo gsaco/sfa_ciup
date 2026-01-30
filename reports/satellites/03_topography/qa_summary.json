@@ -1,0 +1,73 @@
+{
+  "row_count": 1892,
+  "ubigeo_unique": true,
+  "missing_keys": [],
+  "missing_key_count": 0,
+  "missingness": [
+    {
+      "column": "slope_deg",
+      "missing_count": 22,
+      "missing_pct": 1.1627906976744187
+    },
+    {
+      "column": "elev_m",
+      "missing_count": 20,
+      "missing_pct": 1.0570824524312896
+    },
+    {
+      "column": "ruggedness",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "ubigeo6",
+      "missing_count": 0,
+      "missing_pct": 0.0
+    }
+  ],
+  "summary_stats": [
+    {
+      "feature": "elev_m",
+      "min": 2.7510502338409424,
+      "max": 4651.22021484375,
+      "mean": 2219.6344205747305,
+      "std": 1384.2613448958407
+    },
+    {
+      "feature": "slope_deg",
+      "min": 0.06662838207554489,
+      "max": 25.872629871557052,
+      "mean": 5.64803892808303,
+      "std": 5.029079898537867
+    },
+    {
+      "feature": "ruggedness",
+      "min": 0.1424867808818817,
+      "max": 35.887142181396484,
+      "mean": 8.493593847285657,
+      "std": 7.21566177305977
+    }
+  ],
+  "coverage": [
+    {
+      "metric": "ubigeo_total",
+      "value": 1892
+    },
+    {
+      "metric": "feature_rows",
+      "value": 1892
+    },
+    {
+      "metric": "matched_keys",
+      "value": 1892
+    },
+    {
+      "metric": "missing_keys",
+      "value": 0
+    },
+    {
+      "metric": "extra_keys",
+      "value": 0
+    }
+  ]
+}

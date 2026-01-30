@@ -1,54 +1,55 @@
-| model | term | estimate | std_error | z_value | p_value | component | 
-| --- | --- | --- | --- | --- | --- | --- | 
- | temp_topo | (Intercept) |  8.842702e+00 | 1.001070e-01 |    88.3324917 | 0.000000e+00 | frontier |
-| temp_topo | log_land |  7.161754e-01 | 5.098636e-03 |   140.4641180 | 0.000000e+00 | frontier |
-| temp_topo | log_labor |  2.372393e-01 | 5.847673e-03 |    40.5698631 | 0.000000e+00 | frontier |
-| temp_topo | log_inputs |  1.108855e-01 | 2.447129e-03 |    45.3124813 | 0.000000e+00 | frontier |
-| temp_topo | region_natural2 | -4.268370e-01 | 2.603259e-02 |   -16.3962559 | 0.000000e+00 | frontier |
-| temp_topo | region_natural3 |  7.033720e-02 | 2.572959e-02 |     2.7337084 | 6.262547e-03 | frontier |
-| temp_topo | log_surface_km2 |  2.065734e-03 | 5.531651e-03 |     0.3734390 | 7.088217e-01 | frontier |
-| temp_topo | tmean_2024 | -7.281565e-03 | 3.637348e-03 |    -2.0018881 | 4.529677e-02 | frontier |
-| temp_topo | delta_tmean_24_23 | -1.861242e-01 | 1.575189e-02 |   -11.8159919 | 0.000000e+00 | frontier |
-| temp_topo | elev_m | -2.794247e-04 | 1.583783e-05 |   -17.6428604 | 0.000000e+00 | frontier |
-| temp_topo | slope_deg | -5.434740e-04 | 4.803333e-03 |    -0.1131452 | 9.099155e-01 | frontier |
-| temp_topo | ruggedness |  1.043831e-02 | 3.483081e-03 |     2.9968622 | 2.727740e-03 | frontier |
-| temp_topo | prcp_total_z |  3.734642e-02 | 7.523820e-03 |     4.9637570 | 6.914246e-07 | frontier |
-| temp_topo | Z_(Intercept) | -2.206611e+02 | 5.445123e+01 |    -4.0524533 | 5.068334e-05 | inefficiency |
-| temp_topo | Z_diversificacion_area | -3.505566e+01 | 9.836902e+00 |    -3.5636888 | 3.656795e-04 | inefficiency |
-| temp_topo | Z_size_mediano | -2.259315e+01 | 9.586730e+00 |    -2.3567113 | 1.843758e-02 | inefficiency |
-| temp_topo | Z_size_grande |  1.226119e+02 | 3.062377e+01 |     4.0038147 | 6.232921e-05 | inefficiency |
-| temp_topo | Z_diversif_mediano |  1.155689e+02 | 3.523244e+01 |     3.2801844 | 1.037393e-03 | inefficiency |
-| temp_topo | Z_diversif_grande | -2.841762e+01 | 7.026647e+00 |    -4.0442648 | 5.248756e-05 | inefficiency |
-| temp_topo | sigmaSq |  1.776173e+02 | 4.434168e+01 |     4.0056507 | 6.184698e-05 | variance |
-| temp_topo | gamma |  9.969742e-01 | 7.883305e-04 |  1264.6652122 | 0.000000e+00 | variance |
-| controls_temp_topo | (Intercept) |  8.679295e+00 | 9.986626e-02 |    86.9091825 | 0.000000e+00 | frontier |
-| controls_temp_topo | log_land |  7.428318e-01 | 5.119993e-03 |   145.0845280 | 0.000000e+00 | frontier |
-| controls_temp_topo | log_labor |  2.258908e-01 | 5.788279e-03 |    39.0255533 | 0.000000e+00 | frontier |
-| controls_temp_topo | log_inputs |  1.056489e-01 | 2.512471e-03 |    42.0497913 | 0.000000e+00 | frontier |
-| controls_temp_topo | region_natural2 | -2.901242e-01 | 2.563603e-02 |   -11.3170476 | 0.000000e+00 | frontier |
-| controls_temp_topo | region_natural3 |  1.568146e-01 | 2.708866e-02 |     5.7889363 | 7.083355e-09 | frontier |
-| controls_temp_topo | log_surface_km2 |  6.099768e-03 | 5.257502e-03 |     1.1602027 | 2.459663e-01 | frontier |
-| controls_temp_topo | tmean_2024 | -3.536120e-03 | 3.516957e-03 |    -1.0054486 | 3.146809e-01 | frontier |
-| controls_temp_topo | delta_tmean_24_23 | -1.356429e-01 | 1.562190e-02 |    -8.6828642 | 0.000000e+00 | frontier |
-| controls_temp_topo | elev_m | -2.216548e-04 | 1.545843e-05 |   -14.3387716 | 0.000000e+00 | frontier |
-| controls_temp_topo | slope_deg |  2.339684e-03 | 4.681141e-03 |     0.4998107 | 6.172084e-01 | frontier |
-| controls_temp_topo | ruggedness |  8.914506e-03 | 3.383157e-03 |     2.6349667 | 8.414553e-03 | frontier |
-| controls_temp_topo | prcp_total_z |  2.906265e-02 | 7.253172e-03 |     4.0068881 | 6.152400e-05 | frontier |
-| controls_temp_topo | log_seed | -3.859766e-02 | 2.228249e-03 |   -17.3219692 | 0.000000e+00 | frontier |
-| controls_temp_topo | log_irrigation_cost |  4.325198e-02 | 2.683592e-03 |    16.1171976 | 0.000000e+00 | frontier |
-| controls_temp_topo | log_capital |  1.051663e-02 | 2.370920e-03 |     4.4356735 | 9.178485e-06 | frontier |
-| controls_temp_topo | riego_tecnificado_any |  5.073698e-02 | 1.469754e-02 |     3.4520726 | 5.562981e-04 | frontier |
-| controls_temp_topo | Z_(Intercept) | -5.939574e+02 | 5.400977e+01 |   -10.9972204 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_diversificacion_area | -1.021219e+02 | 9.482710e+00 |   -10.7692778 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_size_mediano | -3.838085e+01 | 4.032875e+00 |    -9.5169957 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_size_grande |  3.545403e+02 | 3.141340e+01 |    11.2862752 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_diversif_mediano |  3.092079e+02 | 2.905736e+01 |    10.6412959 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_diversif_grande | -5.279317e+01 | 3.832613e+00 |   -13.7747183 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_nivel_educacion | -4.952308e+00 | 4.509231e-01 |   -10.9826003 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_credito_obtenido | -8.171938e+01 | 7.730639e+00 |   -10.5708448 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_capacitacion_recibida | -1.437719e+01 | 5.907257e-01 |   -24.3381784 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_asistencia_tecnica_recibida | -1.453724e+02 | 1.298935e+01 |   -11.1916563 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_usuario_agua | -9.049769e+01 | 8.118412e+00 |   -11.1472150 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | Z_asociacion_miembro |  3.367364e+01 | 2.245015e+00 |    14.9992895 | 0.000000e+00 | inefficiency |
-| controls_temp_topo | sigmaSq |  5.378190e+02 | 4.924547e+01 |    10.9211881 | 0.000000e+00 | variance |
-| controls_temp_topo | gamma |  9.990890e-01 | 8.757231e-05 | 11408.7327499 | 0.000000e+00 | variance |
+| model | term | estimate | std_error | z_value | p_value | component | inference_note | n_total | n_valid | share_dropped | gamma | gamma_near_boundary | cov_singular | cov_rank | cov_cond | cov_rcond | input_cost_var | ineffDecrease | truncNorm | timeEffect | 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+ | temp_topo | (Intercept) |  7.080488e+00 | 0.070432797 | 100.52828762 | 0.000000e+00 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | log_land |  8.625234e-01 | 0.006357900 | 135.66167862 | 0.000000e+00 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | log_labor |  2.897297e-01 | 0.007900528 |  36.67219124 | 0.000000e+00 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | log_inputs |  4.608420e-02 | 0.006947909 |   6.63281572 | 3.293432e-11 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | log_surface_km2 |  7.662187e-03 | 0.005949867 |   1.28779115 | 1.978187e-01 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | tmean_2024 |  5.397771e-02 | 0.001796626 |  30.04392813 | 0.000000e+00 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | delta_tmean_24_23 | -3.995008e-01 | 0.015034171 | -26.57285415 | 0.000000e+00 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | slope_deg |  1.557744e-02 | 0.005440959 |   2.86299521 | 4.196569e-03 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | ruggedness | -7.494287e-03 | 0.003901240 |  -1.92100130 | 5.473154e-02 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | prcp_total_z | -6.543668e-03 | 0.008663238 |  -0.75533753 | 4.500465e-01 | frontier |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_(Intercept) | -3.569833e+01 | 3.746103425 |  -9.52945536 | 0.000000e+00 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_diversificacion_area |  2.734332e-01 | 0.246436363 |   1.10954887 | 2.671935e-01 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_size_mediano |  4.099557e+00 | 0.763052003 |   5.37257940 | 7.761823e-08 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_size_grande |  1.750091e+01 | 1.648821885 |  10.61418969 | 0.000000e+00 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_diversif_mediano |  2.531471e+00 | 0.341521810 |   7.41232614 | 1.241229e-13 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_diversif_grande | -7.969953e+00 | 0.845918959 |  -9.42165082 | 0.000000e+00 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_region_natural2 |  2.112972e+01 | 2.038165752 |  10.36702885 | 0.000000e+00 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | Z_region_natural3 |  1.471645e+01 | 1.613400013 |   9.12138911 | 0.000000e+00 | inefficiency |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | sigmaSq |  1.634529e+01 | 1.534150169 |  10.65429434 | 0.000000e+00 | variance |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| temp_topo | gamma |  9.698759e-01 | 0.002757124 | 351.77088140 | 0.000000e+00 | variance |  | 31792 | 26546 | 0.1650101 | 0.9698759 | FALSE | FALSE | 20 | 658239108 | 1.519205e-09 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | (Intercept) |  7.659935e+00 | 0.071009203 | 107.87243264 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_land |  8.635287e-01 | 0.006683444 | 129.20415036 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_labor |  2.535185e-01 | 0.007717720 |  32.84888307 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_inputs | -1.763810e-02 | 0.006982063 |  -2.52620134 | 1.153034e-02 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_surface_km2 |  2.503843e-02 | 0.005573287 |   4.49257911 | 7.036577e-06 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | tmean_2024 |  4.343187e-02 | 0.001767748 |  24.56904269 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | delta_tmean_24_23 | -2.575045e-01 | 0.015059312 | -17.09935413 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | slope_deg |  9.091418e-03 | 0.005197589 |   1.74916042 | 8.026329e-02 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | ruggedness |  8.464979e-05 | 0.003779286 |   0.02239836 | 9.821302e-01 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | prcp_total_z |  4.533240e-03 | 0.008028376 |   0.56465219 | 5.723104e-01 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_irrigation_cost |  6.961558e-02 | 0.002792168 |  24.93244310 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | log_capital |  3.141270e-02 | 0.002522056 |  12.45519573 | 0.000000e+00 | frontier |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_(Intercept) | -8.493161e+00 | 0.608314178 | -13.96180042 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_diversificacion_area |  1.831940e-02 | 0.135322843 |   0.13537554 | 8.923150e-01 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_size_mediano |  1.115330e+00 | 0.168070396 |   6.63608661 | 3.221201e-11 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_size_grande |  7.537475e+00 | 0.364797792 |  20.66206181 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_diversif_mediano |  1.961124e+00 | 0.265404237 |   7.38919650 | 1.476597e-13 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_diversif_grande | -3.585455e+00 | 0.291684236 | -12.29224884 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_region_natural2 |  6.052384e+00 | 0.371088608 |  16.30980944 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_region_natural3 |  1.981968e+00 | 0.254420432 |   7.79012953 | 6.661338e-15 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_nivel_educacion | -4.145724e-02 | 0.018379322 |  -2.25564551 | 2.409284e-02 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_capacitacion_recibida | -3.399026e-01 | 0.102476488 |  -3.31688390 | 9.102743e-04 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_asistencia_tecnica_recibida | -1.134940e+00 | 0.140434493 |  -8.08163083 | 6.661338e-16 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_usuario_agua |  7.422440e-01 | 0.082776971 |   8.96679369 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_asociacion_miembro |  1.239295e-02 | 0.104859196 |   0.11818661 | 9.059198e-01 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_riego_any | -2.153776e+00 | 0.107224463 | -20.08661464 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_uso_maquinaria |  4.601973e-01 | 0.057918164 |   7.94564744 | 1.998401e-15 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_usa_abono | -3.744650e-01 | 0.058774620 |  -6.37120267 | 1.875515e-10 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_usa_fertilizantes | -3.736008e+00 | 0.171788120 | -21.74776959 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_semilla_semillero_any |  1.640101e-01 | 0.073209868 |   2.24027348 | 2.507317e-02 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | Z_semilla_comercial_any |  1.945327e+00 | 0.093670993 |  20.76765502 | 0.000000e+00 | inefficiency |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | sigmaSq |  7.095727e+00 | 0.317563944 |  22.34424587 | 0.000000e+00 | variance |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_temp_topo | gamma |  9.383766e-01 | 0.002806385 | 334.37195285 | 0.000000e+00 | variance |  | 31792 | 26073 | 0.1798880 | 0.9383766 | FALSE | FALSE | 33 |  29214266 | 3.422985e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |

@@ -16,7 +16,7 @@ Este analisis se basa en el diccionario ENA 2024 (`data/intermediate/ena2024_dic
 - Endogeneidad: el uso de riego y gasto en agua es un input productivo (potencialmente endogeno). La afiliacion a comite de usuarios (P810) es mas institucional y puede ser mas exogena.
 - Ubicacion recomendada:
   - SFA: variables de riego como condicion ambiental/infraestructura en `X` (frontera) o como tecnologia en `Z` (ineficiencia). Preferencia: P810 en `Z` (capacidad institucional) y un indicador de sistema de riego tecnificado en `X`.
-  - Logit de practicas: evitar usar practicas P301A_* (ya estan en el outcome). Usar P810 o gasto en agua como control exogeno; no usar “manejo de riego” como control.
+  - Logit de practicas: evitar usar practicas incluidas en el outcome (P301A_1-4C, P301A_11, P301A_16, P301A_17). Usar P810 o gasto en agua como control exogeno; no usar “manejo de riego” como control.
 - Signo esperado: riego tecnificado y acceso a agua -> mayor productividad (coef positivo en `X`) y menor ineficiencia (coef negativo en `Z`).
 
 ### Capital/maquinaria/equipos

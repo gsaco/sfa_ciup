@@ -1,26 +1,29 @@
-| model | term | estimate | std_error | z_value | p_value | component | 
-| --- | --- | --- | --- | --- | --- | --- | 
- | controls_ena | (Intercept) |    8.67787649 | 2.385583e-02 |  363.7633895 | 0.000000e+00 | frontier |
-| controls_ena | log_land |    0.76004592 | 5.388211e-03 |  141.0571881 | 0.000000e+00 | frontier |
-| controls_ena | log_labor |    0.22796869 | 5.822969e-03 |   39.1499035 | 0.000000e+00 | frontier |
-| controls_ena | log_inputs |    0.10568179 | 2.428492e-03 |   43.5174567 | 0.000000e+00 | frontier |
-| controls_ena | region_natural2 |   -0.71516353 | 1.693544e-02 |  -42.2288099 | 0.000000e+00 | frontier |
-| controls_ena | region_natural3 |    0.00297901 | 2.302372e-02 |    0.1293887 | 8.970501e-01 | frontier |
-| controls_ena | log_seed |   -0.04697006 | 2.180708e-03 |  -21.5389009 | 0.000000e+00 | frontier |
-| controls_ena | log_irrigation_cost |    0.04847155 | 2.578596e-03 |   18.7976531 | 0.000000e+00 | frontier |
-| controls_ena | log_capital |    0.01315481 | 2.293398e-03 |    5.7359468 | 9.696910e-09 | frontier |
-| controls_ena | riego_tecnificado_any |    0.04705091 | 1.466374e-02 |    3.2086578 | 1.333561e-03 | frontier |
-| controls_ena | Z_(Intercept) | -381.05273943 | 4.791440e+01 |   -7.9527808 | 1.776357e-15 | inefficiency |
-| controls_ena | Z_diversificacion_area |  -14.86033452 | 1.394045e+00 |  -10.6598679 | 0.000000e+00 | inefficiency |
-| controls_ena | Z_size_mediano |  -18.45895312 | 3.321192e+00 |   -5.5579309 | 2.729914e-08 | inefficiency |
-| controls_ena | Z_size_grande |  223.78953244 | 2.639327e+01 |    8.4790385 | 0.000000e+00 | inefficiency |
-| controls_ena | Z_diversif_mediano |  166.96489033 | 2.221321e+01 |    7.5164672 | 5.617729e-14 | inefficiency |
-| controls_ena | Z_diversif_grande |  -61.31011781 | 6.053377e+00 |  -10.1282503 | 0.000000e+00 | inefficiency |
-| controls_ena | Z_nivel_educacion |   -2.11934863 | 1.547520e-01 |  -13.6951328 | 0.000000e+00 | inefficiency |
-| controls_ena | Z_credito_obtenido |  -49.41225411 | 6.234458e+00 |   -7.9256691 | 2.220446e-15 | inefficiency |
-| controls_ena | Z_capacitacion_recibida |   -3.89003760 | 1.160145e-01 |  -33.5306090 | 0.000000e+00 | inefficiency |
-| controls_ena | Z_asistencia_tecnica_recibida |  -89.34677154 | 1.150913e+01 |   -7.7631212 | 8.215650e-15 | inefficiency |
-| controls_ena | Z_usuario_agua |  -60.45972575 | 7.353610e+00 |   -8.2217752 | 2.220446e-16 | inefficiency |
-| controls_ena | Z_asociacion_miembro |   27.76742921 | 3.898151e+00 |    7.1232313 | 1.054268e-12 | inefficiency |
-| controls_ena | sigmaSq |  333.57743515 | 4.148932e+01 |    8.0400801 | 8.881784e-16 | variance |
-| controls_ena | gamma |    0.99854166 | 1.972739e-04 | 5061.7021429 | 0.000000e+00 | variance |
+| model | term | estimate | std_error | z_value | p_value | component | inference_note | n_total | n_valid | share_dropped | gamma | gamma_near_boundary | cov_singular | cov_rank | cov_cond | cov_rcond | input_cost_var | ineffDecrease | truncNorm | timeEffect | 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+ | controls_ena | (Intercept) |  8.88961932 | 0.050245162 | 176.924880 | 0.000000e+00 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | log_land |  0.90192284 | 0.005861943 | 153.860721 | 0.000000e+00 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | log_labor |  0.22316323 | 0.007588724 |  29.407215 | 0.000000e+00 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | log_inputs | -0.01193091 | 0.006777077 |  -1.760479 | 7.832655e-02 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | log_irrigation_cost |  0.07254403 | 0.002653471 |  27.339294 | 0.000000e+00 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | log_capital |  0.04080565 | 0.002622328 |  15.560848 | 0.000000e+00 | frontier |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_(Intercept) | -6.90350723 | 0.399877624 | -17.264050 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_diversificacion_area |  0.91670758 | 0.133699894 |   6.856457 | 7.059020e-12 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_size_mediano |  1.13041577 | 0.176237015 |   6.414179 | 1.415839e-10 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_size_grande |  6.12371889 | 0.268576181 |  22.800678 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_diversif_mediano |  0.71785667 | 0.250950146 |   2.860555 | 4.229003e-03 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_diversif_grande | -3.64536812 | 0.252212574 | -14.453554 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_region_natural2 |  5.98311143 | 0.243268368 |  24.594696 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_region_natural3 |  2.12589207 | 0.167157140 |  12.717926 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_nivel_educacion | -0.02592597 | 0.011532055 |  -2.248165 | 2.456564e-02 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_capacitacion_recibida | -0.23538285 | 0.085961758 |  -2.738227 | 6.177133e-03 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_asistencia_tecnica_recibida | -0.81587837 | 0.123937375 |  -6.582989 | 4.610845e-11 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_usuario_agua |  0.51349448 | 0.073681031 |   6.969154 | 3.188561e-12 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_asociacion_miembro |  0.03818231 | 0.085434148 |   0.446921 | 6.549321e-01 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_riego_any | -1.57459886 | 0.089045336 | -17.683114 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_uso_maquinaria |  0.49097620 | 0.057370090 |   8.558052 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_usa_abono | -0.05774677 | 0.054529094 |  -1.059008 | 2.895959e-01 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_usa_fertilizantes | -2.53419504 | 0.099991071 | -25.344213 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_semilla_semillero_any |  0.12357561 | 0.070798833 |   1.745447 | 8.090710e-02 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | Z_semilla_comercial_any |  1.37948121 | 0.066863812 |  20.631208 | 0.000000e+00 | inefficiency |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | sigmaSq |  4.97594424 | 0.191637825 |  25.965355 | 0.000000e+00 | variance |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| controls_ena | gamma |  0.91452002 | 0.003665908 | 249.466142 | 0.000000e+00 | variance |  | 31824 | 26121 | 0.1792044 | 0.91452 | FALSE | FALSE | 27 | 1456479 | 6.865875e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |

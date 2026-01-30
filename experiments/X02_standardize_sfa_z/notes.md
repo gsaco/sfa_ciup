@@ -1,5 +1,8 @@
 # Experiment X02: Standardize SFA Z variables
 
+## Status (2026-01-26)
+This experiment reflects historical behavior when `gamma` was near boundary; the current baseline spec now shows stable diagnostics (see `outputs/tables/02_sfa_diagnostics.csv`).
+
 ## Goal
 Test whether standardizing diversification variables in the inefficiency (Z) equation reduces boundary `gamma` warnings and stabilizes SFA estimation.
 
@@ -24,4 +27,3 @@ Test whether standardizing diversification variables in the inefficiency (Z) equ
 
 ## Revert
 - Restored original Z variable scaling; re-ran SFA (see `logs/revert.log`).
-

@@ -57,6 +57,31 @@ def build_rows(base: pd.DataFrame, geo: pd.DataFrame, sample_type: str, weight_c
     return rows
 
 
+def required_non_missing(df: pd.DataFrame, columns: list[str]) -> pd.Series:
+    cols = [col for col in columns if col in df.columns]
+    if not cols:
+        return pd.Series([True] * len(df), index=df.index)
+    return df[cols].notna().all(axis=1)
+
+
+def read_parquet_with_fallback(path: Path) -> pd.DataFrame:
+    try:
+        return pd.read_parquet(path)
+    except Exception as exc:
+        csv_path = path.with_suffix(".csv")
+        if not csv_path.exists():
+            raise
+        print(f"Warning: failed to read {path} ({exc}); using {csv_path} instead.")
+        return pd.read_csv(csv_path)
+
+
+def resolve_input_cost_col(df: pd.DataFrame) -> str:
+    for col in ["costo_total_agropecuario", "gasto_agricola_total", "input_costs"]:
+        if col in df.columns:
+            return col
+    return "input_costs"
+
+
 def main() -> None:
     base_path = PROCESSED_DIR / "model_data_ena2024.parquet"
     geo_path = PROCESSED_DIR / "model_data_ena2024_plus_geo2.parquet"
@@ -65,35 +90,72 @@ def main() -> None:
 
     OUTPUT_TABLES.mkdir(parents=True, exist_ok=True)
 
-    base = pd.read_parquet(base_path)
-    geo = pd.read_parquet(geo_path)
+    base = read_parquet_with_fallback(base_path)
+    geo = read_parquet_with_fallback(geo_path)
 
-    # Logit sample: practice_any/diversificacion/weight
-    base_logit = base[base["practice_any"].notna() & base["diversificacion_area"].notna() & base["weight"].notna()]
-    geo_logit = geo[
-        geo["practice_any"].notna()
-        & geo["diversificacion_area"].notna()
-        & geo["weight"].notna()
-        & geo["tmean_2024"].notna()
-        & geo["elev_m"].notna()
+    # Logit sample: match R/02_logit_practices.R (model variables + survey design)
+    logit_required = [
+        "practice_any",
+        "diversificacion_area",
+        "weight",
+        "area_total_ha",
+        "size_cat",
+        "region_natural",
+        "psu",
+        "estrato",
     ]
+    base_logit = base[required_non_missing(base, logit_required)]
 
-    # SFA sample: positive output and inputs, plus temp/topo
+    geo_logit_required = logit_required + [
+        "tmean_2024",
+        "delta_tmean_24_23",
+        "elev_m",
+        "slope_deg",
+        "ruggedness",
+        "prcp_total_z",
+    ]
+    geo_logit = geo[required_non_missing(geo, geo_logit_required)]
+
+    # SFA sample: match R/01_sfa_main.R (positive outputs, constructed inputs, plus climate/topo)
+    base_input_col = resolve_input_cost_col(base)
+    geo_input_col = resolve_input_cost_col(geo)
+
+    base_sfa_required = [
+        "valor_total",
+        "area_total_ha",
+        "labor_total",
+        base_input_col,
+        "diversificacion_area",
+        "size_cat",
+        "region_natural",
+    ]
     base_sfa = base[
         (base["valor_total"] > 0)
         & (base["area_total_ha"] > 0)
-        & base["diversificacion_area"].notna()
-        & base["size_cat"].notna()
-        & base["region_natural"].notna()
+        & required_non_missing(base, base_sfa_required)
     ]
+
+    geo_sfa_required = [
+        "valor_total",
+        "area_total_ha",
+        "labor_total",
+        geo_input_col,
+        "diversificacion_area",
+        "size_cat",
+        "region_natural",
+    ] + [
+        "tmean_2024",
+        "delta_tmean_24_23",
+        "slope_deg",
+        "ruggedness",
+        "prcp_total_z",
+    ]
+    if "surface_km2" in geo.columns:
+        geo_sfa_required.append("surface_km2")
     geo_sfa = geo[
         (geo["valor_total"] > 0)
         & (geo["area_total_ha"] > 0)
-        & geo["diversificacion_area"].notna()
-        & geo["size_cat"].notna()
-        & geo["region_natural"].notna()
-        & geo["tmean_2024"].notna()
-        & geo["elev_m"].notna()
+        & required_non_missing(geo, geo_sfa_required)
     ]
 
     rows = []

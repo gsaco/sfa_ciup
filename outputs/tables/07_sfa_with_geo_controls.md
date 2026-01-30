@@ -1,34 +1,34 @@
-| model | term | estimate | std_error | z_value | p_value | component | 
-| --- | --- | --- | --- | --- | --- | --- | 
- | xgeo_prcp | (Intercept) |    8.66619978 | 4.129273e-02 |  209.8722763 | 0.000000e+00 | frontier |
-| xgeo_prcp | log_land |    0.73118445 | 5.056946e-03 |  144.5901177 | 0.000000e+00 | frontier |
-| xgeo_prcp | log_labor |    0.23945529 | 5.907768e-03 |   40.5322797 | 0.000000e+00 | frontier |
-| xgeo_prcp | log_inputs |    0.11104136 | 2.484275e-03 |   44.6976936 | 0.000000e+00 | frontier |
-| xgeo_prcp | region_natural2 |   -1.00494983 | 1.402775e-02 |  -71.6401334 | 0.000000e+00 | frontier |
-| xgeo_prcp | region_natural3 |   -0.16403178 | 2.064174e-02 |   -7.9466070 | 1.998401e-15 | frontier |
-| xgeo_prcp | log_surface_km2 |    0.01446090 | 5.408218e-03 |    2.6738755 | 7.498029e-03 | frontier |
-| xgeo_prcp | prcp_total_z |    0.01455123 | 7.216358e-03 |    2.0164229 | 4.375577e-02 | frontier |
-| xgeo_prcp | Z_(Intercept) | -315.05932210 | 3.034157e+01 |  -10.3837499 | 0.000000e+00 | inefficiency |
-| xgeo_prcp | Z_diversificacion_area |  -10.32626883 | 1.232804e+00 |   -8.3762431 | 0.000000e+00 | inefficiency |
-| xgeo_prcp | Z_size_mediano |  -31.08852658 | 1.275193e+00 |  -24.3794709 | 0.000000e+00 | inefficiency |
-| xgeo_prcp | Z_size_grande |  174.24048611 | 1.824269e+01 |    9.5512472 | 0.000000e+00 | inefficiency |
-| xgeo_prcp | Z_diversif_mediano |  155.63581183 | 1.051659e+01 |   14.7990738 | 0.000000e+00 | inefficiency |
-| xgeo_prcp | Z_diversif_grande |  -58.85856996 | 9.973392e+00 |   -5.9015598 | 3.600808e-09 | inefficiency |
-| xgeo_prcp | sigmaSq |  245.55241096 | 2.283592e+01 |   10.7529025 | 0.000000e+00 | variance |
-| xgeo_prcp | gamma |    0.99778149 | 2.224445e-04 | 4485.5294404 | 0.000000e+00 | variance |
-| zgeo_prcp | (Intercept) |    8.66519932 | 4.024360e-02 |  215.3186689 | 0.000000e+00 | frontier |
-| zgeo_prcp | log_land |    0.73320076 | 5.255855e-03 |  139.5016994 | 0.000000e+00 | frontier |
-| zgeo_prcp | log_labor |    0.23481199 | 5.898053e-03 |   39.8117811 | 0.000000e+00 | frontier |
-| zgeo_prcp | log_inputs |    0.11132296 | 2.509702e-03 |   44.3570427 | 0.000000e+00 | frontier |
-| zgeo_prcp | region_natural2 |   -1.00035964 | 1.545413e-02 |  -64.7308748 | 0.000000e+00 | frontier |
-| zgeo_prcp | region_natural3 |   -0.14528044 | 2.076859e-02 |   -6.9952006 | 2.648770e-12 | frontier |
-| zgeo_prcp | log_surface_km2 |    0.01292904 | 5.307003e-03 |    2.4362229 | 1.484154e-02 | frontier |
-| zgeo_prcp | Z_(Intercept) | -142.91725346 | 1.987679e+01 |   -7.1901594 | 6.472600e-13 | inefficiency |
-| zgeo_prcp | Z_diversificacion_area |   -0.17454426 | 4.207120e-01 |   -0.4148783 | 6.782310e-01 | inefficiency |
-| zgeo_prcp | Z_size_mediano |  -15.09597425 | 3.799652e+00 |   -3.9729888 | 7.097639e-05 | inefficiency |
-| zgeo_prcp | Z_size_grande |   69.51060255 | 9.900570e+00 |    7.0208686 | 2.204903e-12 | inefficiency |
-| zgeo_prcp | Z_diversif_mediano |   69.03718986 | 1.228076e+01 |    5.6215729 | 1.892266e-08 | inefficiency |
-| zgeo_prcp | Z_diversif_grande |  -23.37312740 | 3.707608e+00 |   -6.3040982 | 2.898768e-10 | inefficiency |
-| zgeo_prcp | Z_prcp_total_z |  -11.83888695 | 1.657252e+00 |   -7.1436840 | 9.086065e-13 | inefficiency |
-| zgeo_prcp | sigmaSq |  106.26869466 | 1.494298e+01 |    7.1116135 | 1.146860e-12 | variance |
-| zgeo_prcp | gamma |    0.99486304 | 7.861645e-04 | 1265.4642825 | 0.000000e+00 | variance |
+| model | term | estimate | std_error | z_value | p_value | component | inference_note | n_total | n_valid | share_dropped | gamma | gamma_near_boundary | cov_singular | cov_rank | cov_cond | cov_rcond | input_cost_var | ineffDecrease | truncNorm | timeEffect | 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+ | xgeo_prcp | (Intercept) |  8.203741e+00 | 0.060699858 | 135.1525558 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | log_land |  9.006359e-01 | 0.006045910 | 148.9661359 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | log_labor |  2.576675e-01 | 0.007920127 |  32.5332595 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | log_inputs |  6.970296e-02 | 0.006780131 |  10.2804732 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | log_surface_km2 |  3.179726e-02 | 0.005753679 |   5.5264222 | 3.268271e-08 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | prcp_total_z | -2.269706e-04 | 0.008738814 |  -0.0259727 | 9.792791e-01 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_(Intercept) | -1.759011e+01 | 1.250742054 | -14.0637395 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_diversificacion_area |  1.926751e+00 | 0.185106469 |  10.4088819 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_size_mediano |  2.461598e+00 | 0.280967783 |   8.7611401 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_size_grande |  9.141758e+00 | 0.488847168 |  18.7006468 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_diversif_mediano | -2.080866e-01 | 0.281648634 |  -0.7388161 | 4.600186e-01 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_diversif_grande | -5.670511e+00 | 0.363747276 | -15.5891500 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_region_natural2 |  1.298194e+01 | 0.833601522 |  15.5733196 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | Z_region_natural3 |  8.791813e+00 | 0.641999871 |  13.6944152 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | sigmaSq |  7.325154e+00 | 0.392894264 |  18.6440836 | 0.000000e+00 | variance |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| xgeo_prcp | gamma |  9.352408e-01 | 0.003304719 | 283.0016281 | 0.000000e+00 | variance |  | 31824 | 26578 | 0.1648441 | 0.9352408 | FALSE | FALSE | 16 | 11982341 | 8.345614e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | (Intercept) |  8.201175e+00 | 0.060948709 | 134.5586305 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | log_land |  9.042981e-01 | 0.005970480 | 151.4615419 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | log_labor |  2.460347e-01 | 0.007836322 |  31.3967095 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | log_inputs |  7.255563e-02 | 0.006907014 |  10.5046306 | 0.000000e+00 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | log_surface_km2 |  3.253513e-02 | 0.005526509 |   5.8871026 | 3.930247e-09 | frontier |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_(Intercept) | -1.740252e+01 | 1.074701481 | -16.1928878 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_diversificacion_area |  2.100153e+00 | 0.198608266 |  10.5743464 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_size_mediano |  2.327524e+00 | 0.251043840 |   9.2713856 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_size_grande |  8.756853e+00 | 0.457493223 |  19.1409456 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_diversif_mediano | -1.469793e-01 | 0.280870060 |  -0.5233001 | 6.007654e-01 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_diversif_grande | -5.593843e+00 | 0.350757207 | -15.9479068 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_prcp_total_z | -7.150248e-01 | 0.047791262 | -14.9614122 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_region_natural2 |  1.264605e+01 | 0.683397796 |  18.5046733 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | Z_region_natural3 |  8.165664e+00 | 0.509567746 |  16.0246867 | 0.000000e+00 | inefficiency |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | sigmaSq |  7.144010e+00 | 0.341139483 |  20.9416087 | 0.000000e+00 | variance |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| zgeo_prcp | gamma |  9.340107e-01 | 0.003116903 | 299.6598555 | 0.000000e+00 | variance |  | 31824 | 26578 | 0.1648441 | 0.9340107 | FALSE | FALSE | 16 | 11036727 | 9.060657e-08 | costo_total_agropecuario | TRUE | FALSE | FALSE |

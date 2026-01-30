@@ -4,7 +4,7 @@
   "baseline_start": 2015,
   "baseline_end": 2020,
   "baseline_note": "fallback_baseline_2015_2020_due_to_download_size",
-  "accessed_at": "2026-01-13T20:13:13",
+  "accessed_at": "2026-01-26T17:17:52",
   "plan_used": "B",
   "files": {
     "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/chirps/monthly_tifs/2015/chirps-v2.0.2015.01.tif.gz": "607edb881a29283889cbe53c8abc7ba35e067fb9b8fb5a0bc737af4beddab0da",
@@ -91,5 +91,26 @@
     "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/chirps/monthly_tifs/2024/chirps-v2.0.2024.10.tif.gz": "3189273dcb62d4d59535d4b042cd1ba55d670dae593b598950e781884c74135a",
     "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/chirps/monthly_tifs/2024/chirps-v2.0.2024.11.tif.gz": "721e98b29dad7d42fbf9298b6958c009bc890461504bfec50d31e67e31596acd",
     "/Users/gabrielsaco/Documents/GitHub/sfa_ciup/data/external/raw/chirps/monthly_tifs/2024/chirps-v2.0.2024.12.tif.gz": "9344bfe6308076d8b8f5469594aba43810dc69056f3eeeb4ea205dc1ed38c99f"
-  }
+  },
+  "source": "CHIRPS v2 monthly precipitation",
+  "season_definitions": {
+    "wet": "Nov-Mar",
+    "dry": "May-Sep",
+    "wet_mode": "within_year"
+  },
+  "units": {
+    "prcp_2024_total": "mm/year",
+    "prcp_2024_wet": "mm/season",
+    "prcp_2024_dry": "mm/season",
+    "prcp_baseline_mean": "mm/year",
+    "prcp_baseline_sd": "mm/year",
+    "prcp_total_anom": "mm/year",
+    "prcp_total_z": "z-score"
+  },
+  "nodata": null,
+  "crs": "GEOGCS[\"WGS 84\",DATUM[\"World Geodetic System 1984\",SPHEROID[\"WGS 84\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST]]",
+  "resolution": [
+    0.05000000074505806,
+    0.05000000074505806
+  ]
 }

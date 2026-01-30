@@ -1,0 +1,2288 @@
+% ==============================================================================
+% Diversificación de cultivos y productividad agropecuaria en el Perú
+% Informe Técnico Completo - ENA 2024
+% Universidad del Pacífico - Centro de Investigación
+% ==============================================================================
+\documentclass[11pt,a4paper]{article}
+
+% --- Paquetes básicos ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{threeparttable}
+\usepackage{pdflscape}
+\usepackage{natbib}
+
+% Compatibility shim for LaTeX kernels without \IfDocumentMetadataT
+\makeatletter
+\@ifundefined{IfDocumentMetadataT}{\newcommand{\IfDocumentMetadataT}[2]{#2}}{}
+\makeatother
+\usepackage{hyperref}
+
+% --- Configuración de página ---
+\geometry{left=2.2cm, right=2.2cm, top=2.2cm, bottom=2.2cm}
+\setstretch{1.15}
+
+% --- Configuración de tablas ---
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\captionsetup{font=small, labelfont=bf, skip=5pt}
+
+% --- Hyperlinks ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    citecolor=blue!60!black,
+    urlcolor=blue!80!black
+}
+
+% --- Comandos personalizados ---
+\newcommand{\HHI}{\text{HHI}}
+\newcommand{\TE}{\text{TE}}
+\newcommand{\OR}{\text{OR}}
+
+% ==============================================================================
+\begin{document}
+
+% --- Portada ---
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    
+    {\Large\textsc{Universidad del Pacífico}}\\[0.2cm]
+    {\normalsize Centro de Investigación}\\[0.5cm]
+    {\small Proyecto SFA\_CIUP}\\[2cm]
+    
+    \rule{\linewidth}{0.5mm}\\[0.4cm]
+    {\LARGE\bfseries Diversificación de Cultivos y Productividad Agropecuaria en el Perú}\\[0.3cm]
+    {\Large Un Análisis de Frontera Estocástica y Adopción de Prácticas Agrícolas}\\[0.3cm]
+    \rule{\linewidth}{0.5mm}\\[1.5cm]
+    
+    {\large\textbf{Informe Técnico Completo}}\\[0.5cm]
+    
+    \vfill
+    
+    \begin{tabular}{ll}
+        \textbf{Fuente de datos:} & Encuesta Nacional Agropecuaria 2024 (INEI) \\
+        \textbf{Datos externos:} & CHIRPS, TerraClimate, Copernicus DEM \\
+        \textbf{Metodología:} & Frontera Estocástica (SFA) y Logit con diseño muestral \\
+        \textbf{Fecha:} & Enero 2026 \\
+    \end{tabular}
+    
+    \vspace{1cm}
+\end{titlepage}
+
+% --- Tabla de contenidos ---
+\tableofcontents
+\newpage
+
+% ==============================================================================
+\section{Resumen Ejecutivo}
+% ==============================================================================
+
+Este informe documenta exhaustivamente el proyecto de investigación que analiza la relación entre diversificación de cultivos, productividad agrícola y adopción de prácticas sostenibles en el Perú. Utilizamos microdatos de la Encuesta Nacional Agropecuaria 2024 (ENA), complementados con información geo-climática de fuentes satelitales.
+
+\subsection{Objetivos del estudio}
+\begin{enumerate}[leftmargin=*]
+    \item Cuantificar la eficiencia técnica de los productores agropecuarios peruanos mediante Análisis de Frontera Estocástica (SFA).
+    \item Evaluar si la diversificación de cultivos se asocia con mayor eficiencia productiva, controlando por heterogeneidad de tamaño y región.
+    \item Examinar la relación entre diversificación y adopción de prácticas agrícolas mediante modelos logit con diseño muestral.
+    \item Probar la robustez de los resultados ante diferentes especificaciones, índices de diversificación y controles adicionales.
+\end{enumerate}
+
+\subsection{Principales hallazgos}
+
+\begin{table}[H]
+\centering
+\caption{Resumen de resultados principales}
+\label{tab:key_findings}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{4cm}p{9cm}}
+\toprule
+\textbf{Dimensión} & \textbf{Hallazgo} \\
+\midrule
+Eficiencia técnica & Media 0.47, mediana 0.51; rango 0.0001--0.89 \\
+Diversificación base & Coef. Z = +1.93 (p$<$0.001) $\Rightarrow$ reduce ineficiencia \\
+Interacción medianos & Coef. $-$0.20 (p=0.41) $\Rightarrow$ sin diferencia significativa \\
+Interacción grandes & Coef. $-$5.54 (p$<$0.001) $\Rightarrow$ efecto neto negativo \\
+Logit (práct. agrícolas) & OR = 3.98 por punto diversificación (p$<$0.001) \\
+Prevalencia prácticas & 77.6\% reporta $\geq$1 práctica \\
+Cobertura geo/clima & 96.8\% de productores enlazados \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Modelo SFA con ineffDecrease=TRUE. Coef. positivo en Z reduce ineficiencia.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Limitaciones clave}
+\begin{itemize}[leftmargin=*]
+    \item La SFA no incorpora pesos muestrales por limitaciones del paquete estadístico.
+    \item La diversificación es potencialmente endógena; los resultados son asociativos, no causales.
+    \item Gamma alto ($\approx$0.93) indica que la varianza de ineficiencia domina; interpretar con cautela.
+    \item Colinealidad fuerte entre temperatura y elevación ($r = -0.93$).
+\end{itemize}
+
+\newpage
+% ==============================================================================
+\section{Introducción y Marco Conceptual}
+% ==============================================================================
+
+\subsection{Motivación y contexto}
+La agricultura peruana se caracteriza por una estructura productiva altamente heterogénea, con predominio de pequeños productores que operan en contextos agroecológicos diversos. La decisión de diversificar cultivos tiene implicaciones tanto para la productividad como para la sostenibilidad de los sistemas agrícolas.
+
+Desde una perspectiva teórica, la diversificación puede:
+\begin{enumerate}
+    \item \textbf{Reducir riesgos}: suavizar la variabilidad de ingresos ante shocks climáticos o de mercado.
+    \item \textbf{Mejorar el uso de recursos}: aprovechar complementariedades entre cultivos.
+    \item \textbf{Reducir economías de escala}: dificultar la especialización.
+\end{enumerate}
+
+\subsection{Preguntas de investigación}
+\begin{enumerate}
+    \item[\textbf{P1.}] ¿Cuál es el nivel de eficiencia técnica de los productores y cómo varía por región y tamaño?
+    \item[\textbf{P2.}] ¿Existe asociación entre diversificación y eficiencia técnica? ¿Es homogénea?
+    \item[\textbf{P3.}] ¿Los productores más diversificados tienen mayor probabilidad de adoptar prácticas agrícolas?
+\end{enumerate}
+
+\subsection{Hipótesis de trabajo}
+\begin{table}[H]
+\centering
+\caption{Hipótesis de investigación}
+\label{tab:hipotesis}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{1.2cm}p{9cm}p{3.5cm}}
+\toprule
+\textbf{ID} & \textbf{Hipótesis} & \textbf{Mecanismo} \\
+\midrule
+H1 & Diversificación reduce ineficiencia en productores pequeños & Manejo de riesgo \\
+H2 & Efecto menor o negativo en productores grandes & Pérdida de economías de escala \\
+H3 & Diversificación asociada positivamente con prácticas & Capital humano, aprendizaje \\
+H4 & Condiciones geo-climáticas afectan frontera e ineficiencia & Restricciones agroecológicas \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+% ==============================================================================
+\section{Fuentes de Datos y Diseño Muestral}
+% ==============================================================================
+
+\subsection{Encuesta Nacional Agropecuaria 2024 (ENA)}
+
+\begin{table}[H]
+\centering
+\caption{Características de la ENA 2024}
+\label{tab:ena_overview}
+\begin{threeparttable}
+\small
+\begin{tabular}{ll}
+\toprule
+\textbf{Característica} & \textbf{Descripción} \\
+\midrule
+Cobertura geográfica & Nacional, 24 departamentos \\
+Unidad de observación & Unidad agropecuaria (productor) \\
+Período de referencia & Año agrícola 2023--2024 \\
+Tamaño de muestra (base) & 35,187 productores \\
+Diseño muestral & Estratificado, bietápico \\
+\midrule
+\textbf{Peso muestral} & FACTOR\_PRODUCTOR \\
+\textbf{Estrato} & ESTRATO \\
+\textbf{PSU} & NSEGM (segmento serpentín) \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+\subsubsection{Módulos utilizados}
+\begin{itemize}
+    \item \textbf{CARATULA}: Identificación, claves de unión, diseño muestral
+    \item \textbf{CAP200AB}: Cultivos, superficies, producción, valores, riego, semillas
+    \item \textbf{CAP200E}: Abonos, fertilizantes, plaguicidas
+    \item \textbf{CAP300AB}: Prácticas agrícolas (outcome logit)
+    \item \textbf{CAP700}: Capacitación y asistencia técnica
+    \item \textbf{CAP800}: Asociatividad
+    \item \textbf{CAP900}: Crédito
+    \item \textbf{CAP1000}: Gastos, trabajo, maquinaria
+    \item \textbf{CAP1100}: Características del productor
+\end{itemize}
+
+\subsection{Datos externos geo-climáticos}
+
+\begin{table}[H]
+\centering
+\caption{Fuentes de datos externos}
+\label{tab:external_data}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{3cm}p{5cm}p{5cm}}
+\toprule
+\textbf{Fuente} & \textbf{Variables} & \textbf{Resolución/Período} \\
+\midrule
+CHIRPS v2 & Precipitación mensual (mm) & 0.05°, 2015--2024 \\
+TerraClimate & Temperatura media mensual (°C) & $\sim$4 km, 2023--2024 \\
+Copernicus DEM GLO-90 & Elevación, pendiente, rugosidad & 90 m \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+\subsection{Política de missingness}
+\begin{itemize}
+    \item \textbf{Missing $\neq$ 0}: NA se mantiene salvo indicador explícito de ``no''
+    \item \textbf{Sumas}: usan \texttt{min\_count=1} (todo NA $\to$ NA)
+    \item \textbf{Indicadores sí/no}: $1 \to 1$, $2/0 \to 0$, otros $\to$ NA
+\end{itemize}
+
+% ==============================================================================
+\section{Definiciones de Variables}
+% ==============================================================================
+
+\begin{table}[H]
+\centering
+\caption{Variables principales del análisis}
+\label{tab:variable_definitions}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{3.2cm}p{6.5cm}p{3.8cm}}
+\toprule
+\textbf{Variable} & \textbf{Definición} & \textbf{Notas} \\
+\midrule
+\multicolumn{3}{l}{\textit{Variables dependientes}} \\
+valor\_total & Suma P220\_1\_VAL + P220\_2\_VAL + P220\_3A\_VAL + P220\_3B\_VAL & Output SFA (S/) \\
+practice\_any & 1 si $\geq$1 práctica (P301A\_1--4C, 11, 16, 17 = 1) & Outcome logit \\
+\midrule
+\multicolumn{3}{l}{\textit{Insumos productivos}} \\
+area\_total\_ha & Superficie cosechada, suma P217\_SUP\_ha & Hectáreas \\
+labor\_total & Trabajadores perm. + eventuales & N° personas \\
+input\_costs\_sfa & costo\_total\_agropecuario (CAP1000) & S/ \\
+\midrule
+\multicolumn{3}{l}{\textit{Índices de diversificación}} \\
+diversificacion\_area & $1 - \HHI$ basado en participaciones de área & 0=especializado \\
+shannon\_area & $-\sum_j s_j \ln(s_j)$ & Alternativo \\
+num\_crops & Conteo cultivos distintos & Alternativo \\
+\midrule
+\multicolumn{3}{l}{\textit{Categorías de tamaño}} \\
+size\_cat & Pequeño $<$2ha, Mediano 2--5ha, Grande $>$5ha & Por área cosechada \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Controles socioeconómicos ENA}
+\label{tab:control_definitions}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{3.5cm}p{7cm}p{2.5cm}}
+\toprule
+\textbf{Variable} & \textbf{Definición} & \textbf{Capítulo} \\
+\midrule
+riego\_any & 1 si tiene riego (P212 $\neq$ 1) & CAP200AB \\
+usuario\_agua & 1 si miembro comité agua (P810=1) & CAP800 \\
+uso\_maquinaria & 1 si P1206=1 & CAP1000 \\
+usa\_abono & 1 si P236=1 & CAP200E \\
+usa\_fertilizantes & 1 si P238=1 & CAP200E \\
+capacitacion\_recibida & 1 si P701=1 & CAP700 \\
+asistencia\_tecnica & 1 si P704=1 & CAP700 \\
+nivel\_educacion & P1105 (1--10) & CAP1100 \\
+asociacion\_miembro & 1 si P801=1 & CAP800 \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Variables geográficas y climáticas externas}
+\label{tab:geo_definitions}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{3.5cm}p{7cm}p{3cm}}
+\toprule
+\textbf{Variable} & \textbf{Definición} & \textbf{Fuente} \\
+\midrule
+prcp\_total\_2024 & Precipitación total anual (mm) & CHIRPS \\
+prcp\_total\_z & $(P_{2024} - \mu_{2015-2020}) / \sigma$ & CHIRPS \\
+tmean\_2024 & Temperatura media anual (°C) & TerraClimate \\
+delta\_tmean & $T_{2024} - T_{2023}$ & TerraClimate \\
+elev\_m & Altitud media distrito (msnm) & Copernicus DEM \\
+slope\_deg & Pendiente media (grados) & Copernicus DEM \\
+ruggedness & Índice rugosidad terreno (TRI) & Copernicus DEM \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+% ==============================================================================
+\section{Operacionalización Detallada de Variables}
+% ==============================================================================
+
+Esta sección documenta en detalle cómo se construyó cada variable, las decisiones metodológicas tomadas y la justificación económica de cada elección.
+
+\subsection{Variable dependiente SFA: Valor de producción}
+
+\subsubsection{Construcción}
+El valor de producción total (\texttt{valor\_total}) se construye como la suma de cuatro componentes del Capítulo 200 de la ENA:
+
+\begin{table}[H]
+\centering
+\caption{Componentes del valor de producción}
+\label{tab:valor_components}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{2.5cm}p{6cm}p{4.5cm}}
+\toprule
+\textbf{Código} & \textbf{Descripción} & \textbf{Justificación} \\
+\midrule
+P220\_1\_VAL & Valor de venta de cosecha & Ingreso monetario directo \\
+P220\_2\_VAL & Valor de autoconsumo & Producción para hogar (valorizada) \\
+P220\_3A\_VAL & Valor de semilla guardada & Inversión productiva futura \\
+P220\_3B\_VAL & Valor de alimento animal & Uso productivo intermedio \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Fórmula: valor\_total = P220\_1\_VAL + P220\_2\_VAL + P220\_3A\_VAL + P220\_3B\_VAL
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Justificación económica}: Se incluyen los cuatro componentes porque representan el valor económico completo de la producción, no solo la venta. El autoconsumo es particularmente importante en agricultura de subsistencia, donde puede representar más del 50\% del valor total en pequeños productores. Excluirlo sesgaría la medición de productividad hacia agricultores comerciales.
+
+\subsubsection{Transformación logarítmica}
+Se aplica $\log(\text{valor\_total} + 1)$ para:
+\begin{itemize}
+    \item Reducir la asimetría de la distribución (cola derecha pesada)
+    \item Permitir interpretación de elasticidades en la frontera
+    \item Manejar ceros sin perder observaciones (+1)
+\end{itemize}
+
+\subsection{Variable dependiente Logit: Adopción de prácticas}
+
+\subsubsection{Construcción}
+La variable \texttt{practice\_any} es un indicador binario que toma valor 1 si el productor reporta al menos una de las siguientes prácticas del Capítulo 300:
+
+\begin{table}[H]
+\centering
+\caption{Prácticas agrícolas incluidas en el indicador}
+\label{tab:practices_detail}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{2cm}p{5.5cm}p{5.5cm}}
+\toprule
+\textbf{Código} & \textbf{Práctica} & \textbf{Relevancia} \\
+\midrule
+P301A\_1 & Rotación de cultivos & Manejo de fertilidad del suelo \\
+P301A\_2 & Asociación de cultivos & Biodiversidad, control de plagas \\
+P301A\_3 & Labranza mínima & Conservación del suelo \\
+P301A\_4 & Terrazas & Control de erosión en laderas \\
+P301A\_4A & Surcos en contorno & Control de escorrentía \\
+P301A\_4B & Barreras vivas & Protección contra erosión eólica \\
+P301A\_4C & Zanjas de infiltración & Conservación de agua \\
+P301A\_11 & Cercos vivos & Protección y biodiversidad \\
+P301A\_16 & Agroforestería & Sistemas integrados sostenibles \\
+P301A\_17 & Uso de abonos orgánicos & Fertilización natural \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Codificación ENA: 1=Sí, 2=No. practice\_any = 1 si cualquier P301A\_* = 1.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Justificación económica}: Estas prácticas representan inversiones en sostenibilidad que tienen costos de corto plazo pero beneficios de largo plazo. La adopción refleja tanto capacidad económica como orientación temporal del productor. La diversificación puede facilitar la adopción al reducir la dependencia de un solo cultivo y permitir experimentación.
+
+\subsubsection{Prevalencia y sus implicaciones}
+La prevalencia de practice\_any es 77.6\%, lo cual tiene implicaciones importantes:
+\begin{itemize}
+    \item Los odds ratios no se aproximan a riesgos relativos
+    \item Efectos marginales son más informativos que OR
+    \item Un OR de 4 no significa que la probabilidad se cuadruplica
+\end{itemize}
+
+\subsection{Índices de diversificación}
+
+\subsubsection{Índice Herfindahl-Hirschman (HHI)}
+El HHI mide la concentración de cultivos basándose en las participaciones de área cosechada:
+\[
+\HHI = \sum_{j=1}^{J} s_j^2, \quad s_j = \frac{\text{área cultivo } j}{\text{área total}}
+\]
+
+El índice de diversificación es $1 - \HHI$, que varía de 0 (un solo cultivo) a $1 - 1/J$ (distribución uniforme con $J$ cultivos).
+
+\textbf{Justificación económica}: El HHI captura la lógica de diversificación de portafolio: la reducción de riesgo es proporcional a cuánto se distribuyen los recursos entre cultivos, no solo a cuántos cultivos hay. Un productor con 90\% en maíz y 10\% en papa tiene HHI cercano a 1, indicando alta concentración pese a tener dos cultivos.
+
+\subsubsection{Índice de Shannon}
+El índice de Shannon captura la entropía de la distribución:
+\[
+H = -\sum_{j=1}^{J} s_j \ln(s_j)
+\]
+
+\textbf{Diferencia con HHI}: Shannon penaliza más la concentración extrema y es más sensible a la presencia de cultivos minoritarios. Puede tomar valores mayores a 1 con muchos cultivos.
+
+\subsubsection{Número de cultivos}
+Simple conteo de cultivos distintos reportados:
+\[
+N = \#\{j : \text{área}_j > 0\}
+\]
+
+\textbf{Limitación}: No distingue entre tener 5 cultivos con distribución 90-2.5-2.5-2.5-2.5 vs 20-20-20-20-20, aunque el riesgo es muy diferente.
+
+\begin{table}[H]
+\centering
+\caption{Comparación de índices de diversificación}
+\label{tab:index_comparison}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{3cm}p{4cm}p{4cm}p{2.5cm}}
+\toprule
+\textbf{Índice} & \textbf{Ventaja} & \textbf{Desventaja} & \textbf{Rango} \\
+\midrule
+1-HHI (principal) & Captura concentración, interpretación clara & Menos sensible a cultivos minoritarios & [0, 1) \\
+Shannon & Sensible a todos los cultivos & Difícil interpretación, sin cota superior fija & $[0, \infty)$ \\
+Núm. cultivos & Simple, intuitivo & Ignora distribución de área & [1, $\infty$) \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+\textbf{Decisión metodológica}: Usamos 1-HHI como índice principal por su interpretación clara y vínculo con teoría de portafolio. Shannon y número de cultivos se usan como robustez.
+
+\subsection{Insumos productivos para SFA}
+
+\subsubsection{Tierra (log\_land)}
+\[
+\log\_land = \ln(\text{area\_total\_ha} + 1)
+\]
+
+Donde area\_total\_ha es la suma de superficies cosechadas de todos los cultivos (P217\_SUP en hectáreas).
+
+\textbf{Justificación}: La tierra es el insumo fundamental en agricultura. El logaritmo permite estimar elasticidades y captura rendimientos decrecientes.
+
+\subsubsection{Trabajo (log\_labor)}
+\[
+\log\_labor = \ln(\text{labor\_total} + 1)
+\]
+
+Donde labor\_total combina:
+\begin{itemize}
+    \item Trabajadores permanentes (P1001A\_2A\_*C)
+    \item Trabajadores eventuales (P1001A\_2B\_*C)
+\end{itemize}
+
+\textbf{Limitación conocida}: No distingue horas trabajadas ni productividad por trabajador. El trabajo familiar no remunerado puede estar subreportado.
+
+\subsubsection{Insumos intermedios (log\_inputs)}
+\[
+\log\_inputs = \ln(\text{costo\_total\_agropecuario} + 1)
+\]
+
+Donde costo\_total\_agropecuario proviene del Capítulo 1000 e incluye:
+\begin{itemize}
+    \item Gastos en insumos agrícolas (semillas, fertilizantes, plaguicidas)
+    \item Gastos en servicios (maquinaria, transporte)
+    \item Gastos en mano de obra contratada
+\end{itemize}
+
+\textbf{Justificación económica}: Captura la intensidad del uso de insumos comprados. Productores más integrados al mercado tienen mayores costos pero potencialmente mayores rendimientos.
+
+\subsection{Categorías de tamaño}
+
+Las categorías se definen sobre area\_total\_ha:
+
+\begin{table}[H]
+\centering
+\caption{Definición de categorías de tamaño}
+\label{tab:size_categories}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{3cm}p{3cm}p{7cm}}
+\toprule
+\textbf{Categoría} & \textbf{Umbral} & \textbf{Justificación económica} \\
+\midrule
+Pequeño & $<$ 2 ha & Agricultura de subsistencia, alto autoconsumo \\
+Mediano & 2--5 ha & Transición, mix comercial/subsistencia \\
+Grande & $>$ 5 ha & Orientación comercial, economías de escala \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Umbrales basados en literatura peruana y distribución observada.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Justificación de umbrales}: En Perú, 2 ha es aproximadamente el umbral de agricultura familiar de subsistencia según la FAO. Los 5 ha corresponden al percentil 80 de la distribución, separando productores con potencial de comercialización significativo.
+
+% ==============================================================================
+\section{Especificación de Modelos}
+% ==============================================================================
+
+Esta sección documenta exactamente qué variables entran en cada especificación econométrica.
+
+\subsection{Matriz de especificaciones SFA}
+
+\begin{table}[H]
+\centering
+\caption{Variables incluidas en cada modelo SFA (Frontera)}
+\label{tab:sfa_spec_frontier}
+\begin{threeparttable}
+\footnotesize
+\begin{tabular}{p{3.5cm}ccccccc}
+\toprule
+\textbf{Variable} & \textbf{main} & \textbf{shannon} & \textbf{num\_cr} & \textbf{small} & \textbf{ena} & \textbf{geo} & \textbf{temp} \\
+\midrule
+\multicolumn{8}{l}{\textit{Insumos productivos (Frontera)}} \\
+log\_land & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+log\_labor & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+log\_inputs & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+log\_irrigation & & & & & $\checkmark$ & & \\
+log\_capital & & & & & $\checkmark$ & & \\
+log\_surface\_km2 & & & & & & $\checkmark$ & $\checkmark$ \\
+tmean\_2024 & & & & & & & $\checkmark$ \\
+delta\_tmean & & & & & & & $\checkmark$ \\
+slope\_deg & & & & & & & $\checkmark$ \\
+prcp\_total\_z (front) & & & & & & $\checkmark$ & $\checkmark$ \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item main=main\_area, shannon=alt\_shannon, num\_cr=alt\_num\_crops, small=small\_only, ena=controls\_ena, geo=xgeo/zgeo, temp=temp\_topo
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Variables incluidas en cada modelo SFA (Ineficiencia)}
+\label{tab:sfa_spec_ineff}
+\begin{threeparttable}
+\footnotesize
+\begin{tabular}{p{4cm}ccccccc}
+\toprule
+\textbf{Variable} & \textbf{main} & \textbf{shannon} & \textbf{num\_cr} & \textbf{small} & \textbf{ena} & \textbf{geo} & \textbf{temp} \\
+\midrule
+\multicolumn{8}{l}{\textit{Diversificación}} \\
+diversificacion\_area (1-HHI) & $\checkmark$ & & & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+shannon\_area & & $\checkmark$ & & & & & \\
+num\_crops & & & $\checkmark$ & & & & \\
+\midrule
+\multicolumn{8}{l}{\textit{Tamaño e interacciones}} \\
+size\_mediano & $\checkmark$ & $\checkmark$ & $\checkmark$ & & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+size\_grande & $\checkmark$ & $\checkmark$ & $\checkmark$ & & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+diversif$\times$mediano & $\checkmark$ & $\checkmark$ & $\checkmark$ & & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+diversif$\times$grande & $\checkmark$ & $\checkmark$ & $\checkmark$ & & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+\midrule
+\multicolumn{8}{l}{\textit{Región}} \\
+region\_natural & $\checkmark$ & & & & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+\midrule
+\multicolumn{8}{l}{\textit{Controles ENA}} \\
+nivel\_educacion & & & & & $\checkmark$ & & $\checkmark$ \\
+capacitacion\_recibida & & & & & $\checkmark$ & & $\checkmark$ \\
+asist\_tecnica\_recibida & & & & & $\checkmark$ & & $\checkmark$ \\
+usuario\_agua & & & & & $\checkmark$ & & $\checkmark$ \\
+asociacion\_miembro & & & & & $\checkmark$ & & $\checkmark$ \\
+riego\_any & & & & & $\checkmark$ & & $\checkmark$ \\
+uso\_maquinaria & & & & & $\checkmark$ & & $\checkmark$ \\
+usa\_abono & & & & & $\checkmark$ & & $\checkmark$ \\
+usa\_fertilizantes & & & & & $\checkmark$ & & $\checkmark$ \\
+semilla\_semillero & & & & & $\checkmark$ & & $\checkmark$ \\
+semilla\_comercial & & & & & $\checkmark$ & & $\checkmark$ \\
+\midrule
+\multicolumn{8}{l}{\textit{Geo-climáticas}} \\
+prcp\_total\_z (inef) & & & & & & $\checkmark^*$ & \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item $\checkmark^*$ = solo en modelo zgeo\_prcp (precipitación en ineficiencia).
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Interpretación de la matriz}: 
+\begin{itemize}
+    \item El modelo \textbf{main} es parsimonioso: solo insumos básicos en frontera, diversificación con interacciones en ineficiencia.
+    \item Los modelos \textbf{shannon} y \textbf{num\_crops} prueban sensibilidad al índice de diversificación.
+    \item El modelo \textbf{small\_only} excluye dummies de tamaño porque solo incluye pequeños.
+    \item El modelo \textbf{ena} agrega controles socioeconómicos para verificar si el efecto de diversificación se mantiene.
+    \item Los modelos \textbf{geo} y \textbf{temp} agregan controles agroecológicos exógenos.
+\end{itemize}
+
+\subsection{Matriz de especificaciones Logit}
+
+\begin{table}[H]
+\centering
+\caption{Variables incluidas en cada modelo Logit}
+\label{tab:logit_spec}
+\begin{threeparttable}
+\footnotesize
+\begin{tabular}{p{4cm}cccccc}
+\toprule
+\textbf{Variable} & \textbf{main} & \textbf{shannon} & \textbf{num\_cr} & \textbf{small} & \textbf{ena} & \textbf{temp} \\
+\midrule
+\multicolumn{7}{l}{\textit{Diversificación}} \\
+diversificacion\_area & $\checkmark$ & & & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+diversif\_alt (Shannon) & & $\checkmark$ & & & & \\
+diversif\_alt2 (núm. cultivos) & & & $\checkmark$ & & & \\
+\midrule
+\multicolumn{7}{l}{\textit{Tamaño e interacciones}} \\
+size\_cat (dummies) & $\checkmark$ & $\checkmark$ & $\checkmark$ & & $\checkmark$ & $\checkmark$ \\
+diversif$\times$size & $\checkmark$ & $\checkmark$ & $\checkmark$ & & $\checkmark$ & $\checkmark$ \\
+\midrule
+\multicolumn{7}{l}{\textit{Controles básicos}} \\
+log\_area & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+region\_natural & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+\midrule
+\multicolumn{7}{l}{\textit{Controles ENA}} \\
+nivel\_educacion & & & & & $\checkmark$ & $\checkmark$ \\
+capacitacion\_recibida & & & & & $\checkmark$ & $\checkmark$ \\
+asist\_tecnica\_recibida & & & & & $\checkmark$ & $\checkmark$ \\
+usuario\_agua & & & & & $\checkmark$ & $\checkmark$ \\
+asociacion\_miembro & & & & & $\checkmark$ & $\checkmark$ \\
+riego\_any & & & & & $\checkmark$ & $\checkmark$ \\
+uso\_maquinaria & & & & & $\checkmark$ & $\checkmark$ \\
+usa\_abono & & & & & $\checkmark$ & $\checkmark$ \\
+usa\_fertilizantes & & & & & $\checkmark$ & $\checkmark$ \\
+semilla\_semillero & & & & & $\checkmark$ & $\checkmark$ \\
+semilla\_comercial & & & & & $\checkmark$ & $\checkmark$ \\
+\midrule
+\multicolumn{7}{l}{\textit{Geo-climáticas}} \\
+prcp\_total\_z & & & & & & $\checkmark$ \\
+tmean\_2024 & & & & & & $\checkmark$ \\
+elev\_m & & & & & & $\checkmark$ \\
+slope\_deg & & & & & & $\checkmark$ \\
+ruggedness & & & & & & $\checkmark$ \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Todos los modelos usan diseño muestral ENA (pesos, estratos, PSU).
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+% ==============================================================================
+\section{Descripción de la Muestra}
+% ==============================================================================
+
+\subsection{Composición por región natural}
+
+\begin{table}[H]
+\centering
+\caption{Resumen de la muestra por región natural}
+\label{tab:sample_region}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Región} & \textbf{n} & \textbf{Peso suma} & \textbf{Área (ha)} & \textbf{Valor (S/)} & \textbf{Diversif.} & \textbf{Práctica (\%)} \\
+\midrule
+Costa & 8,263 & 261,788 & 4.30 & 70,773 & 0.423 & 78.5 \\
+Sierra & 20,601 & 1,540,260 & 1.86 & 7,172 & 0.568 & 90.6 \\
+Selva & 6,323 & 317,957 & 14.02 & 46,391 & 0.395 & 34.0 \\
+\midrule
+\textbf{Total} & 35,187 & 2,120,010 & 4.60 & 28,858 & 0.504 & 77.6 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Área y Valor = promedios. Diversif. = 1-HHI. Práctica = \% con $\geq$1 práctica.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Interpretación regional:}
+\begin{itemize}
+    \item \textbf{Sierra}: Concentra 58.5\% de productores con alta diversificación (0.568), consistente con estrategias de manejo de riesgo en predios pequeños.
+    \item \textbf{Costa}: Mayor valor promedio (S/70,773), indicando orientación comercial con mejor acceso a infraestructura.
+    \item \textbf{Selva}: Unidades más grandes (14 ha) pero muy baja adopción de prácticas (34\%), sugiriendo brechas en asistencia técnica.
+\end{itemize}
+
+\subsection{Composición por tamaño}
+
+\begin{table}[H]
+\centering
+\caption{Resumen de la muestra por tamaño de productor}
+\label{tab:sample_size}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Tamaño} & \textbf{n} & \textbf{Peso suma} & \textbf{Área (ha)} & \textbf{Valor (S/)} & \textbf{Diversif.} & \textbf{Práctica (\%)} \\
+\midrule
+Pequeño ($<$2 ha) & 21,957 & 1,530,220 & 0.72 & 5,667 & 0.486 & 83.6 \\
+Mediano (2-5 ha) & 6,278 & 355,684 & 3.20 & 29,778 & 0.541 & 73.9 \\
+Grande ($>$5 ha) & 5,840 & 232,992 & 20.69 & 119,622 & 0.532 & 56.5 \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+\textbf{Interpretación por tamaño}: Los pequeños dominan (62.4\%) pero generan menor valor. Los medianos tienen mayor diversificación (0.541). La adopción de prácticas disminuye con el tamaño.
+
+\subsection{Índice de diversificación}
+
+\begin{table}[H]
+\centering
+\caption{Estadísticas del índice de diversificación}
+\label{tab:diversif_detail}
+\begin{threeparttable}
+\small
+\begin{tabular}{llrrrrr}
+\toprule
+\textbf{Grupo} & \textbf{Categoría} & \textbf{n} & \textbf{Diversif.} & \textbf{HHI} & \textbf{Núm. cultivos} & \textbf{Área (ha)} \\
+\midrule
+\multicolumn{7}{l}{\textit{Por región}} \\
+& Costa & 8,263 & 0.423 & 0.577 & 3.30 & 4.30 \\
+& Sierra & 20,601 & 0.568 & 0.432 & 3.64 & 1.86 \\
+& Selva & 6,323 & 0.395 & 0.605 & 3.28 & 14.02 \\
+\midrule
+\multicolumn{7}{l}{\textit{Por tamaño}} \\
+& Pequeño & 21,957 & 0.486 & 0.514 & 3.32 & 0.72 \\
+& Mediano & 6,278 & 0.541 & 0.459 & 3.94 & 3.20 \\
+& Grande & 5,840 & 0.532 & 0.468 & 3.71 & 20.69 \\
+\midrule
+\textbf{Total} & & 35,187 & 0.504 & 0.496 & 3.50 & 4.60 \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+\textbf{Interpretación económica del índice de diversificación:}
+
+\begin{enumerate}
+    \item \textbf{Patrón regional}: La Sierra muestra la mayor diversificación (0.568) pese a tener predios más pequeños (1.86 ha). Esto es consistente con:
+    \begin{itemize}
+        \item Estrategias tradicionales de manejo de riesgo altitudinal
+        \item Sistemas de producción mixtos para autoconsumo familiar
+        \item Restricciones de mercado que incentivan producción para múltiples usos
+    \end{itemize}
+    
+    \item \textbf{Patrón por tamaño}: Los medianos (2--5 ha) tienen la mayor diversificación (0.541), sugiriendo un patrón no lineal:
+    \begin{itemize}
+        \item Pequeños ($<$2 ha): Área muy limitada para diversificar efectivamente
+        \item Medianos: Suficiente tierra para diversidad, aún no especializados
+        \item Grandes ($>$5 ha): Incentivos de escala hacia especialización comercial
+    \end{itemize}
+    
+    \item \textbf{Número de cultivos vs diversificación}: El promedio de 3.5 cultivos con diversificación de 0.504 indica distribución desigual. Si los cultivos estuvieran uniformemente distribuidos, esperaríamos diversificación $\approx 0.71$ ($1-1/3.5$). La brecha sugiere que típicamente hay un cultivo dominante.
+\end{enumerate}
+
+\textbf{Implicación para el análisis}: Esta variación en diversificación por tamaño y región motiva la inclusión de interacciones en los modelos econométricos. Un efecto promedio de diversificación enmascararía heterogeneidad importante.
+
+\subsection{Cobertura geográfica y climática}
+
+\begin{table}[H]
+\centering
+\caption{Cobertura y estadísticas de datos externos}
+\label{tab:geo_coverage}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+\textbf{Región} & \textbf{n} & \textbf{Cob. (\%)} & \textbf{Prec.(z)} & \textbf{T.2024} & \textbf{$\Delta$T} & \textbf{Elev.(m)} & \textbf{Pend.(°)} \\
+\midrule
+Costa & 8,263 & 90.6 & $-$0.46 & 21.0 & $-$0.92 & 563 & 3.30 \\
+Sierra & 20,601 & 99.0 & $-$0.29 & 13.3 & $-$0.82 & 3,106 & 6.33 \\
+Selva & 6,323 & 97.8 & $-$0.96 & 24.9 & $-$0.21 & 718 & 3.44 \\
+\midrule
+\textbf{Total} & 35,187 & 96.8 & $-$0.45 & 17.1 & $-$0.73 & 2,113 & 5.14 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Cob. = cobertura UBIGEO. Prec.(z) = anomalía precip. $\Delta$T = cambio temp.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Nota}: Colinealidad fuerte entre temperatura y elevación ($r = -0.925$).
+
+\subsection{Controles ENA: nivel nacional}
+
+\begin{table}[H]
+\centering
+\caption{Estadísticas de controles ENA}
+\label{tab:ena_controls_overall}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Variable} & \textbf{Miss(\%)} & \textbf{Media} & \textbf{P50} & \textbf{P90} \\
+\midrule
+Tiene riego & 0.0 & 0.60 & 1.0 & 1.0 \\
+Riego tecnificado & 40.3 & 0.31 & 0.0 & 1.0 \\
+Usuario agua & 4.9 & 0.45 & 0.0 & 1.0 \\
+Usa maquinaria & 0.01 & 0.72 & 1.0 & 1.0 \\
+Usa abono & 0.01 & 0.61 & 1.0 & 1.0 \\
+Usa fertilizantes & 0.01 & 0.59 & 1.0 & 1.0 \\
+Capacitación & 0.01 & 0.10 & 0.0 & 0.0 \\
+Asist. técnica & 0.01 & 0.06 & 0.0 & 0.0 \\
+Nivel educativo & 3.2 & 4.54 & 4.0 & 8.0 \\
+Crédito obtenido & 86.6 & 0.93 & 1.0 & 1.0 \\
+Asociación & 0.01 & 0.08 & 0.0 & 0.0 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item n=35,187. Crédito excluido del modelo principal por alta missingness.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Muestras analíticas finales}
+
+\begin{table}[H]
+\centering
+\caption{Tamaño de muestras analíticas}
+\label{tab:sample_analytical}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrp{7cm}}
+\toprule
+\textbf{Modelo} & \textbf{n base} & \textbf{n geo2} & \textbf{Requisitos} \\
+\midrule
+SFA (main) & 26,594 & 26,546 & valor\_total $>$ 0, área $>$ 0, diversificación observada \\
+Logit (main) & 34,074 & 34,039 & practice\_any, diversificación, pesos observados \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item geo2 = con controles geo-climáticos completos. Pérdida $<$ 0.2\%.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+% ==============================================================================
+\section{Metodología Econométrica}
+% ==============================================================================
+
+\subsection{Frontera Estocástica de Producción (SFA)}
+
+\subsubsection{Especificación del modelo}
+La frontera Cobb-Douglas:
+\[
+\ln Y_i = \beta_0 + \beta_1 \ln(\text{Tierra}_i) + \beta_2 \ln(\text{Trabajo}_i) + \beta_3 \ln(\text{Insumos}_i) + v_i - u_i
+\]
+
+Donde:
+\begin{itemize}
+    \item $Y_i$ = valor de producción (valor\_total)
+    \item $v_i \sim N(0, \sigma_v^2)$ = error aleatorio
+    \item $u_i \geq 0$ = ineficiencia técnica (half-normal)
+\end{itemize}
+
+\subsubsection{Ecuación de ineficiencia}
+\[
+u_i = \delta_0 + \delta_1 \text{Diversif}_i + \delta_2 \text{Mediano}_i + \delta_3 \text{Grande}_i + \delta_4 \text{Div} \times \text{Med}_i + \delta_5 \text{Div} \times \text{Gra}_i + \gamma_r \text{Región}_i
+\]
+
+\subsubsection{Interpretación de coeficientes}
+Con \texttt{ineffDecrease=TRUE}:
+\begin{itemize}
+    \item Coeficiente \textbf{positivo} en Z $\Rightarrow$ \textbf{reduce} ineficiencia (mayor TE)
+    \item Coeficiente \textbf{negativo} en Z $\Rightarrow$ \textbf{aumenta} ineficiencia (menor TE)
+\end{itemize}
+
+\subsubsection{Parámetro gamma}
+\[
+\gamma = \frac{\sigma_u^2}{\sigma_u^2 + \sigma_v^2}
+\]
+Gamma cercano a 1 indica que la varianza del error se debe principalmente a ineficiencia.
+
+\subsection{Logit con diseño muestral}
+\[
+\Pr(\text{practice\_any}_i = 1) = \Lambda(\alpha + \beta \text{Diversif}_i + \theta' X_i)
+\]
+
+Incorpora diseño muestral ENA: pesos (FACTOR\_PRODUCTOR), estratos (ESTRATO), PSU (NSEGM). Ajuste por PSU solitario habilitado.
+
+% ==============================================================================
+\section{Resultados SFA: Eficiencia Técnica}
+% ==============================================================================
+
+\subsection{Modelo principal}
+
+\begin{table}[H]
+\centering
+\caption{Resultados SFA principal (main\_area)}
+\label{tab:sfa_main}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Variable} & \textbf{Coef.} & \textbf{Err.Est.} & \textbf{z} & \textbf{p} & \textbf{Comp.} \\
+\midrule
+\multicolumn{6}{l}{\textit{Frontera de producción}} \\
+Constante & 8.404 & 0.051 & 164.2 & $<$.001 & Front. \\
+Log(Tierra) & 0.904 & 0.006 & 150.8 & $<$.001 & Front. \\
+Log(Trabajo) & 0.254 & 0.007 & 34.8 & $<$.001 & Front. \\
+Log(Insumos) & 0.070 & 0.007 & 10.5 & $<$.001 & Front. \\
+\midrule
+\multicolumn{6}{l}{\textit{Ecuación de ineficiencia (ineffDecrease=TRUE)}} \\
+Constante & $-$16.813 & 1.069 & $-$15.7 & $<$.001 & Inef. \\
+\textbf{Diversificación} & \textbf{+1.929} & \textbf{0.201} & \textbf{9.6} & \textbf{$<$.001} & Inef. \\
+Mediano (2-5 ha) & +2.334 & 0.213 & 10.9 & $<$.001 & Inef. \\
+Grande ($>$5 ha) & +8.842 & 0.390 & 22.6 & $<$.001 & Inef. \\
+Diversif.$\times$Mediano & $-$0.200 & 0.243 & $-$0.8 & 0.411 & Inef. \\
+Diversif.$\times$Grande & $-$5.543 & 0.289 & $-$19.2 & $<$.001 & Inef. \\
+Región 2 (Sierra) & +12.537 & 0.709 & 17.7 & $<$.001 & Inef. \\
+Región 3 (Selva) & +8.347 & 0.565 & 14.8 & $<$.001 & Inef. \\
+\midrule
+$\sigma^2$ & 7.034 & 0.334 & 21.1 & $<$.001 & Var. \\
+$\gamma$ & 0.933 & 0.003 & 283.2 & $<$.001 & Var. \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item n=26,594. Con ineffDecrease=TRUE, coef. positivo $\Rightarrow$ reduce ineficiencia.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Interpretación económica detallada de la frontera de producción:}
+
+\begin{enumerate}
+    \item \textbf{Elasticidad de la tierra (0.904)}: 
+    \begin{itemize}
+        \item Un incremento de 10\% en área cosechada se asocia con 9.0\% más valor de producción
+        \item La elasticidad cercana a 1 indica que la tierra es el factor productivo dominante
+        \item Consistente con agricultura extensiva donde el factor limitante es la tierra
+    \end{itemize}
+    
+    \item \textbf{Elasticidad del trabajo (0.254)}:
+    \begin{itemize}
+        \item Un incremento de 10\% en mano de obra se asocia con 2.5\% más producción
+        \item Menor que tierra sugiere rendimientos decrecientes del trabajo
+        \item Puede reflejar subempleo rural o trabajo no productivo inclui en medición
+    \end{itemize}
+    
+    \item \textbf{Elasticidad de insumos (0.070)}:
+    \begin{itemize}
+        \item Efecto positivo pero modesto de los insumos comprados
+        \item Puede reflejar baja intensificación promedio o heterogeneidad en adopción
+        \item En modelos con controles ENA, esta elasticidad cambia (ver robustez)
+    \end{itemize}
+    
+    \item \textbf{Retornos a escala (suma = 1.23)}:
+    \begin{itemize}
+        \item Retornos levemente crecientes sugieren beneficios de escala
+        \item Contradicción aparente con resultado de grandes ineficientes
+        \item Se resuelve porque eficiencia técnica $\neq$ retornos a escala
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Interpretación económica de la ecuación de ineficiencia:}
+
+\begin{enumerate}
+    \item \textbf{Diversificación base (+1.929)}:
+    \begin{itemize}
+        \item Para pequeños productores, mayor diversificación reduce ineficiencia
+        \item Mecanismos probables: manejo de riesgo, complementariedades entre cultivos
+        \item Magnitud: pasar de especializado (0) a muy diversificado (0.5) reduce ineficiencia en $\approx 1$ unidad
+    \end{itemize}
+    
+    \item \textbf{Interacción con grandes ($-$5.543)}:
+    \begin{itemize}
+        \item Revierte el efecto positivo: para grandes, diversificación aumenta ineficiencia
+        \item Efecto neto = $1.929 - 5.543 = -3.614$
+        \item Interpretación: economías de escala se pierden con diversificación
+        \item Consistente con teoría de especialización en agricultura comercial
+    \end{itemize}
+    
+    \item \textbf{Dummies regionales (Sierra +12.5, Selva +8.3)}:
+    \begin{itemize}
+        \item Sierra y Selva son más eficientes que Costa (base)
+        \item Contraintuitivo: Costa tiene mayor valor promedio
+        \item Explicación: eficiencia es relativa a la frontera de cada contexto
+        \item La frontera pooled puede asignar mayor eficiencia a regiones con menor varianza
+    \end{itemize}
+    
+    \item \textbf{Gamma (0.933)}:
+    \begin{itemize}
+        \item 93.3\% de la varianza del error compuesto se atribuye a ineficiencia
+        \item Solo 6.7\% es ruido estadístico
+        \item Indica que hay espacio sustancial para mejoras de eficiencia
+        \item Caveat: gamma alto puede indicar sobreidentificación de ineficiencia
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Implicaciones de política:}
+\begin{itemize}
+    \item Para pequeños: promover diversificación puede mejorar eficiencia
+    \item Para grandes: facilitar especialización y economías de escala
+    \item Las intervenciones deben diferenciarse por tamaño de productor
+\end{itemize}
+
+\subsection{Efecto marginal por tamaño}
+
+\begin{table}[H]
+\centering
+\caption{Efecto neto de diversificación por tamaño}
+\label{tab:marginal_diversif}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrl}
+\toprule
+\textbf{Tamaño} & \textbf{Efecto neto} & \textbf{Cálculo} & \textbf{Interpretación} \\
+\midrule
+Pequeño ($<$2 ha) & +1.929 & Base & Diversif. $\Rightarrow$ \textbf{mayor} eficiencia \\
+Mediano (2-5 ha) & +1.729 & $+1.929-0.200$ & Diversif. $\Rightarrow$ \textbf{mayor} eficiencia \\
+Grande ($>$5 ha) & $-$3.614 & $+1.929-5.543$ & Diversif. $\Rightarrow$ \textbf{menor} eficiencia \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Efecto positivo = reduce ineficiencia (con ineffDecrease=TRUE).
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Eficiencia técnica estimada}
+
+\begin{table}[H]
+\centering
+\caption{Distribución de eficiencia técnica (TE)}
+\label{tab:te_stats}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+\textbf{Estadístico} & \textbf{Valor} \\
+\midrule
+n & 26,594 \\
+Media & 0.473 \\
+Desv. Est. & 0.240 \\
+Mínimo & 0.0001 \\
+P10 & 0.097 \\
+Mediana (P50) & 0.511 \\
+P90 & 0.763 \\
+Máximo & 0.893 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item TE $\in$ (0,1]. Calculada del modelo main\_area.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Robustez SFA: índices alternativos}
+
+\begin{table}[H]
+\centering
+\caption{SFA con índices alternativos de diversificación}
+\label{tab:sfa_robustness}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Modelo} & \textbf{Diversif.} & \textbf{Err.Est.} & \textbf{p} & \textbf{$\gamma$} & \textbf{n} \\
+\midrule
+Principal (1-HHI) & +1.929 & 0.201 & $<$.001 & 0.933 & 26,594 \\
+Shannon & +12.835 & 1.624 & $<$.001 & 0.989 & 26,594 \\
+Núm. cultivos & +1.468 & 0.330 & $<$.001 & 0.989 & 26,594 \\
+Solo pequeños & +2.705 & 0.380 & $<$.001 & 0.844 & 16,015 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Todos muestran efecto positivo (reduce ineficiencia). Gamma varía entre modelos.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Robustez SFA: controles adicionales}
+
+\begin{table}[H]
+\centering
+\caption{Comparación efecto diversificación entre modelos SFA}
+\label{tab:sfa_compare_all}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Modelo} & \textbf{Z\_Diversif} & \textbf{Err.Est.} & \textbf{p} & \textbf{Z\_Int.Med} & \textbf{Z\_Int.Gra} \\
+\midrule
+main\_area & +1.929 & 0.201 & $<$.001 & $-$0.200 & $-$5.543 \\
+controls\_ena & +0.917 & 0.134 & $<$.001 & +0.718 & $-$3.645 \\
+temp\_topo & +0.273 & 0.246 & 0.267 & +2.531 & $-$7.970 \\
+controls\_temp\_topo & +0.018 & 0.135 & 0.892 & +1.961 & $-$3.585 \\
+xgeo\_prcp & +1.927 & 0.185 & $<$.001 & $-$0.208 & $-$5.671 \\
+zgeo\_prcp & +2.100 & 0.199 & $<$.001 & $-$0.147 & $-$5.594 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Efecto base se atenúa con controles; interacción negativa para grandes persiste.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Observación clave}: El efecto base de diversificación se atenúa o desaparece con controles temp/topo, pero la interacción negativa para grandes se mantiene robusta.
+
+\textbf{Interpretación económica de la robustez SFA:}
+
+\begin{enumerate}
+    \item \textbf{Estabilidad del efecto base}: El coeficiente de diversificación pasa de +1.929 (main) a +0.018 (controls\_temp\_topo), una reducción del 99\%. Esto sugiere que:
+    \begin{itemize}
+        \item La diversificación puede estar correlacionada con condiciones agroecológicas
+        \item La diversificación no es exógena: productores con mejores condiciones climáticas también diversifican más
+        \item Se requiere cautela en interpretación causal del efecto base
+    \end{itemize}
+    
+    \item \textbf{Robustez de la interacción para grandes}: El coeficiente diversif$\times$grande permanece negativo y significativo en todas las especificaciones (rango: $-$3.6 a $-$8.0). Esto es evidencia más robusta porque:
+    \begin{itemize}
+        \item Efecto diferencial no se explica por condiciones agroecológicas
+        \item La heterogeneidad por tamaño es un patrón estructural
+        \item La pérdida de economías de escala por diversificación en grandes es consistente
+    \end{itemize}
+    
+    \item \textbf{Gamma alto en modelos alternativos}: Los modelos Shannon y núm. cultivos tienen $\gamma \approx 0.99$, cerca del límite. Esto indica:
+    \begin{itemize}
+        \item Posibles problemas de identificación en fronteras alternativas
+        \item El índice HHI es preferible para estabilidad numérica
+    \end{itemize}
+    
+    \item \textbf{Efecto precipitación (xgeo vs zgeo)}: Cuando la precipitación entra en la frontera (xgeo), el efecto de diversificación se mantiene (+1.93). Cuando entra en ineficiencia (zgeo), aumenta ligeramente (+2.10). No hay sensibilidad severa a la ubicación del control climático.
+\end{enumerate}
+
+\textbf{Conclusión de robustez}: Los resultados para grandes productores son robustos. Los resultados para pequeños y medianos dependen de los controles incluidos y deben interpretarse con cautela.
+
+\subsection{SFA con controles ENA detallado}
+
+\begin{table}[H]
+\centering
+\caption{SFA con controles ENA (controls\_ena)}
+\label{tab:sfa_controls_ena}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrl}
+\toprule
+\textbf{Variable} & \textbf{Coef.} & \textbf{Err.Est.} & \textbf{z} & \textbf{p} & \textbf{Comp.} \\
+\midrule
+\multicolumn{6}{l}{\textit{Frontera}} \\
+Log(Tierra) & 0.902 & 0.006 & 153.9 & $<$.001 & Front. \\
+Log(Trabajo) & 0.223 & 0.008 & 29.4 & $<$.001 & Front. \\
+Log(Insumos) & $-$0.012 & 0.007 & $-$1.8 & 0.078 & Front. \\
+Log(Gasto riego) & 0.073 & 0.003 & 27.3 & $<$.001 & Front. \\
+Log(Capital) & 0.041 & 0.003 & 15.6 & $<$.001 & Front. \\
+\midrule
+\multicolumn{6}{l}{\textit{Ineficiencia}} \\
+Diversificación & +0.917 & 0.134 & 6.9 & $<$.001 & Inef. \\
+Nivel educación & $-$0.026 & 0.012 & $-$2.2 & 0.025 & Inef. \\
+Capacitación & $-$0.235 & 0.086 & $-$2.7 & 0.006 & Inef. \\
+Asist. técnica & $-$0.816 & 0.124 & $-$6.6 & $<$.001 & Inef. \\
+Riego (any) & $-$1.575 & 0.089 & $-$17.7 & $<$.001 & Inef. \\
+Usa fertilizantes & $-$2.534 & 0.100 & $-$25.3 & $<$.001 & Inef. \\
+\midrule
+$\gamma$ & 0.915 & 0.004 & 249.5 & $<$.001 & Var. \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item n=26,121. Coef. negativo en ineficiencia = reduce ineficiencia.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Hallazgos}: El riego, fertilizantes y asistencia técnica son los controles más fuertes para reducir ineficiencia.
+
+% ==============================================================================
+\section{Resultados Logit: Prácticas Agrícolas}
+% ==============================================================================
+
+\subsection{Modelo principal}
+
+\begin{table}[H]
+\centering
+\caption{Logit para adopción de prácticas (main)}
+\label{tab:logit_main}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Variable} & \textbf{Coef.} & \textbf{Err.Est.} & \textbf{z} & \textbf{p} & \textbf{OR} \\
+\midrule
+Constante & 0.015 & 0.437 & 0.0 & 0.973 & 1.02 \\
+\textbf{Diversificación} & \textbf{1.382} & \textbf{0.335} & \textbf{4.1} & \textbf{$<$.001} & \textbf{3.98} \\
+Mediano & 0.239 & 0.306 & 0.8 & 0.434 & 1.27 \\
+Pequeño & 0.370 & 0.383 & 1.0 & 0.335 & 1.45 \\
+Log(Área) & $-$0.001 & 0.150 & 0.0 & 0.995 & 1.00 \\
+Sierra (vs Costa) & 1.178 & 0.175 & 6.7 & $<$.001 & 3.25 \\
+Selva (vs Costa) & $-$1.174 & 0.140 & $-$8.4 & $<$.001 & 0.31 \\
+\midrule
+Div.$\times$Mediano & 0.107 & 0.435 & 0.2 & 0.806 & 1.11 \\
+Div.$\times$Pequeño & 0.117 & 0.456 & 0.3 & 0.798 & 1.12 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item n=34,074. OR = $e^{\text{coef}}$. Diseño muestral ENA incorporado.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Interpretación}: Un aumento de 0.1 en diversificación implica OR $\approx$ 1.15 (15\% aumento en odds de práctica). Sierra tiene 3.25 veces mayor probabilidad que Costa; Selva 69\% menor.
+
+\subsection{Robustez Logit}
+
+\begin{table}[H]
+\centering
+\caption{Robustez logit: especificaciones alternativas}
+\label{tab:logit_robustness}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Modelo} & \textbf{Coef.} & \textbf{Err.Est.} & \textbf{p} & \textbf{OR} & \textbf{n} \\
+\midrule
+Principal (1-HHI) & 1.38 & 0.34 & $<$.001 & 3.98 & 34,074 \\
+Shannon & 0.64 & 0.15 & $<$.001 & 1.90 & 34,074 \\
+Núm. cultivos & 0.12 & 0.03 & $<$.001 & 1.12 & 34,074 \\
+Outcome $\geq$2 prác. & 1.29 & 0.36 & $<$.001 & 3.63 & 34,074 \\
+Solo pequeños & 1.36 & 0.32 & $<$.001 & 3.90 & 21,956 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Todos los índices muestran asociación positiva y significativa.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Interpretación económica de la robustez Logit:}
+
+\begin{enumerate}
+    \item \textbf{Consistencia entre índices}: Los tres índices (1-HHI, Shannon, núm. cultivos) muestran OR positivos y significativos, indicando que la asociación entre diversificación y prácticas es robusta a la operacionalización.
+    
+    \item \textbf{Magnitudes diferentes}: 
+    \begin{itemize}
+        \item 1-HHI: OR = 3.98 (más sensible a distribución de área)
+        \item Shannon: OR = 1.90 (sensible a cultivos minoritarios)
+        \item Núm. cultivos: OR = 1.12 (solo conteo, ignora distribución)
+    \end{itemize}
+    Las diferencias reflejan qué aspecto de la diversificación captura cada índice.
+    
+    \item \textbf{Outcome más estricto ($\geq$2 prácticas)}: OR = 3.63, similar al principal. Esto sugiere que la asociación no es solo con una práctica marginal, sino con adopción múltiple.
+    
+    \item \textbf{Solo pequeños}: OR = 3.90, muy similar al promedio (3.98). No hay evidencia de heterogeneidad por tamaño en logit, a diferencia de SFA.
+\end{enumerate}
+
+\textbf{Implicación}: La relación diversificación-prácticas es más robusta que la relación diversificación-eficiencia, persistiendo con diferentes índices y outcomes.
+
+\subsection{Comparación efectos logit}
+
+\begin{table}[H]
+\centering
+\caption{Comparación efecto diversificación entre modelos Logit}
+\label{tab:logit_compare_all}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Modelo} & \textbf{Coef.} & \textbf{Err.Est.} & \textbf{p} & \textbf{OR} & \textbf{Cambio} \\
+\midrule
+main & 1.38 & 0.34 & $<$.001 & 3.98 & -- \\
+controls\_ena & 0.78 & 0.32 & 0.015 & 2.18 & $-$45\% \\
+temp\_topo & 1.27 & 0.39 & 0.001 & 3.55 & $-$11\% \\
+controls\_temp\_topo & 0.79 & 0.36 & 0.027 & 2.21 & $-$45\% \\
+main\_geo (prcp) & 1.40 & 0.35 & $<$.001 & 4.06 & +2\% \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Cambio = variación OR vs main. Efecto persiste en todas las especificaciones.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Logit con controles ENA}
+
+\begin{table}[H]
+\centering
+\caption{Logit con controles ENA (controls\_ena)}
+\label{tab:logit_controls_ena}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Variable} & \textbf{Coef.} & \textbf{Err.Est.} & \textbf{z} & \textbf{p} & \textbf{OR} \\
+\midrule
+Diversificación & 0.781 & 0.319 & 2.4 & 0.015 & 2.18 \\
+Capacitación & 0.750 & 0.215 & 3.5 & $<$.001 & 2.12 \\
+Usuario agua & 0.467 & 0.162 & 2.9 & 0.004 & 1.60 \\
+Uso maquinaria & 0.504 & 0.173 & 2.9 & 0.004 & 1.66 \\
+Usa abono & 1.482 & 0.170 & 8.7 & $<$.001 & 4.40 \\
+Semilla comercial & 0.472 & 0.143 & 3.3 & $<$.001 & 1.60 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item n=34,074. Uso de abono es el predictor más fuerte (OR=4.40).
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+% ==============================================================================
+\section{Pérdida Muestral y Diagnósticos}
+% ==============================================================================
+
+\begin{table}[H]
+\centering
+\caption{Comparación muestras base vs. geo2}
+\label{tab:sample_loss}
+\begin{threeparttable}
+\small
+\begin{tabular}{llrrrr}
+\toprule
+\textbf{Modelo} & \textbf{Grupo} & \textbf{n base} & \textbf{n geo2} & \textbf{Ret.(\%)} & \textbf{Pérdida} \\
+\midrule
+Logit & Total & 34,074 & 34,039 & 99.90 & 35 \\
+& Costa & 7,489 & 7,489 & 100.0 & 0 \\
+& Sierra & 20,403 & 20,380 & 99.89 & 23 \\
+& Selva & 6,182 & 6,170 & 99.81 & 12 \\
+\midrule
+SFA & Total & 26,594 & 26,546 & 99.82 & 48 \\
+& Pequeño & 16,015 & 15,990 & 99.84 & 25 \\
+& Mediano & 5,512 & 5,498 & 99.75 & 14 \\
+& Grande & 5,067 & 5,058 & 99.82 & 9 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Ret. = retención. Pérdida mínima ($<$0.2\%).
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Diagnósticos SFA por modelo}
+\label{tab:sfa_diagnostics}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Modelo} & \textbf{n} & \textbf{$\gamma$} & \textbf{Cov. Sing.} & \textbf{Cond. Num.} \\
+\midrule
+main\_area & 26,594 & 0.933 & FALSE & 5.7e+06 \\
+alt\_shannon & 26,594 & 0.989 & FALSE & 8.4e+09 \\
+alt\_num\_crops & 26,594 & 0.989 & FALSE & 1.3e+10 \\
+small\_only & 16,015 & 0.844 & FALSE & 1.0e+06 \\
+controls\_ena & 26,121 & 0.915 & FALSE & 1.5e+06 \\
+temp\_topo & 26,546 & 0.970 & FALSE & 6.6e+08 \\
+controls\_temp\_topo & 26,073 & 0.938 & FALSE & 2.9e+07 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Cov. Sing. = covariance matrix singular. Ningún modelo tiene matriz singular.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+% ==============================================================================
+\section{Auditorías y Experimentos}
+% ==============================================================================
+
+\subsection{Auditorías técnicas}
+\begin{itemize}
+    \item \textbf{Codificación de prácticas}: P301A usa 1=Sí, 2=No; practice\_any definida con P301A\_1--4C, 11, 16, 17.
+    \item \textbf{Diseño muestral}: PSU NSEGM consistente por estrato; ajuste por PSU solitario aplicado.
+    \item \textbf{Geo/clima}: Cobertura 96.8\%; colinealidad fuerte entre temperatura y elevación.
+    \item \textbf{SFA}: Gamma no está en el límite (0.93); covarianzas no singulares.
+\end{itemize}
+
+\subsection{Experimentos ejecutados}
+\begin{itemize}
+    \item \textbf{X01 (prácticas estrictas)}: Definición actualizada (P301A\_1--4C, 11, 16, 17); prevalencia baja a 0.776.
+    \item \textbf{X02 (estandarización Z)}: No eliminó advertencias de convergencia; revertido.
+\end{itemize}
+
+% ==============================================================================
+\section{Limitaciones}
+% ==============================================================================
+
+\begin{enumerate}
+    \item \textbf{SFA sin pesos}: Resultados son asociativos, no representativos poblacionalmente.
+    \item \textbf{Diversificación endógena}: No se puede establecer causalidad; posible selección.
+    \item \textbf{Gamma alto}: La varianza de ineficiencia domina ($\gamma \approx 0.93$).
+    \item \textbf{Prevalencia de prácticas}: 77.6\% limita variación en el outcome logit.
+    \item \textbf{Colinealidad geo-climática}: Temperatura y elevación correlacionados ($r = -0.93$).
+    \item \textbf{Muestreo espacial}: Datos climáticos en capitales distritales, no GPS de finca.
+\end{enumerate}
+
+% ==============================================================================
+\section{Conclusiones}
+% ==============================================================================
+
+\subsection{Síntesis de resultados}
+
+\begin{enumerate}
+    \item \textbf{Eficiencia técnica}: Los productores peruanos operan al 47\% de la frontera estimada en promedio, con heterogeneidad significativa por región y tamaño.
+    
+    \item \textbf{Diversificación y eficiencia}: La relación es heterogénea por tamaño:
+    \begin{itemize}
+        \item Para pequeños y medianos: diversificación \textit{reduce} ineficiencia
+        \item Para grandes: diversificación \textit{aumenta} ineficiencia (efecto neto negativo)
+    \end{itemize}
+    
+    \item \textbf{Adopción de prácticas}: La diversificación muestra asociación positiva robusta (OR $\approx$ 2--4) que persiste con controles ENA y geo-climáticos.
+    
+    \item \textbf{Controles importantes}: Riego, fertilizantes, asistencia técnica y uso de abono son los predictores más fuertes tanto de eficiencia como de adopción de prácticas.
+    
+    \item \textbf{Heterogeneidad regional}: Sierra presenta mayor diversificación y adopción de prácticas; Selva muestra brechas significativas.
+\end{enumerate}
+
+\subsection{Implicaciones de política}
+
+\begin{itemize}
+    \item Las intervenciones para promover diversificación deben considerar el tamaño del productor.
+    \item El fortalecimiento de servicios de extensión y asistencia técnica puede ser más efectivo que intervenciones directas en diversificación.
+    \item Las políticas diferenciadas por región son necesarias dada la heterogeneidad observada.
+\end{itemize}
+
+\subsection{Siguientes pasos}
+
+\begin{enumerate}
+    \item Explorar estrategias de identificación causal (variables instrumentales, panel).
+    \item Evaluar definiciones alternativas de prácticas y reportar como robustez.
+    \item Incorporar análisis espacial con coordenadas GPS si están disponibles.
+    \item Estimar modelos separados por región para verificar estabilidad de signos.
+\end{enumerate}
+
+% ==============================================================================
+\section{Anexo A: Pipeline de Datos}
+% ==============================================================================
+
+\subsection{Flujo de procesamiento}
+
+El pipeline de procesamiento de datos se ejecutó de forma reproducible mediante scripts secuenciales. A continuación se documenta cada paso:
+
+\begin{enumerate}
+    \item \textbf{Inventario y perfilado}
+    \begin{itemize}
+        \item Script: \texttt{src/ena/scan\_repo.py}
+        \item Output: \texttt{docs/REPO\_INVENTORY.md}, \texttt{data/intermediate/raw\_manifest.csv}
+        \item Descripción: Revisa estructura del directorio, identifica archivos CSV y su contenido.
+    \end{itemize}
+    
+    \item \textbf{Carga y perfilado de módulos}
+    \begin{itemize}
+        \item Script: \texttt{src/ena/01\_load\_and\_profile.py}
+        \item Output: \texttt{data/intermediate/ena2024\_raw.parquet}, \texttt{module\_profile.csv}
+        \item Descripción: Carga módulos ENA, genera estadísticas básicas, identifica llaves primarias.
+    \end{itemize}
+    
+    \item \textbf{Parseo del diccionario}
+    \begin{itemize}
+        \item Script: \texttt{src/ena/02\_build\_schema\_from\_dictionary.py}
+        \item Output: \texttt{docs/ENA2024\_VARIABLE\_DICTIONARY.md}, mapeo de nombres.
+        \item Descripción: Extrae definiciones de variables del PDF oficial, crea esquema estandarizado.
+    \end{itemize}
+    
+    \item \textbf{Aplicación del esquema}
+    \begin{itemize}
+        \item Script: \texttt{src/ena/03\_apply\_schema.py}
+        \item Output: \texttt{data/intermediate/ena2024\_schema.parquet}
+        \item Descripción: Renombra variables, fusiona CARATULA con CAP200AB, crea base a nivel productor-cultivo.
+    \end{itemize}
+    
+    \item \textbf{Cálculo de diversificación}
+    \begin{itemize}
+        \item Script: \texttt{src/ena/04\_compute\_diversification.py}
+        \item Output: Índices HHI, Shannon, número de cultivos a nivel productor.
+        \item Descripción: Calcula participaciones por área cosechada y valor, agrega a nivel productor.
+    \end{itemize}
+    
+    \item \textbf{Construcción del dataset de modelamiento}
+    \begin{itemize}
+        \item Script: \texttt{src/ena/05\_build\_model\_data.py}
+        \item Output: \texttt{data/processed/model\_data\_ena2024.parquet}
+        \item Descripción: Suma valores, insumos, trabajo; aplica transformaciones logarítmicas.
+    \end{itemize}
+    
+    \item \textbf{Controles ENA adicionales}
+    \begin{itemize}
+        \item Script: \texttt{src/ena/06\_build\_model\_data\_plus\_controls.py}
+        \item Output: \texttt{data/processed/model\_data\_ena2024\_plus\_controls.parquet}
+        \item Descripción: Agrega variables de CAP700-1100 (riego, maquinaria, capital humano).
+    \end{itemize}
+    
+    \item \textbf{Datos externos}
+    \begin{itemize}
+        \item UBIGEO: \texttt{src/external/ubigeo/}
+        \item CHIRPS: \texttt{src/external/chirps/}
+        \item TerraClimate: \texttt{src/external/temperature/}
+        \item Copernicus DEM: \texttt{src/external/topography/}
+    \end{itemize}
+    
+    \item \textbf{Merge geo-climático}
+    \begin{itemize}
+        \item Scripts: \texttt{src/features/merge\_*.py}
+        \item Output: \texttt{data/processed/model\_data\_ena2024\_plus\_geo2.parquet}
+        \item Descripción: Enlaza por UBIGEO distrital, verifica cobertura.
+    \end{itemize}
+    
+    \item \textbf{Estimación econométrica}
+    \begin{itemize}
+        \item SFA: \texttt{R/01\_sfa\_main.R}
+        \item Logit: \texttt{R/02\_logit\_practices.R}
+        \item Outputs: \texttt{outputs/tables/02\_sfa\_main.csv}, \texttt{04\_logit\_main.csv}
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Control de calidad}
+
+\begin{table}[H]
+\centering
+\caption{Verificaciones de calidad de datos}
+\label{tab:qa_checks}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{4cm}p{6cm}p{3cm}}
+\toprule
+\textbf{Verificación} & \textbf{Descripción} & \textbf{Resultado} \\
+\midrule
+Duplicados de llave & ANIO+CCDD+CCPP+CCDI+NSEGM+ID\_PROD+UA & 0 duplicados \\
+Rangos de área & area\_total\_ha $\in$ [0, 10{,}000] & Plausible \\
+Rangos de valor & valor\_total $\in$ [0, 7M] & Colas pesadas \\
+Cobertura UBIGEO & \% productores con match & 96.8\% \\
+Rangos temperatura & tmean\_2024 $\in$ [5, 30]°C & Plausible \\
+Rangos elevación & elev\_m $\in$ [0, 4{,}500] msnm & Plausible \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+\subsection{Política de missingness detallada}
+
+\begin{table}[H]
+\centering
+\caption{Tratamiento de valores faltantes por tipo de variable}
+\label{tab:missingness_policy}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{3.5cm}p{4cm}p{5.5cm}}
+\toprule
+\textbf{Tipo de variable} & \textbf{Tratamiento} & \textbf{Justificación} \\
+\midrule
+Sumas de componentes & \texttt{min\_count=1} & Todo NA $\to$ NA, no imputa ceros \\
+Indicadores sí/no & $1\to 1$, $2/0\to 0$, otro$\to$NA & Codificación ENA estándar \\
+Gastos monetarios & 0 si indicador=No & Lógica condicional \\
+Controles alto-missing & Excluir del modelo base & Preservar muestra \\
+Geo-climáticas & NA propagado & No imputar valores espaciales \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+% ==============================================================================
+\section{Anexo B: Tablas Adicionales}
+% ==============================================================================
+
+\subsection{Controles ENA por región natural}
+
+\begin{table}[H]
+\centering
+\caption{Controles ENA por región: Costa}
+\label{tab:ena_controls_costa}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Variable} & \textbf{Miss(\%)} & \textbf{Media} & \textbf{P50} & \textbf{P90} \\
+\midrule
+Tiene riego & 0.0 & 0.96 & 1 & 1 \\
+Riego tecnificado & 4.2 & 0.24 & 0 & 1 \\
+Usuario agua & 10.8 & 0.75 & 1 & 1 \\
+Usa maquinaria & 0.0 & 0.84 & 1 & 1 \\
+Usa abono & 0.0 & 0.45 & 0 & 1 \\
+Usa fertilizantes & 0.0 & 0.85 & 1 & 1 \\
+Semilla certificada & 43.7 & 0.52 & 1 & 1 \\
+Capacitación & 0.0 & 0.12 & 0 & 1 \\
+Asist. técnica & 0.0 & 0.11 & 0 & 1 \\
+Nivel educativo & 9.4 & 5.42 & 6 & 9 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item n=8,263. Costa = región natural 1.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Controles ENA por región: Sierra}
+\label{tab:ena_controls_sierra}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Variable} & \textbf{Miss(\%)} & \textbf{Media} & \textbf{P50} & \textbf{P90} \\
+\midrule
+Tiene riego & 0.0 & 0.59 & 1 & 1 \\
+Riego tecnificado & 40.6 & 0.37 & 0 & 1 \\
+Usuario agua & 2.9 & 0.46 & 0 & 1 \\
+Usa maquinaria & 0.0 & 0.66 & 1 & 1 \\
+Usa abono & 0.0 & 0.78 & 1 & 1 \\
+Usa fertilizantes & 0.0 & 0.52 & 1 & 1 \\
+Semilla certificada & 13.2 & 0.03 & 0 & 0 \\
+Capacitación & 0.0 & 0.07 & 0 & 0 \\
+Asist. técnica & 0.0 & 0.03 & 0 & 0 \\
+Nivel educativo & 1.0 & 4.23 & 4 & 6 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item n=20,601. Sierra = región natural 2.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Controles ENA por región: Selva}
+\label{tab:ena_controls_selva}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Variable} & \textbf{Miss(\%)} & \textbf{Media} & \textbf{P50} & \textbf{P90} \\
+\midrule
+Tiene riego & 0.0 & 0.14 & 0 & 1 \\
+Riego tecnificado & 86.5 & 0.17 & 0 & 1 \\
+Usuario agua & 3.9 & 0.07 & 0 & 0 \\
+Usa maquinaria & 0.0 & 0.74 & 1 & 1 \\
+Usa abono & 0.0 & 0.24 & 0 & 1 \\
+Usa fertilizantes & 0.0 & 0.45 & 0 & 1 \\
+Semilla certificada & 59.2 & 0.26 & 0 & 1 \\
+Capacitación & 0.0 & 0.15 & 0 & 1 \\
+Asist. técnica & 0.0 & 0.09 & 0 & 0 \\
+Nivel educativo & 2.2 & 4.54 & 4 & 7 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item n=6,323. Selva = región natural 3.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Temperatura y topografía detallada}
+
+\begin{table}[H]
+\centering
+\caption{Estadísticas de temperatura y topografía por región}
+\label{tab:temp_topo_detail}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Región} & \textbf{tmean\_2024} & \textbf{tmean\_2023} & \textbf{$\Delta$T} & \textbf{elev\_m} & \textbf{slope\_deg} & \textbf{ruggedness} \\
+\midrule
+Costa & 21.05 & 21.97 & $-$0.92 & 563 & 3.30 & 4.64 \\
+Sierra & 13.29 & 14.11 & $-$0.82 & 3,106 & 6.33 & 9.39 \\
+Selva & 24.87 & 25.08 & $-$0.21 & 718 & 3.44 & 5.16 \\
+\midrule
+\textbf{Total} & 17.10 & 17.83 & $-$0.73 & 2,113 & 5.14 & 7.58 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Temperatura en °C, elevación en msnm, pendiente en grados.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Colinealidad entre variables geo-climáticas}
+
+\begin{table}[H]
+\centering
+\caption{Correlaciones entre variables geo-climáticas}
+\label{tab:geo_correlations}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+& \textbf{tmean\_2024} & \textbf{elev\_m} & \textbf{slope\_deg} & \textbf{ruggedness} \\
+\midrule
+tmean\_2024 & 1.000 & & & \\
+elev\_m & $-$0.925 & 1.000 & & \\
+slope\_deg & $-$0.470 & 0.608 & 1.000 & \\
+ruggedness & $-$0.498 & 0.625 & 0.968 & 1.000 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Correlación alta entre temperatura y elevación ($r=-0.925$).
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{SFA con temperatura y topografía detallado}
+
+\begin{table}[H]
+\centering
+\caption{SFA con temperatura y topografía (temp\_topo)}
+\label{tab:sfa_temp_topo}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrl}
+\toprule
+\textbf{Variable} & \textbf{Coef.} & \textbf{Err.Est.} & \textbf{z} & \textbf{p} & \textbf{Comp.} \\
+\midrule
+\multicolumn{6}{l}{\textit{Frontera}} \\
+Log(Tierra) & 0.863 & 0.006 & 135.7 & $<$.001 & Front. \\
+Log(Trabajo) & 0.290 & 0.008 & 36.7 & $<$.001 & Front. \\
+Log(Insumos) & 0.046 & 0.007 & 6.6 & $<$.001 & Front. \\
+tmean\_2024 & 0.054 & 0.002 & 30.0 & $<$.001 & Front. \\
+delta\_tmean & $-$0.400 & 0.015 & $-$26.6 & $<$.001 & Front. \\
+slope\_deg & 0.016 & 0.005 & 2.9 & 0.004 & Front. \\
+\midrule
+\multicolumn{6}{l}{\textit{Ineficiencia}} \\
+Diversificación & +0.273 & 0.246 & 1.1 & 0.267 & Inef. \\
+Diversif.$\times$Mediano & +2.531 & 0.342 & 7.4 & $<$.001 & Inef. \\
+Diversif.$\times$Grande & $-$7.970 & 0.846 & $-$9.4 & $<$.001 & Inef. \\
+\midrule
+$\gamma$ & 0.970 & 0.003 & 351.8 & $<$.001 & Var. \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item n=26,546. Efecto base de diversificación no significativo con controles temp/topo.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Logit con precipitación}
+
+\begin{table}[H]
+\centering
+\caption{Logit con control de precipitación (main\_geo)}
+\label{tab:logit_geo}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Variable} & \textbf{Coef.} & \textbf{Err.Est.} & \textbf{z} & \textbf{p} & \textbf{OR} \\
+\midrule
+Diversificación & 1.400 & 0.354 & 4.0 & $<$.001 & 4.06 \\
+Sierra (vs Costa) & 1.192 & 0.165 & 7.2 & $<$.001 & 3.29 \\
+Selva (vs Costa) & $-$0.983 & 0.141 & $-$7.0 & $<$.001 & 0.37 \\
+prcp\_total\_z & 0.550 & 0.080 & 6.9 & $<$.001 & 1.73 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item n=34,039. Precipitación z-score positivamente asociada con prácticas.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Logit con temperatura y topografía}
+
+\begin{table}[H]
+\centering
+\caption{Logit con temperatura y topografía (temp\_topo)}
+\label{tab:logit_temp_topo}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Variable} & \textbf{Coef.} & \textbf{Err.Est.} & \textbf{z} & \textbf{p} & \textbf{OR} \\
+\midrule
+Diversificación & 1.267 & 0.386 & 3.3 & 0.001 & 3.55 \\
+tmean\_2024 & $-$0.182 & 0.040 & $-$4.6 & $<$.001 & 0.83 \\
+elev\_m & $-$0.0004 & 0.0002 & $-$2.0 & 0.050 & 1.00 \\
+slope\_deg & 0.126 & 0.056 & 2.2 & 0.025 & 1.13 \\
+ruggedness & $-$0.114 & 0.039 & $-$3.0 & 0.003 & 0.89 \\
+prcp\_total\_z & 0.489 & 0.082 & 6.0 & $<$.001 & 1.63 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item n=34,039. Temperatura negativamente asociada; pendiente positivamente.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+% ==============================================================================
+\section{Anexo C: Interpretación Detallada}
+% ==============================================================================
+
+\subsection{Interpretación de coeficientes SFA}
+
+En el modelo SFA con \texttt{ineffDecrease=TRUE}, la interpretación de los coeficientes de la ecuación de ineficiencia ($Z$) es:
+
+\begin{itemize}
+    \item \textbf{Coeficiente positivo}: La variable \textit{reduce} la ineficiencia (aumenta la eficiencia técnica).
+    \item \textbf{Coeficiente negativo}: La variable \textit{aumenta} la ineficiencia (reduce la eficiencia técnica).
+\end{itemize}
+
+Para el modelo principal (main\_area):
+\begin{itemize}
+    \item \textbf{Z\_diversificacion\_area = +1.929}: Para productores pequeños (base), un aumento de 0.1 en diversificación reduce la ineficiencia en $0.1 \times 1.929 = 0.193$ unidades.
+    
+    \item \textbf{Z\_diversif\_grande = $-$5.543}: Para productores grandes, el efecto neto es $1.929 - 5.543 = -3.614$, lo que significa que la diversificación \textit{aumenta} la ineficiencia.
+    
+    \item \textbf{Gamma = 0.933}: El 93.3\% de la varianza del error compuesto se atribuye a ineficiencia técnica. Esto indica que hay espacio significativo para mejoras de eficiencia, pero también que el modelo puede estar sobre-atribuyendo variación a ineficiencia.
+\end{itemize}
+
+\subsection{Interpretación de odds ratios en logit}
+
+En el modelo logit principal:
+\begin{itemize}
+    \item \textbf{OR(diversificación) = 3.98}: Un aumento de 1 punto (de 0 a 1, es decir, de especialización total a diversificación máxima) multiplica las odds de adoptar prácticas por 3.98.
+    
+    \item \textbf{Interpretación marginal}: Un aumento de 0.1 puntos en diversificación implica un cambio en odds de $e^{0.1 \times 1.382} = 1.15$, es decir, 15\% mayor probabilidad relativa.
+    
+    \item \textbf{Prevalencia alta (77.6\%)}: Con prevalencia cercana al 80\%, los odds ratios deben interpretarse con cautela. Un OR de 4 no significa que la probabilidad se cuadruplica; el efecto en probabilidad absoluta es más modesto.
+\end{itemize}
+
+\subsection{Heterogeneidad por tamaño}
+
+El patrón de heterogeneidad por tamaño tiene interpretaciones económicas plausibles:
+
+\begin{enumerate}
+    \item \textbf{Pequeños ($<$2 ha)}: La diversificación beneficia porque:
+    \begin{itemize}
+        \item Reduce riesgo de pérdidas catastróficas
+        \item Aprovecha complementariedades en uso de tierra limitada
+        \item Menor costo de gestión de múltiples cultivos en área pequeña
+    \end{itemize}
+    
+    \item \textbf{Medianos (2--5 ha)}: Efecto similar a pequeños (interacción no significativa)
+    
+    \item \textbf{Grandes ($>$5 ha)}: La diversificación perjudica porque:
+    \begin{itemize}
+        \item Pérdida de economías de escala en cultivos individuales
+        \item Mayor complejidad de gestión
+        \item Posible evidencia de \textit{dis}economías de scope a gran escala
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Robustez y sensibilidad}
+
+\begin{table}[H]
+\centering
+\caption{Resumen de sensibilidad del efecto de diversificación}
+\label{tab:sensitivity_summary}
+\begin{threeparttable}
+\small
+\begin{tabular}{lcc}
+\toprule
+\textbf{Especificación} & \textbf{SFA (Z\_diversif)} & \textbf{Logit (OR)} \\
+\midrule
+Baseline & +1.93*** & 3.98*** \\
++ Controles ENA & +0.92*** & 2.18* \\
++ Temp/Topo & +0.27 (ns) & 3.55** \\
++ Todo & +0.02 (ns) & 2.21* \\
+\midrule
+Shannon (alt) & +12.8*** & 1.90*** \\
+Núm. cultivos (alt) & +1.47*** & 1.12*** \\
+Solo pequeños & +2.71*** & 3.90*** \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item ***p$<$0.001, **p$<$0.01, *p$<$0.05, ns = no significativo.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Conclusión de robustez}: 
+\begin{itemize}
+    \item El efecto en SFA es sensible a la inclusión de controles temp/topo (se atenúa o desaparece)
+    \item El efecto en logit es más robusto, permaneciendo significativo en todas las especificaciones
+    \item La interacción negativa para grandes es consistente en todas las especificaciones SFA
+\end{itemize}
+
+% ==============================================================================
+\section{Anexo D: Pipeline de Merges ENA}
+% ==============================================================================
+
+Esta sección documenta el proceso de construcción de los datasets analíticos mediante merges secuenciales de los módulos ENA y fuentes externas.
+
+\subsection{Descripción de merges}
+
+\subsubsection{M01 — Merge crop module con CARATULA (schema build)}
+\textbf{Propósito}: Anexar campos de hogar/ubicación/diseño (CARATULA) a registros de cultivos.\\
+\textbf{Inputs}: \texttt{03\_CAP200AB.csv} (datos de cultivos), \texttt{CARATULA.csv} (datos de hogar/ubicación)\\
+\textbf{Output}: \texttt{ena2024\_schema.parquet}\\
+\textbf{Código}: \texttt{03\_apply\_schema.py} $\to$ \texttt{main()}; bloque: \texttt{merged = crop.merge(caratula, on=KEY\_COLS, how="left", validate="many\_to\_one")}\\
+\textbf{Claves}: ANIO, CCDD, CCPP, CCDI, NSEGM, ID\_PROD, UA\\
+\textbf{Tipo join}: LEFT JOIN; left = módulo cultivos, right = CARATULA\\
+\textbf{Validaciones}: \texttt{validate="many\_to\_one"} asegura unicidad en CARATULA
+
+\subsubsection{M02 — Merge métricas de diversificación (features build)}
+\textbf{Propósito}: Crear una fila por ID\_COLS con métricas de diversificación.\\
+\textbf{Inputs}: \texttt{ena2024\_schema.parquet} (de M01), agregados intermedios (area\_div, value\_div)\\
+\textbf{Output}: \texttt{ena2024\_features.parquet}\\
+\textbf{Código}: \texttt{04\_compute\_diversification.py} $\to$ \texttt{main()}\\
+\textbf{Claves}: anio, ccdd, ccpp, ccdi, psu, id\_prod, ua\\
+\textbf{Tipo join}: LEFT JOINs; left = base, right = agregados
+
+\subsubsection{M03 — Merge módulos producción/costos/prácticas}
+\textbf{Propósito}: Agregar costos, trabajo y prácticas a features ENA para modelado.\\
+\textbf{Inputs}: \texttt{ena2024\_features.parquet}, \texttt{18\_CAP1000.csv}, \texttt{07\_CAP200E.csv}, \texttt{08\_CAP300AB.csv}\\
+\textbf{Output}: \texttt{model\_data\_ena2024.parquet}\\
+\textbf{Código}: \texttt{05\_build\_model\_data.py} $\to$ \texttt{main()}\\
+\textbf{Claves}: anio, ccdd, ccpp, ccdi, psu, id\_prod, ua\\
+\textbf{Tipo join}: LEFT JOINs secuenciales
+
+\subsubsection{M04 — Merge controles de riego (schema + CAP800 + CAP1000)}
+\textbf{Propósito}: Construir controles relacionados con riego por productor.\\
+\textbf{Inputs}: \texttt{ena2024\_schema.parquet}, \texttt{16\_CAP800.csv}, \texttt{18\_CAP1000.csv}\\
+\textbf{Código}: \texttt{ena\_controls.py} $\to$ \texttt{irrigation\_features()}\\
+\textbf{Validaciones}: CAP800/CAP1000 usan \texttt{drop\_duplicates(subset=ID\_COLS)} antes del merge
+
+\subsubsection{M05 — Merge controles de maquinaria/capital (CAP1000 + CAP1200)}
+\textbf{Propósito}: Construir controles de maquinaria/activos.\\
+\textbf{Inputs}: \texttt{18\_CAP1000.csv}, \texttt{21\_CAP1200B\_ME.csv}\\
+\textbf{Código}: \texttt{ena\_controls.py} $\to$ \texttt{machinery\_capital\_features()}\\
+\textbf{Tipo join}: LEFT JOIN; left = cap1000, right = cap1200\_agg
+
+\subsubsection{M06 — Merge controles fertilizante/semilla (CAP200E + schema seed cert)}
+\textbf{Propósito}: Construir controles de semilla y fertilizante.\\
+\textbf{Inputs}: \texttt{07\_CAP200E.csv}, \texttt{ena2024\_schema.parquet}\\
+\textbf{Código}: \texttt{ena\_controls.py} $\to$ \texttt{fertilizer\_seed\_features()}\\
+\textbf{Tipo join}: LEFT JOIN; left = cap200e\_agg, right = seed\_agg
+
+\subsubsection{M07 — Merge controles extensión/crédito/educación}
+\textbf{Propósito}: Construir controles de capacitación/crédito/educación/asociación.\\
+\textbf{Inputs}: \texttt{15\_CAP700.csv}, \texttt{17\_CAP900.csv}, \texttt{19\_CAP1100.csv}, \texttt{16\_CAP800.csv}\\
+\textbf{Código}: \texttt{ena\_controls.py} $\to$ \texttt{extension\_credit\_education\_features()}\\
+\textbf{Tipo join}: LEFT JOINs secuenciales
+
+\subsubsection{M08 — Merge todos los controles ENA en datos base}
+\textbf{Propósito}: Producir dataset con todas las variables de control.\\
+\textbf{Inputs}: \texttt{model\_data\_ena2024.parquet}, outputs de M04--M07\\
+\textbf{Output}: \texttt{model\_data\_ena2024\_plus\_controls.parquet}\\
+\textbf{Código}: \texttt{06\_build\_model\_data\_plus\_controls.py} $\to$ \texttt{main()}\\
+\textbf{Validaciones}: Verifica existencia de columnas de control post-merge
+
+\subsubsection{M09 — Merge datos ENA con geo/clima}
+\textbf{Propósito}: Anexar características geográficas y climáticas.\\
+\textbf{Inputs}: \texttt{model\_data\_ena2024.parquet}, \texttt{ubigeo\_district\_capitals.parquet}, \texttt{chirps\_district\_features\_2024.parquet}\\
+\textbf{Output}: \texttt{model\_data\_ena2024\_plus\_geo.parquet}\\
+\textbf{Claves}: ubigeo6 (construido desde ccdd/ccpp/ccdi)\\
+\textbf{Código}: \texttt{merge\_geo\_features.py} $\to$ \texttt{main()}
+
+\subsubsection{M10 — Merge datos ENA (+ controles) con temperatura}
+\textbf{Propósito}: Anexar características de temperatura.\\
+\textbf{Inputs}: \texttt{model\_data\_ena2024\_plus\_controls.parquet}, \texttt{temperature\_district\_features\_2023\_2024.parquet}\\
+\textbf{Output}: \texttt{model\_data\_ena2024\_plus\_controls\_temp.parquet}\\
+\textbf{Código}: \texttt{merge\_temperature\_features.py} $\to$ \texttt{main()}
+
+\subsubsection{M11 — Merge datos ENA con geo+clima+topografía (final geo2)}
+\textbf{Propósito}: Anexar características completas de clima/topografía.\\
+\textbf{Inputs}: \texttt{model\_data\_ena2024\_plus\_controls\_temp.parquet}, \texttt{ubigeo\_district\_capitals.parquet}, \texttt{chirps\_district\_features\_2024.parquet}, \texttt{topography\_district\_features.parquet}\\
+\textbf{Output}: \texttt{model\_data\_ena2024\_plus\_geo2.parquet}\\
+\textbf{Código}: \texttt{merge\_geo2\_features.py} $\to$ \texttt{main()}
+
+\subsection{Tabla resumen de merges}
+
+\begin{landscape}
+\begin{table}[H]
+\centering
+\caption{Resumen de operaciones de merge en el pipeline ENA}
+\label{tab:merge_summary}
+\begin{threeparttable}
+\footnotesize
+\begin{tabular}{llrrrrrrr}
+\toprule
+\textbf{Step ID} & \textbf{Merge} & \textbf{Rows A} & \textbf{Rows B} & \textbf{Rows After} & \textbf{Matched} & \textbf{Left-only} & \textbf{Right-only} & \textbf{Dups} \\
+\midrule
+M01 & CAP200AB $\leftarrow$ CARATULA & 165,711 & 40,237 & 165,711 & 165,711 & 0 & 5,050 & 0 \\
+M02a & base $\leftarrow$ area\_div & 35,187 & 34,075 & 35,187 & 34,075 & 1,112 & 0 & 0 \\
+M02b & base+area $\leftarrow$ value\_div & 35,187 & 31,824 & 35,187 & 31,824 & 3,363 & 0 & 0 \\
+M03a & features $\leftarrow$ CAP1000 & 35,187 & 39,112 & 35,187 & 35,184 & 3 & 3,928 & 0 \\
+M03b & (M03a) $\leftarrow$ CAP200E\_agg & 35,187 & 35,185 & 35,187 & 35,185 & 2 & 0 & 0 \\
+M03c & (M03b) $\leftarrow$ CAP300 & 35,187 & 38,733 & 35,187 & 35,185 & 2 & 3,548 & 0 \\
+M04a & crop\_agg $\leftarrow$ CAP800 & 35,187 & 39,112 & 35,187 & 35,184 & 3 & 3,928 & 0 \\
+M04b & (M04a) $\leftarrow$ CAP1000 & 35,187 & 39,112 & 35,187 & 35,184 & 3 & 3,928 & 0 \\
+M05 & CAP1000 $\leftarrow$ CAP1200B\_agg & 39,112 & 26,200 & 39,112 & 26,200 & 12,912 & 0 & 0 \\
+M06 & CAP200E\_agg $\leftarrow$ seed\_agg & 35,185 & 35,187 & 35,185 & 35,185 & 0 & 2 & 0 \\
+M07a & CAP700 $\leftarrow$ CAP900 & 39,112 & 39,112 & 39,112 & 39,112 & 0 & 0 & 0 \\
+M07b & (M07a) $\leftarrow$ CAP1100 & 39,112 & 37,514 & 39,112 & 37,514 & 1,598 & 0 & 0 \\
+M07c & (M07b) $\leftarrow$ CAP800 & 39,112 & 39,112 & 39,112 & 39,112 & 0 & 0 & 0 \\
+M08a & base $\leftarrow$ controls (irrigation) & 35,187 & 35,187 & 35,187 & 35,187 & 0 & 0 & 0 \\
+M08b & (M08a) $\leftarrow$ controls (machinery) & 35,187 & 39,112 & 35,187 & 35,184 & 3 & 3,928 & 0 \\
+M08c & (M08b) $\leftarrow$ controls (fert/seed) & 35,187 & 35,185 & 35,187 & 35,185 & 2 & 0 & 0 \\
+M08d & (M08c) $\leftarrow$ controls (ext/cred/edu) & 35,187 & 39,112 & 35,187 & 35,184 & 3 & 3,928 & 0 \\
+M09a & model $\leftarrow$ ubigeo & 35,187 & 1,892 & 35,187 & 34,075 & 1,112 & 350 & 0 \\
+M09b & (M09a) $\leftarrow$ chirps & 35,187 & 1,892 & 35,187 & 34,075 & 1,112 & 350 & 0 \\
+M10 & model+controls $\leftarrow$ temperature & 35,187 & 1,892 & 35,187 & 34,075 & 1,112 & 350 & 0 \\
+M11a & model+controls+temp $\leftarrow$ ubigeo & 35,187 & 1,892 & 35,187 & 34,075 & 1,112 & 350 & 0 \\
+M11b & (M11a) $\leftarrow$ chirps & 35,187 & 1,892 & 35,187 & 34,075 & 1,112 & 350 & 0 \\
+M11c & (M11b) $\leftarrow$ topography & 35,187 & 1,892 & 35,187 & 34,075 & 1,112 & 350 & 0 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Rows A = filas tabla izquierda, Rows B = filas tabla derecha, Matched = filas con match, Dups = duplicados introducidos.
+\item Todos los merges usan LEFT JOIN. Las filas ``Right-only'' no se pierden del dataset base.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+\end{landscape}
+
+\subsection{Descripción temática de datasets}
+
+\begin{table}[H]
+\centering
+\caption{Módulos ENA y contenido temático}
+\label{tab:module_topics}
+\begin{threeparttable}
+\footnotesize
+\begin{tabular}{p{3.5cm}p{3cm}p{6.5cm}}
+\toprule
+\textbf{Dataset} & \textbf{Tema} & \textbf{Variables principales} \\
+\midrule
+\multicolumn{3}{l}{\textit{Módulos ENA - Datos crudos}} \\
+CARATULA.csv & Identificación hogar & anio, ccdd/ccpp/ccdi (ubigeo), psu, id\_prod, ua, region\_natural, estrato, weight, latitud, longitud \\
+03\_CAP200AB.csv & Cultivos (nivel parcela) & crop\_code, crop\_name, area\_cosechada\_ha, valor\_venta, valor\_consumo, water\_source, irrigation\_system, seed\_certified \\
+07\_CAP200E.csv & Insumos agrícolas & gasto\_semilla, usa\_abono, usa\_fertilizantes, semilla\_semillero, semilla\_comercial \\
+08\_CAP300AB.csv & Prácticas agrícolas & P301A\_1--17 (10 prácticas sostenibles como rotación, terrazas, control biológico) \\
+15\_CAP700.csv & Capacitación y AT & capacitacion\_recibida, asistencia\_tecnica\_recibida \\
+16\_CAP800.csv & Asociatividad y agua & asociacion\_miembro, asociacion\_num, usuario\_agua \\
+17\_CAP900.csv & Crédito & credito\_obtenido \\
+18\_CAP1000.csv & Costos y trabajo & costo\_total\_agropecuario, labor (jornaleros), gasto\_agua\_riego, uso\_maquinaria, gastos maquinaria \\
+19\_CAP1100.csv & Productor & nivel\_educacion \\
+21\_CAP1200B\_ME.csv & Maquinaria/equipos & num\_maquinaria\_equipo (inventario) \\
+\midrule
+\multicolumn{3}{l}{\textit{Datos externos geo-climáticos}} \\
+ubigeo\_district\_capitals & Geografía & capital\_lat, capital\_lon, surface\_km2 \\
+chirps\_district\_features\_2024 & Precipitación & prcp\_2024\_total, prcp\_total\_z (z-score vs.\ 2015--2020) \\
+temperature\_district\_features & Temperatura & tmean\_2023, tmean\_2024, delta\_tmean\_24\_23 \\
+topography\_district\_features & Topografía & elev\_m, slope\_deg, ruggedness (TRI) \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+\subsection{Lógica de agregación de datasets intermedios}
+
+La construcción del pipeline requiere agregar datos a nivel de cultivo al nivel de productor (ID\_COLS). Esta sección documenta cómo se forman los principales agregados intermedios.
+
+\begin{table}[H]
+\centering
+\caption{Formación de agregados intermedios clave}
+\label{tab:aggregation_logic}
+\begin{threeparttable}
+\footnotesize
+\begin{tabular}{p{2.8cm}p{2.5cm}p{4cm}p{4cm}}
+\toprule
+\textbf{Agregado} & \textbf{Origen} & \textbf{Lógica de agregación} & \textbf{Variables resultantes} \\
+\midrule
+\multicolumn{4}{l}{\textit{Agregados de diversificación (04\_compute\_diversification.py)}} \\
+area\_div & ena2024\_schema & groupby(ID\_COLS) sobre \texttt{area\_cosechada\_ha}; cálculo de HHI, Shannon, conteo cultivos & hhi\_area, diversificacion\_area, shannon\_area, num\_crops\_area, area\_total\_ha \\
+value\_div & ena2024\_schema & groupby(ID\_COLS) sobre \texttt{valor\_total\_cultivo}; misma lógica & hhi\_valor, diversificacion\_valor, shannon\_valor, num\_crops\_valor, valor\_total \\
+\midrule
+\multicolumn{4}{l}{\textit{Agregados de riego (ena\_controls.py::irrigation\_features)}} \\
+crop\_agg & ena2024\_schema & groupby(ID\_COLS).agg(max,mean) sobre \texttt{riego\_crop}, \texttt{riego\_tecnificado\_crop} & riego\_any, riego\_share, riego\_tecnificado\_any, riego\_tecnificado\_share \\
+\midrule
+\multicolumn{4}{l}{\textit{Agregados de insumos (05\_build\_model\_data.py)}} \\
+cap200e\_agg & 07\_CAP200E & groupby(ID\_COLS).sum(min\_count=1) sobre gastos & gasto\_abono, gasto\_fertilizantes, gasto\_plaguicidas \\
+\midrule
+\multicolumn{4}{l}{\textit{Agregados de semilla (ena\_controls.py::fertilizer\_seed\_features)}} \\
+seed\_agg & ena2024\_schema & groupby(ID\_COLS).agg(max,mean) sobre \texttt{semilla\_certificada\_crop} derivado de P214 & semilla\_certificada\_any, semilla\_certificada\_share \\
+cap200e\_agg (alt) & 07\_CAP200E & groupby(ID\_COLS).agg(sum,max) sobre gasto\_semilla, dummies de semilla/abono & gasto\_semilla, usa\_abono, usa\_fertilizantes, semilla\_semillero\_any, semilla\_comercial\_any \\
+\midrule
+\multicolumn{4}{l}{\textit{Agregados de maquinaria (ena\_controls.py::machinery\_capital\_features)}} \\
+cap1200\_agg & 21\_CAP1200B & groupby(ID\_COLS).sum(min\_count=1) sobre \texttt{num\_maquinaria\_equipo} & num\_maquinaria\_equipo (total por productor) \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item ID\_COLS = [anio, ccdd, ccpp, ccdi, psu, id\_prod, ua]. min\_count=1 significa que si todos los valores son NA, el resultado es NA (no 0).
+\item crop\_agg y seed\_agg transforman datos nivel-cultivo a nivel-productor usando max (indica "al menos uno") y mean (proporción).
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Uso de datasets resultantes en el modelado}
+
+\begin{table}[H]
+\centering
+\caption{Datasets finales y su uso en el análisis}
+\label{tab:dataset_usage}
+\begin{threeparttable}
+\footnotesize
+\begin{tabular}{p{4.5cm}p{4cm}p{5cm}}
+\toprule
+\textbf{Dataset} & \textbf{Variables clave añadidas} & \textbf{Uso en modelado} \\
+\midrule
+\multicolumn{3}{l}{\textit{Etapa 1--2: Schema y Features}} \\
+ena2024\_schema.parquet & Campos hogar + cultivos unidos; 165,711 filas (nivel cultivo) & Base para agregar diversificación; input para controles de riego/semilla \\
+ena2024\_features.parquet & Diversificación (HHI, Shannon, num\_crops); 35,187 filas (nivel productor) & Dataset base para modelos; contiene outcome geográfico \\
+\midrule
+\multicolumn{3}{l}{\textit{Etapa 3: Model Data}} \\
+model\_data\_ena2024.parquet & costo\_total\_agropecuario, labor\_total, input\_costs, practice\_any, size\_cat & \textbf{SFA base}: log(valor) $\sim$ log(land, labor, inputs); \textbf{Logit base}: practice\_any \\
+\midrule
+\multicolumn{3}{l}{\textit{Etapa 4: Controles ENA}} \\
+model\_data\_ena2024\_plus\_controls.parquet & 24 variables de control (riego, maquinaria, semilla, capacitación, crédito, educación, asociación) & \textbf{SFA controls\_ena}: Robustez con controles socioeconómicos; \textbf{Logit controls\_ena} \\
+\midrule
+\multicolumn{3}{l}{\textit{Etapa 5: Geo/Clima}} \\
+model\_data\_ena2024\_plus\_geo.parquet & ubigeo6, capital\_lat/lon, prcp\_total\_z & \textbf{SFA xgeo/zgeo}: Precipitación en frontera e ineficiencia \\
+model\_data\_ena2024\_plus\_controls\_temp.parquet & tmean\_2023, tmean\_2024, delta\_tmean & \textbf{SFA temp\_topo}: Temperatura en modelo \\
+model\_data\_ena2024\_plus\_geo2.parquet & Completo: temp + topo (elev\_m, slope\_deg, ruggedness) & \textbf{Modelo final}: Todos los controles geo-climáticos + ENA \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Los datasets se usan según las especificaciones en Tablas \ref{tab:sfa_spec_frontier}--\ref{tab:logit_spec}.
+\item El dataset \texttt{model\_data\_ena2024\_plus\_geo2} es el más completo para análisis de robustez.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Detalle de construcción: crop\_agg y seed\_agg}
+
+Los agregados \texttt{crop\_agg} y \texttt{seed\_agg} son cruciales porque transforman variables de nivel cultivo a nivel productor.
+
+\subsubsection{crop\_agg (irrigation\_features)}
+\begin{verbatim}
+# Código en ena_controls.py líneas 80-89
+schema["riego_crop"] = (water_source != 1).astype(int)  # 1=secano, otros=riego
+schema["riego_tecnificado_crop"] = irrigation_system.isin([1,2,3,4,5,6]).astype(int)
+
+crop_agg = schema.groupby(ID_COLS).agg(
+    riego_any=("riego_crop", "max"),              # 1 si algún cultivo tiene riego
+    riego_share=("riego_crop", "mean"),           # proporción de cultivos con riego
+    riego_tecnificado_any=("riego_tecnificado_crop", "max"),
+    riego_tecnificado_share=("riego_tecnificado_crop", "mean"),
+)
+\end{verbatim}
+
+\textbf{Interpretación}: \texttt{riego\_any=1} indica que el productor riega al menos un cultivo. \texttt{riego\_share=0.5} indica que el 50\% de sus cultivos tienen riego.
+
+\subsubsection{seed\_agg (fertilizer\_seed\_features)}
+\begin{verbatim}
+# Código en ena_controls.py líneas 198-210
+schema["semilla_certificada_crop"] = np.where(seed_code == 1, 1, 
+                                     np.where(seed_code == 2, 0, np.nan))
+
+seed_agg = schema.groupby(ID_COLS).agg(
+    semilla_certificada_any=("semilla_certificada_crop", "max"),   # 1 si algún cultivo
+    semilla_certificada_share=("semilla_certificada_crop", "mean"), # proporción
+)
+\end{verbatim}
+
+\textbf{Interpretación}: Derivado de P214 (semilla certificada: 1=Sí, 2=No). \texttt{semilla\_certificada\_any=1} si al menos un cultivo usa semilla certificada.
+
+\subsection{Diagrama de flujo de merges}
+
+El flujo de datos sigue la siguiente estructura lógica:
+
+\begin{enumerate}
+    \item \textbf{Etapa 1 (Schema)}: Construcción del dataset base uniendo módulo de cultivos con CARATULA (M01)
+    \item \textbf{Etapa 2 (Features)}: Cálculo y anexión de métricas de diversificación (M02)
+    \item \textbf{Etapa 3 (Model data)}: Incorporación de costos, prácticas y trabajo (M03)
+    \item \textbf{Etapa 4 (Controls)}: Construcción paralela de controles desde múltiples módulos ENA (M04--M07), luego consolidación (M08)
+    \item \textbf{Etapa 5 (Geo/Climate)}: Anexión de datos externos satelitales y topográficos (M09--M11)
+\end{enumerate}
+
+\textbf{Modos de falla comunes}:
+\begin{itemize}
+    \item \textbf{Claves duplicadas en tabla derecha}: Puede causar inflación de filas (no observado en este pipeline)
+    \item \textbf{Archivos faltantes}: Genera \texttt{FileNotFoundError}
+    \item \textbf{Columnas de clave faltantes}: Reduce matches, genera NAs en campos anexados
+\end{itemize}
+
+% ==============================================================================
+\section{Anexo E: Reproducibilidad}
+% ==============================================================================
+
+\subsection{Requisitos de software}
+
+\begin{table}[H]
+\centering
+\caption{Versiones de software utilizadas}
+\label{tab:software_versions}
+\begin{threeparttable}
+\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Software} & \textbf{Versión} & \textbf{Uso} \\
+\midrule
+Python & 3.11+ & Procesamiento de datos \\
+R & 4.3+ & Estimación SFA y logit \\
+pandas & 2.0+ & Manipulación de dataframes \\
+pyarrow & 14.0+ & Lectura/escritura parquet \\
+frontier (R) & 1.1.8 & Paquete SFA \\
+survey (R) & 4.2+ & Logit con diseño muestral \\
+rasterio (Python) & 1.3+ & Extracción de datos satelitales \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+\subsection{Instrucciones de ejecución}
+
+\begin{verbatim}
+# 1. Crear entorno virtual
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+pip install -r requirements.txt
+
+# 2. Instalar paquetes R
+Rscript R/install_packages.R
+
+# 3. Ejecutar pipeline completo
+bash scripts/run_all.sh
+\end{verbatim}
+
+\subsection{Archivos de output}
+
+\begin{table}[H]
+\centering
+\caption{Principales archivos de output}
+\label{tab:output_files}
+\begin{threeparttable}
+\small
+\begin{tabular}{ll}
+\toprule
+\textbf{Archivo} & \textbf{Contenido} \\
+\midrule
+\texttt{outputs/tables/00\_sample\_overview.*} & Descriptivos muestrales \\
+\texttt{outputs/tables/01\_diversification\_descriptives.*} & Índices de diversificación \\
+\texttt{outputs/tables/02\_sfa\_main.csv} & Resultados SFA principal \\
+\texttt{outputs/tables/02\_sfa\_diagnostics.csv} & Diagnósticos SFA \\
+\texttt{outputs/tables/03\_sfa\_robustness.csv} & Robustez SFA \\
+\texttt{outputs/tables/04\_logit\_main.csv} & Resultados logit principal \\
+\texttt{outputs/tables/05\_logit\_robustness.csv} & Robustez logit \\
+\texttt{data/processed/ena2024\_with\_TE.parquet} & Eficiencia técnica estimada \\
+\texttt{outputs/manifest.json} & Manifiesto de outputs \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+\end{document}
+

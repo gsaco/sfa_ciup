@@ -1,34 +1,40 @@
 # Robustness summary
 
 ## Executive takeaways
-- Diversificacion effects are stable across specifications: SFA inefficiency coefficients remain negative and significant, and logit odds ratios remain large and significant.
-- Size interactions keep the same sign pattern in SFA (mediano positive, grande negative) and remain statistically weak in logit.
-- Sample loss after adding temperature/topography is below 0.1% overall (see `outputs/tables/sample_loss_analysis.csv`).
+- Diversificacion effects are **not uniformly signed** in SFA: baseline is positive (efficiency‑improving for small/medium), while large‑farm interactions are negative and significant.
+- Logit effects of diversification remain **positive and significant** across specs; size interactions are statistically weak.
+- Sample loss after adding geo/climate is **<0.2%** overall (see `outputs/tables/sample_loss_analysis.csv`).
 
 ## SFA (inefficiency equation)
-- Baseline (M1): Z_diversificacion_area = -14.93 (p < 1e-15).
-- + Controles ENA (M2): Z_diversificacion_area = -14.86 (p ~ 0).
-- + Temp/topo (M3): Z_diversificacion_area = -35.06 (p = 3.7e-4).
-- + Controles ENA + temp/topo (M4): Z_diversificacion_area = -102.12 (p ~ 0).
-- Size interactions stay aligned across models: Z_diversif_mediano > 0 and Z_diversif_grande < 0 (see `outputs/tables/15_sfa_compare_effects_all.csv`).
+Key terms (see `outputs/tables/15_sfa_compare_effects_all.csv`):
+| model | Z_diversificacion_area | p_value | Z_diversif_mediano | p_value | Z_diversif_grande | p_value |
+|:--|--:|--:|--:|--:|--:|--:|
+| main_area | 1.929 | 0 | -0.200 | 0.411 | -5.543 | 0 |
+| controls_ena | 0.917 | 7.06e-12 | 0.718 | 0.00423 | -3.645 | 0 |
+| temp_topo | 0.273 | 0.267 | 2.531 | 1.24e-13 | -7.970 | 0 |
+| controls_temp_topo | 0.018 | 0.892 | 1.961 | 1.48e-13 | -3.585 | 0 |
 
-Interpretation: higher diversification is associated with lower inefficiency in all SFA specifications; the sign pattern is unchanged with added controls.
+Interpretation (ineffDecrease=TRUE): baseline diversification improves efficiency for small/medium producers, but the large‑farm interaction is negative and significant across specs, flipping the net effect for large farms.
 
 ## Logit (practicas sostenibles)
-- Baseline (L1): diversificacion_area coef 2.74, OR 15.46 (p = 2e-6).
-- + Controles ENA (L2): coef 2.65, OR 14.09 (p = 5e-6).
-- + Temp/topo (L3): coef 2.49, OR 12.03 (p = 1.3e-4).
-- + Controles ENA + temp/topo (L4): coef 2.38, OR 10.84 (p = 2.1e-4).
-- Interactions with size are negative but not significant in any model (see `outputs/tables/18_logit_compare_effects_all.csv`).
+Key terms (see `outputs/tables/18_logit_compare_effects_all.csv`):
+| model | diversificacion_area | odds_ratio | p_value |
+|:--|--:|--:|--:|
+| main | 1.382 | 3.98 | 3.84e-05 |
+| controls_ena | 0.781 | 2.18 | 0.0145 |
+| temp_topo | 1.267 | 3.55 | 0.00105 |
+| controls_temp_topo | 0.791 | 2.21 | 0.0273 |
+
+Interactions with size are statistically weak in all models.
 
 Interpretation: diversification remains strongly and positively associated with adoption of practicas sostenibles after adding ENA and geo-climate controls.
 
 ## Sample composition
-- Logit sample: 34,074 baseline vs 34,051 with geo2 (share remaining 0.9993).
-- SFA sample: 31,824 baseline vs 31,804 with geo2 (share remaining 0.9994).
+- Logit sample: 34,074 baseline vs 34,039 with geo2 (share remaining 0.99897).
+- SFA sample: 26,594 baseline vs 26,546 with geo2 (share remaining 0.99820).
 - Losses are small and balanced across region and size (see `outputs/tables/sample_loss_analysis.csv`).
 
 ## Collinearity and specification choice
-- Potential collinearity exists between temperature/topography and region_natural, but coefficient signs and significance for diversification are stable across models.
-- Preferred specification: M4/L4 (controls + temp/topo) when convergence is stable, because it adds key ENA controls and exogenous geo-climate factors with minimal sample loss.
-- Fallback: M2/L2 when temperature/topography are unavailable.
+- Potential collinearity exists between temperature/topography and region_natural; condition numbers rise in some climate specs.
+- Preferred specification: controls + temp/topo **when diagnostics are stable** (see `outputs/tables/02_sfa_diagnostics.csv`).
+- Fallback: controls‑only specs when temp/topo data are unavailable.

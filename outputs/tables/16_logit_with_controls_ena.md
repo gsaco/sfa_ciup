@@ -1,17 +1,22 @@
 | model | term | estimate | std_error | z_value | p_value | odds_ratio | 
 | --- | --- | --- | --- | --- | --- | --- | 
- | controls_ena | (Intercept) |  0.84007045 | 0.58608058 |  1.4333702 | 1.518311e-01 |   2.3165302 |
-| controls_ena | diversificacion_area |  2.64523170 | 0.57712539 |  4.5834610 | 4.714530e-06 |  14.0867085 |
-| controls_ena | size_catmediano_2_5ha |  0.39033685 | 0.38608524 |  1.0110121 | 3.120725e-01 |   1.4774784 |
-| controls_ena | size_catpequeno_<2ha |  0.33458704 | 0.46760654 |  0.7155311 | 4.743231e-01 |   1.3973632 |
-| controls_ena | log_area | -0.07476799 | 0.16836720 | -0.4440769 | 6.570113e-01 |   0.9279588 |
-| controls_ena | region_natural2 |  2.10733053 | 0.46607065 |  4.5214831 | 6.320508e-06 |   8.2262522 |
-| controls_ena | region_natural3 | -1.15579489 | 0.38834314 | -2.9762207 | 2.935916e-03 |   0.3148072 |
-| controls_ena | nivel_educacion |  0.10278247 | 0.03401848 |  3.0213717 | 2.532419e-03 |   1.1082503 |
-| controls_ena | credito_obtenido |  0.79622859 | 0.29301704 |  2.7173457 | 6.609434e-03 |   2.2171633 |
-| controls_ena | capacitacion_recibida |  1.43651941 | 0.33092237 |  4.3409559 | 1.454112e-05 |   4.2060308 |
-| controls_ena | asistencia_tecnica_recibida | -0.11298698 | 0.47744698 | -0.2366482 | 8.129420e-01 |   0.8931623 |
-| controls_ena | usuario_agua |  5.06563777 | 0.71068902 |  7.1277839 | 1.206591e-12 | 158.4814838 |
-| controls_ena | asociacion_miembro |  0.62724300 | 0.32241755 |  1.9454369 | 5.179314e-02 |   1.8724411 |
-| controls_ena | diversificacion_area:size_catmediano_2_5ha | -0.22480601 | 0.76258763 | -0.2947937 | 7.681670e-01 |   0.7986711 |
-| controls_ena | diversificacion_area:size_catpequeno_<2ha | -0.80616414 | 0.81003923 | -0.9952162 | 3.196920e-01 |   0.4465678 |
+ | controls_ena | (Intercept) | -1.039885577 | 0.47922813 | -2.169917660 | 3.007300e-02 | 0.3534951 |
+| controls_ena | diversificacion_area |  0.781186788 | 0.31945556 |  2.445369239 | 1.451413e-02 | 2.1840627 |
+| controls_ena | size_catmediano_2_5ha |  0.008855540 | 0.29630225 |  0.029886848 | 9.761588e-01 | 1.0088949 |
+| controls_ena | size_catpequeno_<2ha |  0.351688074 | 0.36072920 |  0.974936531 | 3.296519e-01 | 1.4214651 |
+| controls_ena | log_area | -0.113752133 | 0.13568650 | -0.838345247 | 4.018880e-01 | 0.8924791 |
+| controls_ena | region_natural2 |  1.121043170 | 0.18956654 |  5.913718683 | 3.630480e-09 | 3.0680530 |
+| controls_ena | region_natural3 | -0.692261072 | 0.20511333 | -3.375017388 | 7.452902e-04 | 0.5004433 |
+| controls_ena | nivel_educacion | -0.014291392 | 0.02941412 | -0.485868419 | 6.270876e-01 | 0.9858102 |
+| controls_ena | capacitacion_recibida |  0.749689195 | 0.21463041 |  3.492930991 | 4.830333e-04 | 2.1163421 |
+| controls_ena | asistencia_tecnica_recibida |  0.006557223 | 0.32908408 |  0.019925676 | 9.841037e-01 | 1.0065788 |
+| controls_ena | usuario_agua |  0.467182143 | 0.16214522 |  2.881257532 | 3.982445e-03 | 1.5954920 |
+| controls_ena | asociacion_miembro |  0.000861925 | 0.24712237 |  0.003487847 | 9.972173e-01 | 1.0008623 |
+| controls_ena | riego_any |  0.299243343 | 0.16708058 |  1.791012171 | 7.336853e-02 | 1.3488378 |
+| controls_ena | uso_maquinaria |  0.504194028 | 0.17342131 |  2.907336124 | 3.665683e-03 | 1.6556506 |
+| controls_ena | usa_abono |  1.481706752 | 0.16962639 |  8.735119216 | 3.546472e-18 | 4.4004498 |
+| controls_ena | usa_fertilizantes |  0.097907104 | 0.17038865 |  0.574610482 | 5.655878e-01 | 1.1028603 |
+| controls_ena | semilla_semillero_any | -0.041546968 | 0.15809884 | -0.262791105 | 7.927254e-01 | 0.9593043 |
+| controls_ena | semilla_comercial_any |  0.471542748 | 0.14299258 |  3.297672918 | 9.835961e-04 | 1.6024645 |
+| controls_ena | diversificacion_area:size_catmediano_2_5ha |  0.239077548 | 0.43702133 |  0.547061505 | 5.843676e-01 | 1.2700770 |
+| controls_ena | diversificacion_area:size_catpequeno_<2ha | -0.073983959 | 0.45799636 | -0.161538313 | 8.716778e-01 | 0.9286866 |

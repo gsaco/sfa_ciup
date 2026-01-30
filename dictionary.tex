@@ -1,0 +1,657 @@
+% ============================================================================
+% ENA 2024 Research Status Audit + Variable Dictionary (Codebook)
+% ============================================================================
+\documentclass[11pt,a4paper]{article}
+
+% --- Packages ---------------------------------------------------------------
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+
+% --- Colors -----------------------------------------------------------------
+\definecolor{sectionblue}{RGB}{0,51,102}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{tableheader}{RGB}{230,240,250}
+
+% --- Hyperref setup ---------------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=sectionblue,
+    citecolor=sectionblue,
+    urlcolor=sectionblue
+}
+
+% --- Paragraph spacing ------------------------------------------------------
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+% --- Table column types -----------------------------------------------------
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% --- Header/Footer ----------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize ENA 2024 Variable Dictionary}
+\fancyhead[R]{\footnotesize \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --- Title information ------------------------------------------------------
+\title{%
+    \vspace{-1cm}
+    \textbf{\LARGE Research Status Audit}\\[0.3em]
+    \textbf{\Large Variable Dictionary (Codebook)}\\[0.5em]
+    \large ENA 2024 Modeling Datasets --- Peru
+}
+\author{Automated Build from Repository Artifacts}
+\date{January 29, 2026}
+
+% ============================================================================
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{abstract}
+\noindent
+This document provides a comprehensive research status audit and variable dictionary (codebook) for the ENA 2024 modeling datasets for Peru. It documents the data artifacts, variable definitions, construction methods, and reproducibility gaps identified in the provided ZIP archives.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ============================================================================
+\section{Current Status (Evidence-Based)}
+% ============================================================================
+
+\subsection{Summary of Findings}
+
+The provided ZIP artifacts contain multiple \emph{processed} modeling-ready CSV extracts and supporting metadata. However, they \textbf{do not contain}:
+\begin{enumerate}
+    \item The underlying ENA raw CSV modules
+    \item The transformation code (scripts/notebooks) that builds the final datasets
+\end{enumerate}
+
+This limits full traceability of variable construction and prevents end-to-end reproducibility from raw data.
+
+\subsection{ZIP Archive Contents}
+
+\subsubsection{Archive.zip}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Intermediate metadata:}
+    \begin{itemize}
+        \item \texttt{ena2024\_dictionary.csv} --- Variable codes with Spanish descriptions
+        \item \texttt{variable\_map.json} --- Raw to cleaned feature name mapping
+        \item \texttt{module\_profile.csv} --- ENA module file inventory
+        \item \texttt{raw\_manifest.csv} --- Raw file manifest
+        \item Various \texttt{*.parquet} intermediate files
+    \end{itemize}
+    \item \textbf{Processed outputs:}
+    \begin{itemize}
+        \item Multiple \texttt{model\_data\_ena2024*.csv} files
+        \item Treatment effect outputs: \texttt{ena2024\_with\_TE*.csv}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{processed.zip}
+District-level external features in \texttt{data/external/processed/}:
+\begin{itemize}[leftmargin=1.5em]
+    \item CHIRPS precipitation data (parquet + JSON metadata)
+    \item Temperature aggregates
+    \item Topography features (elevation, slope, ruggedness)
+    \item UBIGEO district capital coordinates
+\end{itemize}
+
+\subsubsection{raw.zip}
+Contains only a placeholder (\texttt{.DS\_Store}). \textbf{No ENA raw data modules are present.}
+
+% ============================================================================
+\subsection{Processed Datasets Overview}
+% ============================================================================
+
+\begin{table}[htbp]
+\centering
+\caption{Processed datasets found in provided ZIP artifacts.}
+\label{tab:datasets}
+\small
+\begin{tabular}{L{5cm}rrl}
+\toprule
+\textbf{File} & \textbf{Rows} & \textbf{Cols} & \textbf{SHA256 (first 12)} \\
+\midrule
+\texttt{model\_data\_ena2024\_plus\_geo2.csv} & 35,187 & 98 & \texttt{a8488aa87a9c} \\
+\texttt{model\_data\_ena2024\_plus\_controls\_temp.csv} & 35,187 & 89 & \texttt{61a186534670} \\
+\texttt{model\_data\_ena2024\_plus\_controls.csv} & 35,187 & 77 & \texttt{b538913b98ca} \\
+\texttt{model\_data\_ena2024\_plus\_geo.csv} & 35,187 & 50 & \texttt{687cfbaa6fdf} \\
+\texttt{model\_data\_ena2024.csv} & 35,187 & 39 & \texttt{387a837d2dae} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Treatment effect (TE) output files in \texttt{processed/}.}
+\label{tab:teoutputs}
+\small
+\begin{tabular}{L{4.5cm}rrL{4cm}}
+\toprule
+\textbf{TE File} & \textbf{Rows} & \textbf{Cols} & \textbf{Model Label(s)} \\
+\midrule
+\texttt{ena2024\_with\_TE.csv} & 26,594 & 8 & (none) \\
+\texttt{ena2024\_with\_TE\_controls.csv} & 26,121 & 9 & controls\_ena \\
+\texttt{ena2024\_with\_TE\_geo.csv} & 53,156 & 9 & xgeo\_prcp, zgeo\_prcp \\
+\texttt{ena2024\_with\_TE\_geo2.csv} & 52,619 & 9 & temp\_topo, controls\_temp\_topo \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================================
+\subsection{Dataset Variants}
+% ============================================================================
+
+\begin{table}[htbp]
+\centering
+\caption{Modeling dataset variants and included feature blocks.}
+\label{tab:variants}
+\small
+\begin{tabular}{L{4cm}rrL{6cm}}
+\toprule
+\textbf{Dataset} & \textbf{Rows} & \textbf{Cols} & \textbf{Included Feature Blocks} \\
+\midrule
+\texttt{model\_data\_ena2024.csv} & 35,187 & 39 & Base ENA UA-level outcomes, diversity indices, costs, geography labels \\
+\texttt{..\_plus\_controls.csv} & 35,187 & 77 & Base + irrigation, mechanization, seed, services, finance, missing flags \\
+\texttt{..\_plus\_geo.csv} & 35,187 & 50 & Base + UBIGEO, CHIRPS precipitation, district capital, surface \\
+\texttt{..\_plus\_geo2.csv} & 35,187 & 98 & Geo + controls + temperature + topography (most complete) \\
+\texttt{..\_plus\_controls\_temp.csv} & 35,187 & 89 & Controls + UBIGEO + temperature \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================================
+\subsection{Inferred Data Pipeline}
+% ============================================================================
+
+Based on file names and column structures, the current pipeline appears to follow these steps:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Raw data ingestion:} Start from ENA 2024 survey microdata (CSV modules listed in \texttt{module\_profile.csv})
+    
+    \item \textbf{Feature construction:} Aggregate UA-level outcomes and features (farm size, crop diversification indices, labor totals, cost totals)
+    
+    \item \textbf{Control variables:} Build controls from ENA modules (irrigation, mechanization, seed type, training, credit, association membership) with missingness flags
+    
+    \item \textbf{Geospatial merge:} Join district-level covariates via 6-digit UBIGEO:
+    \begin{itemize}
+        \item CHIRPS precipitation (with baseline statistics)
+        \item Temperature aggregates (2023--2024)
+        \item Topography (elevation, slope, ruggedness)
+        \item District capital coordinates and area
+    \end{itemize}
+    
+    \item \textbf{Export:} Generate modeling datasets under \texttt{processed/model\_data\_ena2024*.csv}
+    
+    \item \textbf{Treatment effects:} Produce TE outputs under \texttt{processed/ena2024\_with\_TE*.csv}
+\end{enumerate}
+
+\textbf{Merge key for TE files:} \texttt{anio, ccdd, ccpp, ccdi, psu, id\_prod, ua}
+
+% ============================================================================
+\subsection{Reproducibility Gaps and Recommended Fixes}
+% ============================================================================
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Raw ENA modules missing}
+    \begin{itemize}
+        \item \textit{Issue:} Module inventory exists but referenced raw CSVs are absent
+        \item \textit{Fix:} Add raw modules or documented data-access step with checksum manifest
+    \end{itemize}
+    
+    \item \textbf{Transformation code missing}
+    \begin{itemize}
+        \item \textit{Issue:} No \texttt{.py}, \texttt{.R}, \texttt{.do}, or \texttt{.ipynb} files present
+        \item \textit{Fix:} Include feature engineering scripts and a single pipeline entrypoint
+    \end{itemize}
+    
+    \item \textbf{Environment not specified}
+    \begin{itemize}
+        \item \textit{Issue:} Parquet files require specific engine (pyarrow/fastparquet)
+        \item \textit{Fix:} Add \texttt{requirements.txt} or \texttt{environment.yml}
+    \end{itemize}
+    
+    \item \textbf{Incomplete temperature pipeline}
+    \begin{itemize}
+        \item \textit{Issue:} In one dataset variant, \texttt{tmean\_baseline\_sd} and \texttt{tmean\_z} are missing
+        \item \textit{Fix:} Implement baseline computation and populate z-scores consistently
+    \end{itemize}
+    
+    \item \textbf{Untraceable derived constructs}
+    \begin{itemize}
+        \item \textit{Examples:} \texttt{valor\_total}, \texttt{area\_total\_ha}, \texttt{num\_practices}, \texttt{riego\_share}
+        \item \textit{Fix:} Add feature specification document or code comments with exact formulas
+    \end{itemize}
+\end{enumerate}
+
+% ============================================================================
+\newpage
+\section{Variable Dictionary (Codebook)}
+\label{sec:codebook}
+% ============================================================================
+
+This section provides detailed variable definitions for the two most complete modeling datasets.
+
+% ----------------------------------------------------------------------------
+\subsection{Dataset: model\_data\_ena2024\_plus\_geo2.csv}
+% ----------------------------------------------------------------------------
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Rows:} 35,187
+    \item \textbf{Columns:} 98
+    \item \textbf{Key columns:} \texttt{anio}, \texttt{ccdd}, \texttt{ccpp}, \texttt{ccdi}, \texttt{psu}, \texttt{id\_prod}, \texttt{ua}
+    \item \textbf{Missing keys:} 1,112 rows (3.16\%)
+    \item \textbf{Duplicate keys:} 0
+\end{itemize}
+
+% --- IDs and Merge Keys -----------------------------------------------------
+\subsubsection{IDs and Merge Keys}
+
+\begin{longtable}{L{2.5cm}L{3cm}L{5cm}L{3.5cm}}
+\caption{Identifier variables.} \\
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\emph{Continued...}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\texttt{anio} & ID / year & Survey reference year (2024) & 0\% missing \\
+\texttt{ccdd} & ID / code & Department code (UBIGEO) & 3.16\% missing \\
+\texttt{ccpp} & ID / code & Province code (UBIGEO) & 3.16\% missing \\
+\texttt{ccdi} & ID / code & District code (UBIGEO) & 3.16\% missing \\
+\texttt{psu} & ID / code & Primary sampling unit / segment & 0\% missing \\
+\texttt{id\_prod} & ID / code & Producer identifier & 0\% missing \\
+\texttt{ua} & ID / code & Unidad Agropecuaria number & 0\% missing \\
+\texttt{ubigeo6} & ID / code & 6-digit district UBIGEO (ccdd+ccpp+ccdi) & 3.16\% missing \\
+\end{longtable}
+
+% --- Survey Design ----------------------------------------------------------
+\subsubsection{Survey Design and Weights}
+
+\begin{longtable}{L{2.5cm}L{3cm}L{5cm}L{3.5cm}}
+\caption{Survey design variables.} \\
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{estrato} & Continuous / code & Sampling stratum code & 3.16\% missing \\
+\texttt{region\_natural} & Categorical / code & Natural region (1, 2, 3) & 0\% missing \\
+\texttt{weight} & Continuous & Survey expansion weight & Range: [7.75e-06, 2.07e+04] \\
+\end{longtable}
+
+% --- Geography --------------------------------------------------------------
+\subsubsection{Geography Labels and Coordinates}
+
+\begin{longtable}{L{2.5cm}L{3cm}L{5cm}L{3.5cm}}
+\caption{Geographic variables.} \\
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{departamento} & Categorical & Department name & 25 unique values \\
+\texttt{provincia} & Categorical & Province name & 195 unique values \\
+\texttt{distrito} & Categorical & District name & 1,433 unique values \\
+\texttt{latitud} & Continuous / degrees & Segment latitude & Range: [-18.3, -0.99] \\
+\texttt{longitud} & Continuous / degrees & Segment longitude & Range: [-81.1, -68.9] \\
+\texttt{capital\_lat} & Continuous / degrees & District capital latitude & 3.16\% missing \\
+\texttt{capital\_lon} & Continuous / degrees & District capital longitude & 3.16\% missing \\
+\texttt{surface\_km2} & Continuous / km² & District surface area & Range: [2.2, 24,000] \\
+\end{longtable}
+
+% --- Farm Size and Diversification ------------------------------------------
+\subsubsection{Farm Size and Diversification Indices}
+
+\begin{longtable}{L{2.5cm}L{2.5cm}L{5.5cm}L{3.5cm}}
+\caption{Farm characteristics and diversification measures.} \\
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{area\_total\_ha} & Continuous / ha & Total farm area in hectares & Median: 1.15 ha \\
+\texttt{size\_cat} & Categorical & Farm size category: pequeño ($<$2ha), mediano (2--5ha), grande ($>$5ha) & 3 categories \\
+\texttt{valor\_total} & Continuous / S/ & Total crop production value & Median: 4,280 S/ \\
+\texttt{num\_crops\_area} & Count & Number of crops (area-based) & Range: [1, 28] \\
+\texttt{num\_crops\_valor} & Count & Number of crops (value-based) & Range: [1, 23] \\
+\texttt{hhi\_area} & Index [0,1] & Herfindahl-Hirschman Index for crop area shares & Higher = more specialized \\
+\texttt{hhi\_valor} & Index [0,1] & HHI for crop value shares & 9.56\% missing \\
+\texttt{diversificacion\_area} & Index [0,1] & Diversification index: $1 - \mathrm{hhi\_area}$ & Higher = more diversified \\
+\texttt{diversificacion\_valor} & Index [0,1] & Diversification index: $1 - \mathrm{hhi\_valor}$ & 9.56\% missing \\
+\texttt{shannon\_area} & Index & Shannon entropy of crop area shares & Range: [0, 3.97] \\
+\texttt{shannon\_valor} & Index & Shannon entropy of crop value shares & 9.56\% missing \\
+\end{longtable}
+
+% --- Labor and Costs --------------------------------------------------------
+\subsubsection{Labor and Production Costs}
+
+\begin{longtable}{L{3cm}L{2.5cm}L{5cm}L{3.5cm}}
+\caption{Labor and cost variables.} \\
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{jornaleros\_event\_h} & Count & Temporary laborers (men) & 19.38\% missing \\
+\texttt{jornaleros\_event\_m} & Count & Temporary laborers (women) & 68.50\% missing \\
+\texttt{jornaleros\_perm\_h} & Count & Permanent laborers (men) & 95.09\% missing \\
+\texttt{jornaleros\_perm\_m} & Count & Permanent laborers (women) & 98.40\% missing \\
+\texttt{labor\_total} & Count & Total hired laborers (sum of above) & Verified construction \\
+\texttt{costo\_total\_agropecuario} & S/ & Total agricultural cost & 0.02\% missing \\
+\texttt{gasto\_agricola\_total} & S/ & Total agricultural expenditure & Median: 1,570 S/ \\
+\texttt{gasto\_semilla} & S/ & Seed expenditure & 31.57\% missing \\
+\texttt{gasto\_fertilizantes} & S/ & Fertilizer expenditure & 41.31\% missing \\
+\texttt{gasto\_plaguicidas} & S/ & Pesticide expenditure & 35.19\% missing \\
+\texttt{gasto\_abono} & S/ & Manure expenditure & 39.27\% missing \\
+\texttt{input\_costs} & S/ & Total input costs (abono + fertilizantes + plaguicidas) & Verified: exact sum \\
+\texttt{gasto\_agua\_riego} & S/ & Irrigation water expenditure & 0.02\% missing \\
+\end{longtable}
+
+% --- Practices and Irrigation -----------------------------------------------
+\subsubsection{Agricultural Practices and Irrigation}
+
+\begin{longtable}{L{3cm}L{2.5cm}L{5cm}L{3.5cm}}
+\caption{Practice and irrigation indicators.} \\
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{num\_practices} & Count [0--10] & Count of good agricultural practices & Median: 2 \\
+\texttt{practice\_any} & Binary & Any practices applied ($=1$ if num\_practices $>0$) & Verified \\
+\texttt{riego\_share} & Proportion [0,1] & Share of parcels/area irrigated & Median: 0.5 \\
+\texttt{riego\_any} & Binary & Any irrigation ($=1$ if riego\_share $>0$) & Verified \\
+\texttt{riego\_tecnificado\_share} & Proportion [0,1] & Share with technified irrigation & 40.32\% missing \\
+\texttt{riego\_tecnificado\_any} & Binary & Any technified irrigation & NA when riego\_any=0 \\
+\texttt{usuario\_agua} & Binary & Water user organization member & 4.95\% missing \\
+\end{longtable}
+
+% --- Mechanization and Inputs -----------------------------------------------
+\subsubsection{Mechanization and Inputs}
+
+\begin{longtable}{L{3cm}L{2.5cm}L{5cm}L{3.5cm}}
+\caption{Mechanization and input variables.} \\
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{uso\_maquinaria} & Binary & Used machinery in last 12 months & 0.01\% missing \\
+\texttt{num\_maquinaria\_equipo} & Count & Number of machinery/equipment items & 28.42\% missing \\
+\texttt{usa\_abono} & Binary & Used manure in last 12 months & 0.01\% missing \\
+\texttt{usa\_fertilizantes} & Binary & Used fertilizers in last 12 months & 0.01\% missing \\
+\texttt{semilla\_certificada\_any} & Binary & Used certified seed & 28.65\% missing \\
+\texttt{semilla\_certificada\_share} & Proportion [0,1] & Share of certified seed & 28.65\% missing \\
+\texttt{semilla\_comercial\_any} & Binary & Used commercial seed & 0.01\% missing \\
+\texttt{semilla\_semillero\_any} & Binary & Used seedbed source & 0.01\% missing \\
+\end{longtable}
+
+% --- Services and Finance ---------------------------------------------------
+\subsubsection{Services, Finance, and Human Capital}
+
+\begin{longtable}{L{3cm}L{2.5cm}L{5cm}L{3.5cm}}
+\caption{Service access and human capital variables.} \\
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{asistencia\_tecnica\_recibida} & Binary & Received technical assistance (3 years) & 0.01\% missing \\
+\texttt{capacitacion\_recibida} & Binary & Received training (3 years, $\geq$4 hrs) & 0.01\% missing \\
+\texttt{credito\_obtenido} & Binary & Obtained agricultural credit & 86.60\% missing \\
+\texttt{asociacion\_miembro} & Binary & Member of producer association & 0.01\% missing \\
+\texttt{asociacion\_num} & Count [0--5] & Number of associations & 6 levels \\
+\texttt{nivel\_educacion} & Categorical & Highest education level (1--10) & 3.16\% missing \\
+\end{longtable}
+
+% --- Climate: Precipitation -------------------------------------------------
+\subsubsection{Climate: Precipitation (CHIRPS)}
+
+\textit{All precipitation variables are district-level features merged via \texttt{ubigeo6}.}
+
+\begin{longtable}{L{2.5cm}L{2.5cm}L{5.5cm}L{3.5cm}}
+\caption{CHIRPS precipitation variables.} \\
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{prcp\_2024\_total} & Continuous / mm & Total precipitation in 2024 & Range: [4.2, 4,840] \\
+\texttt{prcp\_2024\_wet} & Continuous / mm & Wet-season precipitation 2024 & \\
+\texttt{prcp\_2024\_dry} & Continuous / mm & Dry-season precipitation 2024 & \\
+\texttt{prcp\_baseline\_mean} & Continuous / mm & Baseline mean annual precipitation & See metadata JSON \\
+\texttt{prcp\_baseline\_sd} & Continuous / mm & Baseline std. dev. of precipitation & \\
+\texttt{prcp\_total\_anom} & Continuous / mm & Anomaly: 2024 $-$ baseline mean & Verified \\
+\texttt{prcp\_total\_z} & Index & Z-score: anomaly / baseline SD & Range: [-4.9, 3.2] \\
+\end{longtable}
+
+% --- Climate: Temperature ---------------------------------------------------
+\subsubsection{Climate: Temperature}
+
+\textit{District-level temperature features merged via \texttt{ubigeo6}.}
+
+\begin{longtable}{L{2.5cm}L{2.5cm}L{5.5cm}L{3.5cm}}
+\caption{Temperature variables.} \\
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{tmean\_2023} & Continuous / °C & Mean temperature in 2023 & Range: [7.8, 28.8] \\
+\texttt{tmean\_2024} & Continuous / °C & Mean temperature in 2024 & Range: [6.9, 28.5] \\
+\texttt{tmax\_2023} & Continuous / °C & Mean max temperature 2023 & \\
+\texttt{tmax\_2024} & Continuous / °C & Mean max temperature 2024 & \\
+\texttt{tmin\_2023} & Continuous / °C & Mean min temperature 2023 & \\
+\texttt{tmin\_2024} & Continuous / °C & Mean min temperature 2024 & \\
+\texttt{delta\_tmean\_24\_23} & Continuous / °C & Change: tmean\_2024 $-$ tmean\_2023 & Range: [-1.7, 1.2] \\
+\end{longtable}
+
+% --- Topography -------------------------------------------------------------
+\subsubsection{Topography}
+
+\begin{longtable}{L{2.5cm}L{2.5cm}L{5.5cm}L{3.5cm}}
+\caption{Topographic variables.} \\
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type / Unit} & \textbf{Definition} & \textbf{Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{elev\_m} & Continuous / m & Mean elevation in district & Range: [3.5, 4,360] \\
+\texttt{slope\_deg} & Continuous / ° & Mean slope in district & Range: [0.07, 25.9] \\
+\texttt{ruggedness} & Index & Terrain ruggedness index & Range: [0.14, 35.9] \\
+\end{longtable}
+
+% ============================================================================
+\newpage
+\section{ENA Raw Module Reference}
+% ============================================================================
+
+The following ENA 2024 raw modules are referenced by the repository (per \texttt{module\_profile.csv}):
+
+\begin{longtable}{L{3cm}L{5cm}rrl}
+\caption{ENA 2024 raw module files.} \\
+\toprule
+\textbf{Module} & \textbf{Path} & \textbf{Rows} & \textbf{Cols} & \textbf{Key} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Module} & \textbf{Path} & \textbf{Rows} & \textbf{Cols} & \textbf{Key} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+CARATULA & 973-Modulo1893/CARATULA.csv & 40,237 & 17 & UA \\
+01\_CAP100A\_04 & 973-Modulo1893/01\_CAP100A\_04.csv & 426,505 & 38 & P115\_COD \\
+03\_CAP200A & 973-Modulo1895/03\_CAP200A.csv & 115,517 & 29 & P204\_COD \\
+03\_CAP200AB & 973-Modulo1895/03\_CAP200AB.csv & 165,711 & 127 & P204\_COD \\
+04\_CAP200B\_1 & 973-Modulo1896/04\_CAP200B\_1.csv & 5,041 & 33 & --- \\
+08\_CAP300AB & 973-Modulo1900/08\_CAP300AB.csv & 38,733 & 111 & --- \\
+14\_CAP600 & 973-Modulo1906/14\_CAP600.csv & 39,112 & 61 & --- \\
+15\_CAP700 & 973-Modulo1907/15\_CAP700.csv & 39,112 & 393 & --- \\
+16\_CAP800 & 973-Modulo1908/16\_CAP800.csv & 39,112 & 102 & --- \\
+17\_CAP900 & 973-Modulo1909/17\_CAP900.csv & 39,112 & 54 & --- \\
+18\_CAP1000 & 973-Modulo1910/18\_CAP1000.csv & 39,112 & 69 & --- \\
+19\_CAP1100 & 973-Modulo1911/19\_CAP1100.csv & 101,707 & 36 & --- \\
+20\_CAP1200A\_IS & 973-Modulo1912/20\_CAP1200A\_IS.csv & 75,993 & 31 & P1202\_COD \\
+21\_CAP1200B\_ME & 973-Modulo1913/21\_CAP1200B\_ME.csv & 49,289 & 25 & P1207\_COD \\
+\end{longtable}
+
+% ============================================================================
+\section{Variable Block Specifications}
+% ============================================================================
+
+This section documents recommended constructions for key variable blocks that currently have UNRESOLVED status.
+
+\subsection{Block A: Crop-Level Production and Value}
+
+\subsubsection{Production Value Aggregation}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Raw fields:} \texttt{P220\_1\_VAL}, \texttt{P220\_2\_VAL}, \texttt{P220\_3A\_VAL}, \texttt{P220\_3B\_VAL}
+    \item \textbf{Expected module:} \texttt{03\_CAP200AB.csv}
+    \item \textbf{Recommended construction:}
+    \begin{itemize}
+        \item Per-crop value: sum of destination-specific values
+        \item UA total: aggregate across crops with \texttt{P204\_COD}
+    \end{itemize}
+    \item \textbf{Pitfalls:} Check for skip patterns; distinguish zeros from missing
+\end{itemize}
+
+\subsubsection{Harvested Area}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Raw fields:} \texttt{P217\_SUP\_1}, \texttt{P217\_SUP\_2}
+    \item \textbf{Construction:} \texttt{area\_ha = P217\_SUP\_1 + P217\_SUP\_2 / 100}
+\end{itemize}
+
+\subsection{Block B: Irrigation Indicators}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Raw fields:} \texttt{P121} (irrigation yes/no), \texttt{P122} items (irrigation type)
+    \item \textbf{Expected module:} Parcels module (confirm path)
+    \item \textbf{Recommended constructs:}
+    \begin{itemize}
+        \item \texttt{riego\_share}: Share of parcels with \texttt{P121=1}
+        \item \texttt{riego\_tecnificado\_any}: Any P122 item indicates drip/sprinkler
+    \end{itemize}
+\end{itemize}
+
+\subsection{Block C: Agricultural Practices}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Raw fields:} \texttt{P301A\_*} items in CAP300AB
+    \item \textbf{Recommended construction:}
+    \begin{itemize}
+        \item Identify practice indicator items (confirm with questionnaire)
+        \item \texttt{num\_practices} = count of items with value = 1
+    \end{itemize}
+    \item \textbf{Model use:} Technology adoption, management sophistication
+\end{itemize}
+
+\subsection{Block D: Human Capital and Services}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Training:} \texttt{P701} (last 3 years, $\geq$4 hours)
+    \item \textbf{Technical assistance:} \texttt{P702}
+    \item \textbf{Association:} \texttt{P801}, \texttt{P802} (count)
+    \item \textbf{Credit:} \texttt{P901\_*} items (solicited/obtained)
+\end{itemize}
+
+% ============================================================================
+\section{Implementation Checklist}
+% ============================================================================
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Data access:} Add raw ENA modules or documented access procedure with checksums
+    
+    \item \textbf{Raw cleaning layer:} Standardize missing codes, reconstruct integer/decimal pairs, enforce constraints
+    
+    \item \textbf{Feature engineering:} For each construct, produce:
+    \begin{itemize}
+        \item Crop-level intermediates (if applicable)
+        \item UA-level aggregates for modeling
+    \end{itemize}
+    
+    \item \textbf{Unit tests:}
+    \begin{itemize}
+        \item Key uniqueness per module
+        \item Reconciliation checks (verify derived equals original)
+        \item Structural missingness patterns
+    \end{itemize}
+    
+    \item \textbf{Documentation:} Update this codebook with verified constructions and version hash
+\end{enumerate}
+
+% ============================================================================
+\end{document}

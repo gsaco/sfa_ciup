@@ -1,14 +1,15 @@
 # Robustness with Geo/Climate Controls
 
 ## SFA (inefficiency effects)
-- **Baseline**: `Z_diversificacion_area` is negative and significant; interactions are significant.
-- **XGEO (precipitation in frontier)**: signs and significance for diversification and interactions remain similar to baseline.
-- **ZGEO (precipitation in inefficiency)**: the main diversification term attenuates substantially; interaction terms remain significant.
+### Diversification terms
+- **Baseline**: `Z_diversificacion_area` is positive and significant; large‑farm interaction is negative and significant.
+- **XGEO (precipitation in frontier)**: diversification signs are similar to baseline; `prcp_total_z` in the frontier is not significant.
+- **ZGEO (precipitation in inefficiency)**: `Z_prcp_total_z` is negative and significant (inefficiency‑increasing), while diversification interactions remain sizeable.
 
-Interpretation: adding climate controls changes the magnitude of inefficiency effects and reduces the baseline effect of diversification, suggesting some confounding with agroclimatic conditions.
+Interpretation: climate controls change magnitudes and add a strong inefficiency gradient for precipitation anomalies; diversification effects remain heterogeneous by size.
 
 ## Logit (practices)
-- **Baseline vs GEO**: the odds ratio for diversification remains large and significant after adding `prcp_total_z`.
+- **Baseline vs GEO**: diversification remains positive and significant after adding `prcp_total_z` (OR ~1.73 per 1 SD precipitation; see `outputs/tables/09_logit_with_geo_controls.csv`).
 - **Interactions**: remain non-significant in both specifications.
 
 ## Conclusion

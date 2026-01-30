@@ -1,5 +1,8 @@
 # Experiment X01: Strict practice_any definition
 
+## Status (2026-01-26)
+These results are historical. The current baseline definition (subset of P301A items) yields `practice_any` mean ~0.776; treat the numbers below as experiment‑time snapshots, not current results.
+
 ## Goal
 Test whether a narrower "sustainable practices" subset reduces outcome saturation and changes logit results.
 
@@ -28,4 +31,3 @@ Test whether a narrower "sustainable practices" subset reduces outcome saturatio
 
 ## Revert
 - Restored original definition; rebuilt data and logit outputs (see `logs/revert.log`).
-

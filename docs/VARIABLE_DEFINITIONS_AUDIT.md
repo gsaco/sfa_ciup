@@ -3,9 +3,9 @@
 ## Practice Variables
 - **Source:** `08_CAP300AB.csv` (P301A_*).
 - **Coding check:** Raw values are `{1,2}` for all P301A_* checked; dictionary examples (e.g., P240) show `1=Si`, `2=No`, consistent with the current `==1` coding.
-- **Construction:** `num_practices = sum(P301A_* == 1)` and `practice_any = num_practices > 0` (`src/ena/05_build_model_data.py`).
-- **Prevalence:** `practice_any` mean approx 0.953; `num_practices` mean approx 7.06, max 21. High prevalence likely reflects broad inclusion of routine practices (plowing, fertilizers, pesticides) rather than only "sustainable" practices.
-- **Risk:** Interpretation as "sustainable practices" is likely overstated unless a narrower subset is used.
+- **Construction:** `num_practices = sum(selected P301A vars == 1)` where selected vars are `P301A_1`, `P301A_2`, `P301A_3`, `P301A_4`, `P301A_4A`, `P301A_4B`, `P301A_4C`, `P301A_11`, `P301A_16`, `P301A_17`; `practice_any = num_practices > 0` (`src/ena/05_build_model_data.py`).
+- **Prevalence:** current `practice_any` mean ~0.776 (see `outputs/tables/00_sample_overview.*`).
+- **Risk:** Interpretation as "sustainable practices" still needs care; the subset reduces routine practice overlap but may remain correlated with other inputs and access.
 
 ## PSU / Strata / Weights
 - **PSU:** `NSEGM` mapped to `psu` in `src/ena/02_build_schema_from_dictionary.py`; dictionary description: "Numero correlativo en secuencia serpentin por region."
@@ -25,4 +25,3 @@
 ## Irrigation / Seed Controls
 - **Irrigation:** `riego_crop` coded as `water_source != 1` (assumes code 1 indicates rainfed/none); `riego_tecnificado_crop` uses `irrigation_system` in {1..6}. Value codes need confirmation in the dictionary (not explicit in parsed tables).
 - **Seed certification:** `seed_certified` codes 1/2 mapped to yes/no; consistent with other yes/no variables.
-

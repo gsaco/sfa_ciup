@@ -1,40 +1,34 @@
-| model | term | estimate | std_error | z_value | p_value | component | 
-| --- | --- | --- | --- | --- | --- | --- | 
- | alt_shannon | (Intercept) |    8.73208342 | 2.170209e-02 |  402.3614024 | 0.000000e+00 | frontier |
-| alt_shannon | log_land |    0.73449120 | 4.982121e-03 |  147.4253930 | 0.000000e+00 | frontier |
-| alt_shannon | log_labor |    0.23855860 | 5.457640e-03 |   43.7109447 | 0.000000e+00 | frontier |
-| alt_shannon | log_inputs |    0.11170024 | 2.380441e-03 |   46.9241860 | 0.000000e+00 | frontier |
-| alt_shannon | region_natural2 |   -0.99585398 | 1.460241e-02 |  -68.1979122 | 0.000000e+00 | frontier |
-| alt_shannon | region_natural3 |   -0.15771467 | 1.697409e-02 |   -9.2914941 | 0.000000e+00 | frontier |
-| alt_shannon | Z_(Intercept) | -550.80037589 | 8.454616e+01 |   -6.5147885 | 7.279222e-11 | inefficiency |
-| alt_shannon | Z_diversif_alt |    5.84565201 | 1.477524e+00 |    3.9563829 | 7.609316e-05 | inefficiency |
-| alt_shannon | Z_size_mediano |  -10.55388864 | 2.666040e+00 |   -3.9586393 | 7.537799e-05 | inefficiency |
-| alt_shannon | Z_size_grande |  277.12685226 | 4.181613e+01 |    6.6272713 | 3.419487e-11 | inefficiency |
-| alt_shannon | Z_diversif_alt_med |   88.94439844 | 1.360415e+01 |    6.5380353 | 6.233214e-11 | inefficiency |
-| alt_shannon | Z_diversif_alt_gra |  -29.26086292 | 4.398592e+00 |   -6.6523255 | 2.884981e-11 | inefficiency |
-| alt_shannon | sigmaSq |  413.66648492 | 6.320315e+01 |    6.5450296 | 5.948353e-11 | variance |
-| alt_shannon | gamma |    0.99867653 | 2.175634e-04 | 4590.2784955 | 0.000000e+00 | variance |
-| alt_num_crops | (Intercept) |    8.73447555 | 2.186604e-02 |  399.4539777 | 0.000000e+00 | frontier |
-| alt_num_crops | log_land |    0.73118912 | 4.882116e-03 |  149.7688810 | 0.000000e+00 | frontier |
-| alt_num_crops | log_labor |    0.24012325 | 5.704234e-03 |   42.0956143 | 0.000000e+00 | frontier |
-| alt_num_crops | log_inputs |    0.11176612 | 2.334938e-03 |   47.8668381 | 0.000000e+00 | frontier |
-| alt_num_crops | region_natural2 |   -1.00731086 | 1.458153e-02 |  -69.0812656 | 0.000000e+00 | frontier |
-| alt_num_crops | region_natural3 |   -0.16330941 | 1.990764e-02 |   -8.2033544 | 2.220446e-16 | frontier |
-| alt_num_crops | Z_(Intercept) | -138.28060723 | 1.254125e+01 |  -11.0260664 | 0.000000e+00 | inefficiency |
-| alt_num_crops | Z_diversif_alt2 |   -0.01591934 | 1.680842e-02 |   -0.9471049 | 3.435853e-01 | inefficiency |
-| alt_num_crops | Z_size_mediano |   10.45352291 | 6.150321e-01 |   16.9967124 | 0.000000e+00 | inefficiency |
-| alt_num_crops | Z_size_grande |   45.82898543 | 4.845374e+00 |    9.4582966 | 0.000000e+00 | inefficiency |
-| alt_num_crops | Z_diversif_alt2_med |    3.83589023 | 4.295665e-01 |    8.9296766 | 0.000000e+00 | inefficiency |
-| alt_num_crops | Z_diversif_alt2_gra |    3.85938611 | 1.293876e-01 |   29.8281083 | 0.000000e+00 | inefficiency |
-| alt_num_crops | sigmaSq |  105.55980964 | 9.750960e+00 |   10.8255814 | 0.000000e+00 | variance |
-| alt_num_crops | gamma |    0.99479080 | 5.338044e-04 | 1863.5867238 | 0.000000e+00 | variance |
-| small_only | (Intercept) |    8.69261598 | 2.827201e-02 |  307.4636286 | 0.000000e+00 | frontier |
-| small_only | log_land |    0.74018452 | 6.908090e-03 |  107.1474977 | 0.000000e+00 | frontier |
-| small_only | log_labor |    0.21227448 | 7.250609e-03 |   29.2767807 | 0.000000e+00 | frontier |
-| small_only | log_inputs |    0.10136816 | 3.125114e-03 |   32.4366269 | 0.000000e+00 | frontier |
-| small_only | region_natural2 |   -0.88959983 | 1.733231e-02 |  -51.3260931 | 0.000000e+00 | frontier |
-| small_only | region_natural3 |   -0.07516587 | 2.735723e-02 |   -2.7475681 | 6.003903e-03 | frontier |
-| small_only | Z_(Intercept) | -125.92897218 | 3.269362e+01 |   -3.8517905 | 1.172573e-04 | inefficiency |
-| small_only | Z_diversificacion_area |    6.03125518 | 9.066250e-01 |    6.6524255 | 2.883027e-11 | inefficiency |
-| small_only | sigmaSq |   89.50415767 | 2.216741e+01 |    4.0376468 | 5.399006e-05 | variance |
-| small_only | gamma |    0.99351725 | 1.625641e-03 |  611.1541455 | 0.000000e+00 | variance |
+| model | term | estimate | std_error | z_value | p_value | component | inference_note | n_total | n_valid | share_dropped | gamma | gamma_near_boundary | cov_singular | cov_rank | cov_cond | cov_rcond | input_cost_var | ineffDecrease | truncNorm | timeEffect | 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+ | alt_shannon | (Intercept) |   7.95240784 |  0.051755816 | 153.652450 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | log_land |   0.88986530 |  0.006255305 | 142.257697 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | log_labor |   0.29746931 |  0.008562729 |  34.740012 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | log_inputs |   0.10889603 |  0.006979520 |  15.602224 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_(Intercept) | -59.83156927 |  8.661869179 |  -6.907466 | 4.933831e-12 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_diversif_alt |  12.83486988 |  1.623545658 |   7.905457 | 2.664535e-15 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_size_mediano |  -0.73288659 |  0.601284709 |  -1.218868 | 2.228944e-01 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_size_grande |  33.34767559 |  4.371592069 |   7.628268 | 2.375877e-14 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_diversif_alt_med |   4.98643039 |  0.868962570 |   5.738372 | 9.559103e-09 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | Z_diversif_alt_gra | -11.93816652 |  1.714295353 |  -6.963891 | 3.310019e-12 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | sigmaSq |  46.83065905 |  6.996507318 |   6.693434 | 2.179945e-11 | variance |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_shannon | gamma |   0.98870996 |  0.001802724 | 548.453452 | 0.000000e+00 | variance |  | 31824 | 26594 | 0.1643414 | 0.9887100 | FALSE | FALSE | 12 |  8358075418 | 1.196448e-10 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | (Intercept) |   7.99664086 |  0.053289916 | 150.059175 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | log_land |   0.88360814 |  0.006127905 | 144.194166 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | log_labor |   0.30438413 |  0.008691257 |  35.021878 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | log_inputs |   0.10227467 |  0.007107526 |  14.389630 | 0.000000e+00 | frontier |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_(Intercept) | -54.73606967 | 10.360969364 |  -5.282910 | 1.271478e-07 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_diversif_alt2 |   1.46812128 |  0.329802690 |   4.451514 | 8.526698e-06 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_size_mediano |   5.31520736 |  1.222746081 |   4.346943 | 1.380482e-05 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_size_grande |  18.18949045 |  3.686522747 |   4.934051 | 8.054148e-07 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_diversif_alt2_med |   0.43687430 |  0.129213776 |   3.381020 | 7.221741e-04 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | Z_diversif_alt2_gra |   0.52549662 |  0.151281036 |   3.473645 | 5.134398e-04 | inefficiency |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | sigmaSq |  50.14243971 |  8.661405960 |   5.789180 | 7.073079e-09 | variance |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| alt_num_crops | gamma |   0.98934727 |  0.001869797 | 529.120075 | 0.000000e+00 | variance |  | 31824 | 26594 | 0.1643414 | 0.9893473 | FALSE | FALSE | 12 | 12565849285 | 7.958077e-11 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | (Intercept) |   8.57923204 |  0.073837442 | 116.190808 | 0.000000e+00 | frontier |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | log_land |   0.88505348 |  0.008604260 | 102.862247 | 0.000000e+00 | frontier |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | log_labor |   0.26972741 |  0.011957468 |  22.557234 | 0.000000e+00 | frontier |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | log_inputs |   0.03719875 |  0.008980297 |   4.142262 | 3.438969e-05 | frontier |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | Z_(Intercept) |  -2.87601424 |  0.707487219 |  -4.065111 | 4.800956e-05 | inefficiency |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | Z_diversificacion_area |   2.70549534 |  0.379984060 |   7.120023 | 1.079137e-12 | inefficiency |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | sigmaSq |   3.68577065 |  0.414921256 |   8.883061 | 0.000000e+00 | variance |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |
+| small_only | gamma |   0.84403600 |  0.015092434 |  55.924446 | 0.000000e+00 | variance |  | 20692 | 16015 | 0.2260294 | 0.8440360 | FALSE | FALSE |  8 |     1033286 | 9.677860e-07 | costo_total_agropecuario | TRUE | FALSE | FALSE |

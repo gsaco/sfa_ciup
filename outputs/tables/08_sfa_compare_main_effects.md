@@ -1,11 +1,11 @@
 | model | term | estimate | std_error | p_value | 
 | --- | --- | --- | --- | --- | 
- | main_area | Z_diversificacion_area | -14.9304685 |  1.820617 | 2.220446e-16 |
-| main_area | Z_diversif_mediano | 174.7929733 | 23.979256 | 3.115286e-13 |
-| main_area | Z_diversif_grande | -69.9012745 | 10.234233 | 8.482992e-12 |
-| xgeo_prcp | Z_diversificacion_area | -10.3262688 |  1.232804 | 0.000000e+00 |
-| xgeo_prcp | Z_diversif_mediano | 155.6358118 | 10.516591 | 0.000000e+00 |
-| xgeo_prcp | Z_diversif_grande | -58.8585700 |  9.973392 | 3.600808e-09 |
-| zgeo_prcp | Z_diversificacion_area |  -0.1745443 |  0.420712 | 6.782310e-01 |
-| zgeo_prcp | Z_diversif_mediano |  69.0371899 | 12.280760 | 1.892266e-08 |
-| zgeo_prcp | Z_diversif_grande | -23.3731274 |  3.707608 | 2.898768e-10 |
+ | main_area | Z_diversificacion_area |  1.9293785 | 0.2007915 | 0.0000000 |
+| main_area | Z_diversif_mediano | -0.1995218 | 0.2429158 | 0.4114401 |
+| main_area | Z_diversif_grande | -5.5425393 | 0.2892420 | 0.0000000 |
+| xgeo_prcp | Z_diversificacion_area |  1.9267514 | 0.1851065 | 0.0000000 |
+| xgeo_prcp | Z_diversif_mediano | -0.2080866 | 0.2816486 | 0.4600186 |
+| xgeo_prcp | Z_diversif_grande | -5.6705108 | 0.3637473 | 0.0000000 |
+| zgeo_prcp | Z_diversificacion_area |  2.1001526 | 0.1986083 | 0.0000000 |
+| zgeo_prcp | Z_diversif_mediano | -0.1469793 | 0.2808701 | 0.6007654 |
+| zgeo_prcp | Z_diversif_grande | -5.5938432 | 0.3507572 | 0.0000000 |

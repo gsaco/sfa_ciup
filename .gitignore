@@ -1,7 +1,40 @@
 data/raw/
 data/external/raw/
+data/external/processed/
 data/intermediate/
 data/processed/
 logs/
 outputs/baseline_tables/
+outputs/tables/
+outputs/manifest.json
 venv/
+
+# OS / editor
+.DS_Store
+.vscode/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+.jupyter/
+
+# LaTeX / report build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+reports/*.pdf
+dictionary.aux
+dictionary.log
+dictionary.out
+dictionary.toc
+dictionary.pdf

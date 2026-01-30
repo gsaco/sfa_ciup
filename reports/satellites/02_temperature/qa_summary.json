@@ -1,0 +1,169 @@
+{
+  "row_count": 1892,
+  "ubigeo_unique": true,
+  "missing_keys": [],
+  "missing_key_count": 0,
+  "missingness": [
+    {
+      "column": "tmean_baseline_sd",
+      "missing_count": 1892,
+      "missing_pct": 100.0
+    },
+    {
+      "column": "tmean_z",
+      "missing_count": 1892,
+      "missing_pct": 100.0
+    },
+    {
+      "column": "tmax_2023",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "tmin_2023",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "tmean_2023",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "tmax_2024",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "tmin_2024",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "tmean_2024",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "delta_tmean_24_23",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "tmean_baseline_mean",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "tmean_anom",
+      "missing_count": 18,
+      "missing_pct": 0.9513742071881607
+    },
+    {
+      "column": "ubigeo6",
+      "missing_count": 0,
+      "missing_pct": 0.0
+    }
+  ],
+  "summary_stats": [
+    {
+      "feature": "tmax_2023",
+      "min": 12.600000000000009,
+      "max": 34.400000000000006,
+      "mean": 23.600213447171825,
+      "std": 4.975301513941592
+    },
+    {
+      "feature": "tmin_2023",
+      "min": -0.5,
+      "max": 23.5,
+      "mean": 10.81099252934899,
+      "std": 6.104294373569867
+    },
+    {
+      "feature": "tmean_2023",
+      "min": 6.399999999999999,
+      "max": 28.750000000000007,
+      "mean": 17.205602988260406,
+      "std": 5.493783127607885
+    },
+    {
+      "feature": "tmax_2024",
+      "min": 12.100000000000009,
+      "max": 33.80000000000001,
+      "mean": 22.829135538954116,
+      "std": 5.137863861681313
+    },
+    {
+      "feature": "tmin_2024",
+      "min": -1.5,
+      "max": 23.5,
+      "mean": 10.039914621131272,
+      "std": 6.287749187789914
+    },
+    {
+      "feature": "tmean_2024",
+      "min": 5.399999999999999,
+      "max": 28.45000000000001,
+      "mean": 16.43452508004269,
+      "std": 5.669246248941566
+    },
+    {
+      "feature": "delta_tmean_24_23",
+      "min": -1.7000000000000028,
+      "max": 1.1999999999999957,
+      "mean": -0.771077908217716,
+      "std": 0.46234183173009064
+    },
+    {
+      "feature": "tmean_baseline_mean",
+      "min": 6.399999999999999,
+      "max": 28.750000000000007,
+      "mean": 17.205602988260406,
+      "std": 5.493783127607885
+    },
+    {
+      "feature": "tmean_baseline_sd",
+      "min": NaN,
+      "max": NaN,
+      "mean": NaN,
+      "std": NaN
+    },
+    {
+      "feature": "tmean_anom",
+      "min": -1.7000000000000028,
+      "max": 1.1999999999999957,
+      "mean": -0.771077908217716,
+      "std": 0.46234183173009064
+    },
+    {
+      "feature": "tmean_z",
+      "min": NaN,
+      "max": NaN,
+      "mean": NaN,
+      "std": NaN
+    }
+  ],
+  "coverage": [
+    {
+      "metric": "ubigeo_total",
+      "value": 1892
+    },
+    {
+      "metric": "feature_rows",
+      "value": 1892
+    },
+    {
+      "metric": "matched_keys",
+      "value": 1892
+    },
+    {
+      "metric": "missing_keys",
+      "value": 0
+    },
+    {
+      "metric": "extra_keys",
+      "value": 0
+    }
+  ]
+}

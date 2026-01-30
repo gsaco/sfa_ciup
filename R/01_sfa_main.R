@@ -12,6 +12,14 @@ out_tables <- file.path(repo_root, "outputs", "tables")
 out_data <- file.path(repo_root, "data", "processed")
 dir.create(out_tables, recursive = TRUE, showWarnings = FALSE)
 
+source(file.path(repo_root, "R", "sfa_diagnostics.R"))
+
+SFA_ASSUMPTIONS <- list(
+  ineffDecrease = TRUE,
+  truncNorm = FALSE,
+  timeEffect = FALSE
+)
+
 df <- read.csv(data_path, stringsAsFactors = FALSE)
 
 numeric_vars <- c(
@@ -19,6 +27,8 @@ numeric_vars <- c(
   "area_total_ha",
   "labor_total",
   "input_costs",
+  "gasto_agricola_total",
+  "costo_total_agropecuario",
   "diversificacion_area",
   "diversificacion_valor",
   "shannon_area",
@@ -30,13 +40,40 @@ for (v in numeric_vars) {
   }
 }
 
+select_input_costs <- function(data) {
+  if ("costo_total_agropecuario" %in% names(data)) {
+    return("costo_total_agropecuario")
+  }
+  if ("gasto_agricola_total" %in% names(data)) {
+    return("gasto_agricola_total")
+  }
+  if ("input_costs" %in% names(data)) {
+    return("input_costs")
+  }
+  return(NA_character_)
+}
+
+attach_input_costs <- function(data) {
+  input_col <- select_input_costs(data)
+  if (!is.na(input_col)) {
+    data$input_costs_sfa <- suppressWarnings(as.numeric(data[[input_col]]))
+  } else {
+    data$input_costs_sfa <- NA_real_
+  }
+  list(data = data, input_col = input_col)
+}
+
 df <- df[df$valor_total > 0 & df$area_total_ha > 0, ]
 df <- df[!is.na(df$diversificacion_area) & !is.na(df$size_cat) & !is.na(df$region_natural), ]
+
+input_cost_result <- attach_input_costs(df)
+df <- input_cost_result$data
+input_cost_col <- input_cost_result$input_col
 
 df$log_y <- log(df$valor_total)
 df$log_land <- log(df$area_total_ha)
 df$log_labor <- log(df$labor_total + 1)
-df$log_inputs <- log(df$input_costs + 1)
+df$log_inputs <- log(df$input_costs_sfa + 1)
 
 df$size_cat <- factor(df$size_cat)
 df$region_natural <- factor(df$region_natural)
@@ -52,8 +89,15 @@ if (ncol(region_dummies) > 1) {
 }
 df <- cbind(df, region_dummies)
 
-x_names <- c("log_land", "log_labor", "log_inputs", colnames(region_dummies))
-z_names_main <- c("diversificacion_area", "size_mediano", "size_grande", "diversif_mediano", "diversif_grande")
+x_names <- c("log_land", "log_labor", "log_inputs")
+z_names_main <- c(
+  "diversificacion_area",
+  "size_mediano",
+  "size_grande",
+  "diversif_mediano",
+  "diversif_grande",
+  colnames(region_dummies)
+)
 
 safe_frontier <- function(data, x_names, z_names, model_name) {
   tryCatch(
@@ -63,7 +107,10 @@ safe_frontier <- function(data, x_names, z_names, model_name) {
         xNames = x_names,
         zNames = z_names,
         data = data,
-        zIntercept = TRUE
+        zIntercept = TRUE,
+        ineffDecrease = SFA_ASSUMPTIONS$ineffDecrease,
+        truncNorm = SFA_ASSUMPTIONS$truncNorm,
+        timeEffect = SFA_ASSUMPTIONS$timeEffect
       )
       list(model = model, name = model_name)
     },
@@ -76,10 +123,19 @@ safe_frontier <- function(data, x_names, z_names, model_name) {
 
 tidy_frontier <- function(model, model_name) {
   params <- model[["mleParam"]]
-  cov <- model[["mleCov"]]
-  se <- sqrt(diag(cov))
-  z <- params / se
-  p <- 2 * (1 - pnorm(abs(z)))
+  cov_diag <- cov_diagnostics(model)
+  inference_note <- ""
+  if (isTRUE(cov_diag$cov_singular)) {
+    se <- rep(NA_real_, length(params))
+    z <- rep(NA_real_, length(params))
+    p <- rep(NA_real_, length(params))
+    inference_note <- "DO NOT INTERPRET: singular covariance"
+  } else {
+    cov <- model[["mleCov"]]
+    se <- sqrt(diag(cov))
+    z <- params / se
+    p <- 2 * (1 - pnorm(abs(z)))
+  }
   terms <- names(params)
   component <- ifelse(
     grepl("^Z_", terms),
@@ -94,6 +150,7 @@ tidy_frontier <- function(model, model_name) {
     z_value = as.numeric(z),
     p_value = as.numeric(p),
     component = component,
+    inference_note = inference_note,
     stringsAsFactors = FALSE
   )
 }
@@ -102,10 +159,21 @@ filter_vars <- function(data, vars) {
   vars[vars %in% names(data)]
 }
 
-build_te <- function(model_obj, data, model_name) {
+row_sums_min1 <- function(data, cols) {
+  subset <- data[, cols, drop = FALSE]
+  sums <- rowSums(subset, na.rm = TRUE)
+  all_missing <- apply(is.na(subset), 1, all)
+  sums[all_missing] <- NA
+  sums
+}
+
+build_te <- function(model_obj, data, model_name = NULL) {
   valid <- model_obj$model$validObs
   keys <- data[valid, c("anio", "ccdd", "ccpp", "ccdi", "psu", "id_prod", "ua")]
   keys$te <- as.numeric(efficiencies(model_obj$model))
+  if (is.null(model_name)) {
+    model_name <- model_obj$name
+  }
   keys$model <- model_name
   keys
 }
@@ -115,7 +183,23 @@ if (is.null(model_main)) {
   stop("Main SFA model failed; cannot proceed.")
 }
 
+diagnostic_rows <- list()
+main_diag <- build_sfa_diagnostics_row(model_main, df)
+main_diag$input_cost_var <- input_cost_col
+main_diag$ineffDecrease <- SFA_ASSUMPTIONS$ineffDecrease
+main_diag$truncNorm <- SFA_ASSUMPTIONS$truncNorm
+main_diag$timeEffect <- SFA_ASSUMPTIONS$timeEffect
+diagnostic_rows[[length(diagnostic_rows) + 1]] <- main_diag
+
+if (isTRUE(main_diag$gamma_near_boundary)) {
+  warning(sprintf("Gamma near boundary for model %s (gamma=%.4f).", main_diag$model, main_diag$gamma))
+}
+if (isTRUE(main_diag$cov_singular)) {
+  warning(sprintf("Covariance matrix singular for model %s. DO NOT INTERPRET inference.", main_diag$model))
+}
+
 main_table <- tidy_frontier(model_main$model, model_main$name)
+main_table <- attach_diagnostics(main_table, main_diag)
 write.csv(main_table, file.path(out_tables, "02_sfa_main.csv"), row.names = FALSE)
 writeLines(
   paste(
@@ -127,9 +211,8 @@ writeLines(
   con = file.path(out_tables, "02_sfa_main.md")
 )
 
-te <- efficiencies(model_main$model)
-te_df <- df[, c("anio", "ccdd", "ccpp", "ccdi", "psu", "id_prod", "ua")]
-te_df$te <- as.numeric(te)
+te_full <- build_te(model_main, df)
+te_df <- te_full[, c("anio", "ccdd", "ccpp", "ccdi", "psu", "id_prod", "ua", "te")]
 te_csv <- file.path(out_data, "ena2024_with_TE.csv")
 write.csv(te_df, te_csv, row.names = FALSE)
 
@@ -141,6 +224,14 @@ py_cmd <- sprintf(
 )
 system2("python", c("-c", shQuote(py_cmd)))
 
+te_table_parquet <- file.path(out_tables, "03_sfa_te.parquet")
+py_cmd_out <- sprintf(
+  "import pandas as pd; df=pd.read_csv(r'%s'); df.to_parquet(r'%s', index=False)",
+  te_csv,
+  te_table_parquet
+)
+system2("python", c("-c", shQuote(py_cmd_out)))
+
 robust_rows <- list()
 
 if ("shannon_area" %in% names(df)) {
@@ -150,7 +241,21 @@ if ("shannon_area" %in% names(df)) {
   z_alt <- c("diversif_alt", "size_mediano", "size_grande", "diversif_alt_med", "diversif_alt_gra")
   alt_model <- safe_frontier(df, x_names, z_alt, "alt_shannon")
   if (!is.null(alt_model)) {
-    robust_rows[[length(robust_rows) + 1]] <- tidy_frontier(alt_model$model, alt_model$name)
+    alt_diag <- build_sfa_diagnostics_row(alt_model, df)
+    alt_diag$input_cost_var <- input_cost_col
+    alt_diag$ineffDecrease <- SFA_ASSUMPTIONS$ineffDecrease
+    alt_diag$truncNorm <- SFA_ASSUMPTIONS$truncNorm
+    alt_diag$timeEffect <- SFA_ASSUMPTIONS$timeEffect
+    diagnostic_rows[[length(diagnostic_rows) + 1]] <- alt_diag
+    if (isTRUE(alt_diag$gamma_near_boundary)) {
+      warning(sprintf("Gamma near boundary for model %s (gamma=%.4f).", alt_diag$model, alt_diag$gamma))
+    }
+    if (isTRUE(alt_diag$cov_singular)) {
+      warning(sprintf("Covariance matrix singular for model %s. DO NOT INTERPRET inference.", alt_diag$model))
+    }
+    alt_table <- tidy_frontier(alt_model$model, alt_model$name)
+    alt_table <- attach_diagnostics(alt_table, alt_diag)
+    robust_rows[[length(robust_rows) + 1]] <- alt_table
   }
 }
 
@@ -161,7 +266,21 @@ if ("num_crops_area" %in% names(df)) {
   z_alt2 <- c("diversif_alt2", "size_mediano", "size_grande", "diversif_alt2_med", "diversif_alt2_gra")
   alt2_model <- safe_frontier(df, x_names, z_alt2, "alt_num_crops")
   if (!is.null(alt2_model)) {
-    robust_rows[[length(robust_rows) + 1]] <- tidy_frontier(alt2_model$model, alt2_model$name)
+    alt2_diag <- build_sfa_diagnostics_row(alt2_model, df)
+    alt2_diag$input_cost_var <- input_cost_col
+    alt2_diag$ineffDecrease <- SFA_ASSUMPTIONS$ineffDecrease
+    alt2_diag$truncNorm <- SFA_ASSUMPTIONS$truncNorm
+    alt2_diag$timeEffect <- SFA_ASSUMPTIONS$timeEffect
+    diagnostic_rows[[length(diagnostic_rows) + 1]] <- alt2_diag
+    if (isTRUE(alt2_diag$gamma_near_boundary)) {
+      warning(sprintf("Gamma near boundary for model %s (gamma=%.4f).", alt2_diag$model, alt2_diag$gamma))
+    }
+    if (isTRUE(alt2_diag$cov_singular)) {
+      warning(sprintf("Covariance matrix singular for model %s. DO NOT INTERPRET inference.", alt2_diag$model))
+    }
+    alt2_table <- tidy_frontier(alt2_model$model, alt2_model$name)
+    alt2_table <- attach_diagnostics(alt2_table, alt2_diag)
+    robust_rows[[length(robust_rows) + 1]] <- alt2_table
   }
 }
 
@@ -170,7 +289,21 @@ if (nrow(df_small) > 0) {
   z_small <- c("diversificacion_area")
   small_model <- safe_frontier(df_small, x_names, z_small, "small_only")
   if (!is.null(small_model)) {
-    robust_rows[[length(robust_rows) + 1]] <- tidy_frontier(small_model$model, small_model$name)
+    small_diag <- build_sfa_diagnostics_row(small_model, df_small)
+    small_diag$input_cost_var <- input_cost_col
+    small_diag$ineffDecrease <- SFA_ASSUMPTIONS$ineffDecrease
+    small_diag$truncNorm <- SFA_ASSUMPTIONS$truncNorm
+    small_diag$timeEffect <- SFA_ASSUMPTIONS$timeEffect
+    diagnostic_rows[[length(diagnostic_rows) + 1]] <- small_diag
+    if (isTRUE(small_diag$gamma_near_boundary)) {
+      warning(sprintf("Gamma near boundary for model %s (gamma=%.4f).", small_diag$model, small_diag$gamma))
+    }
+    if (isTRUE(small_diag$cov_singular)) {
+      warning(sprintf("Covariance matrix singular for model %s. DO NOT INTERPRET inference.", small_diag$model))
+    }
+    small_table <- tidy_frontier(small_model$model, small_model$name)
+    small_table <- attach_diagnostics(small_table, small_diag)
+    robust_rows[[length(robust_rows) + 1]] <- small_table
   }
 }
 
@@ -190,11 +323,16 @@ if (length(robust_rows) > 0) {
 
 z_controls_extra <- c(
   "nivel_educacion",
-  "credito_obtenido",
   "capacitacion_recibida",
   "asistencia_tecnica_recibida",
   "usuario_agua",
-  "asociacion_miembro"
+  "asociacion_miembro",
+  "riego_any",
+  "uso_maquinaria",
+  "usa_abono",
+  "usa_fertilizantes",
+  "semilla_semillero_any",
+  "semilla_comercial_any"
 )
 
 controls_path <- file.path(repo_root, "data", "processed", "model_data_ena2024_plus_controls.csv")
@@ -206,6 +344,8 @@ if (file.exists(controls_path)) {
     "area_total_ha",
     "labor_total",
     "input_costs",
+    "gasto_agricola_total",
+    "costo_total_agropecuario",
     "diversificacion_area",
     "shannon_area",
     "num_crops_area",
@@ -214,13 +354,17 @@ if (file.exists(controls_path)) {
     "gasto_compra_maquinaria",
     "gasto_compra_equipos",
     "gasto_alquiler_mant_equipos",
-    "riego_tecnificado_any",
     "nivel_educacion",
-    "credito_obtenido",
     "capacitacion_recibida",
     "asistencia_tecnica_recibida",
     "usuario_agua",
-    "asociacion_miembro"
+    "asociacion_miembro",
+    "riego_any",
+    "uso_maquinaria",
+    "usa_abono",
+    "usa_fertilizantes",
+    "semilla_semillero_any",
+    "semilla_comercial_any"
   )
   for (v in controls_numeric) {
     if (v %in% names(controls)) {
@@ -231,15 +375,19 @@ if (file.exists(controls_path)) {
   controls <- controls[controls$valor_total > 0 & controls$area_total_ha > 0, ]
   controls <- controls[!is.na(controls$diversificacion_area) & !is.na(controls$size_cat) & !is.na(controls$region_natural), ]
 
+  controls_input <- attach_input_costs(controls)
+  controls <- controls_input$data
+  controls_input_col <- controls_input$input_col
+
   controls$log_y <- log(controls$valor_total)
   controls$log_land <- log(controls$area_total_ha)
   controls$log_labor <- log(controls$labor_total + 1)
-  controls$log_inputs <- log(controls$input_costs + 1)
+  controls$log_inputs <- log(controls$input_costs_sfa + 1)
   controls$log_seed <- log(controls$gasto_semilla + 1)
   controls$log_irrigation_cost <- log(controls$gasto_agua_riego + 1)
-  controls$capital_total <- rowSums(
-    controls[, c("gasto_compra_maquinaria", "gasto_compra_equipos", "gasto_alquiler_mant_equipos")],
-    na.rm = TRUE
+  controls$capital_total <- row_sums_min1(
+    controls,
+    c("gasto_compra_maquinaria", "gasto_compra_equipos", "gasto_alquiler_mant_equipos")
   )
   controls$log_capital <- log(controls$capital_total + 1)
 
@@ -260,18 +408,29 @@ if (file.exists(controls_path)) {
     "log_land",
     "log_labor",
     "log_inputs",
-    colnames(controls_region_dummies),
-    "log_seed",
     "log_irrigation_cost",
-    "log_capital",
-    "riego_tecnificado_any"
+    "log_capital"
   )
   x_controls <- filter_vars(controls, x_controls)
   z_controls <- filter_vars(controls, c(z_names_main, z_controls_extra))
 
   controls_model <- safe_frontier(controls, x_controls, z_controls, "controls_ena")
   if (!is.null(controls_model)) {
+    controls_diag <- build_sfa_diagnostics_row(controls_model, controls)
+    controls_diag$input_cost_var <- controls_input_col
+    controls_diag$ineffDecrease <- SFA_ASSUMPTIONS$ineffDecrease
+    controls_diag$truncNorm <- SFA_ASSUMPTIONS$truncNorm
+    controls_diag$timeEffect <- SFA_ASSUMPTIONS$timeEffect
+    diagnostic_rows[[length(diagnostic_rows) + 1]] <- controls_diag
+    if (isTRUE(controls_diag$gamma_near_boundary)) {
+      warning(sprintf("Gamma near boundary for model %s (gamma=%.4f).", controls_diag$model, controls_diag$gamma))
+    }
+    if (isTRUE(controls_diag$cov_singular)) {
+      warning(sprintf("Covariance matrix singular for model %s. DO NOT INTERPRET inference.", controls_diag$model))
+    }
+
     controls_table <- tidy_frontier(controls_model$model, controls_model$name)
+    controls_table <- attach_diagnostics(controls_table, controls_diag)
     write.csv(controls_table, file.path(out_tables, "13_sfa_with_controls_ena.csv"), row.names = FALSE)
     writeLines(
       paste(
@@ -305,6 +464,8 @@ if (file.exists(geo2_path)) {
     "area_total_ha",
     "labor_total",
     "input_costs",
+    "gasto_agricola_total",
+    "costo_total_agropecuario",
     "diversificacion_area",
     "shannon_area",
     "num_crops_area",
@@ -321,13 +482,17 @@ if (file.exists(geo2_path)) {
     "gasto_compra_maquinaria",
     "gasto_compra_equipos",
     "gasto_alquiler_mant_equipos",
-    "riego_tecnificado_any",
     "nivel_educacion",
-    "credito_obtenido",
     "capacitacion_recibida",
     "asistencia_tecnica_recibida",
     "usuario_agua",
-    "asociacion_miembro"
+    "asociacion_miembro",
+    "riego_any",
+    "uso_maquinaria",
+    "usa_abono",
+    "usa_fertilizantes",
+    "semilla_semillero_any",
+    "semilla_comercial_any"
   )
   for (v in geo2_numeric) {
     if (v %in% names(geo2)) {
@@ -337,17 +502,27 @@ if (file.exists(geo2_path)) {
 
   geo2 <- geo2[geo2$valor_total > 0 & geo2$area_total_ha > 0, ]
   geo2 <- geo2[!is.na(geo2$diversificacion_area) & !is.na(geo2$size_cat) & !is.na(geo2$region_natural), ]
-  geo2 <- geo2[!is.na(geo2$tmean_2024) & !is.na(geo2$elev_m), ]
+  geo2 <- geo2[
+    !is.na(geo2$tmean_2024) &
+      !is.na(geo2$delta_tmean_24_23) &
+      !is.na(geo2$slope_deg) &
+      !is.na(geo2$ruggedness) &
+      !is.na(geo2$prcp_total_z),
+  ]
+
+  geo2_input <- attach_input_costs(geo2)
+  geo2 <- geo2_input$data
+  geo2_input_col <- geo2_input$input_col
 
   geo2$log_y <- log(geo2$valor_total)
   geo2$log_land <- log(geo2$area_total_ha)
   geo2$log_labor <- log(geo2$labor_total + 1)
-  geo2$log_inputs <- log(geo2$input_costs + 1)
+  geo2$log_inputs <- log(geo2$input_costs_sfa + 1)
   geo2$log_seed <- log(geo2$gasto_semilla + 1)
   geo2$log_irrigation_cost <- log(geo2$gasto_agua_riego + 1)
-  geo2$capital_total <- rowSums(
-    geo2[, c("gasto_compra_maquinaria", "gasto_compra_equipos", "gasto_alquiler_mant_equipos")],
-    na.rm = TRUE
+  geo2$capital_total <- row_sums_min1(
+    geo2,
+    c("gasto_compra_maquinaria", "gasto_compra_equipos", "gasto_alquiler_mant_equipos")
   )
   geo2$log_capital <- log(geo2$capital_total + 1)
   geo2$log_surface_km2 <- if ("surface_km2" %in% names(geo2)) log(geo2$surface_km2 + 1) else NA
@@ -365,7 +540,7 @@ if (file.exists(geo2_path)) {
   }
   geo2 <- cbind(geo2, geo2_region_dummies)
 
-  x_geo2_base <- c("log_land", "log_labor", "log_inputs", colnames(geo2_region_dummies))
+  x_geo2_base <- c("log_land", "log_labor", "log_inputs")
   if ("surface_km2" %in% names(geo2)) {
     x_geo2_base <- c(x_geo2_base, "log_surface_km2")
   }
@@ -373,7 +548,6 @@ if (file.exists(geo2_path)) {
     x_geo2_base,
     "tmean_2024",
     "delta_tmean_24_23",
-    "elev_m",
     "slope_deg",
     "ruggedness",
     "prcp_total_z"
@@ -383,16 +557,44 @@ if (file.exists(geo2_path)) {
   geo2_rows <- list()
   model_temp_topo <- safe_frontier(geo2, x_geo2_temp, z_names_main, "temp_topo")
   if (!is.null(model_temp_topo)) {
-    geo2_rows[[length(geo2_rows) + 1]] <- tidy_frontier(model_temp_topo$model, model_temp_topo$name)
+    temp_diag <- build_sfa_diagnostics_row(model_temp_topo, geo2)
+    temp_diag$input_cost_var <- geo2_input_col
+    temp_diag$ineffDecrease <- SFA_ASSUMPTIONS$ineffDecrease
+    temp_diag$truncNorm <- SFA_ASSUMPTIONS$truncNorm
+    temp_diag$timeEffect <- SFA_ASSUMPTIONS$timeEffect
+    diagnostic_rows[[length(diagnostic_rows) + 1]] <- temp_diag
+    if (isTRUE(temp_diag$gamma_near_boundary)) {
+      warning(sprintf("Gamma near boundary for model %s (gamma=%.4f).", temp_diag$model, temp_diag$gamma))
+    }
+    if (isTRUE(temp_diag$cov_singular)) {
+      warning(sprintf("Covariance matrix singular for model %s. DO NOT INTERPRET inference.", temp_diag$model))
+    }
+    temp_table <- tidy_frontier(model_temp_topo$model, model_temp_topo$name)
+    temp_table <- attach_diagnostics(temp_table, temp_diag)
+    geo2_rows[[length(geo2_rows) + 1]] <- temp_table
   }
 
-  x_geo2_controls <- c(x_geo2_temp, "log_seed", "log_irrigation_cost", "log_capital", "riego_tecnificado_any")
+  x_geo2_controls <- c(x_geo2_temp, "log_irrigation_cost", "log_capital")
   x_geo2_controls <- filter_vars(geo2, x_geo2_controls)
   z_geo2_controls <- filter_vars(geo2, c(z_names_main, z_controls_extra))
 
   model_controls_temp <- safe_frontier(geo2, x_geo2_controls, z_geo2_controls, "controls_temp_topo")
   if (!is.null(model_controls_temp)) {
-    geo2_rows[[length(geo2_rows) + 1]] <- tidy_frontier(model_controls_temp$model, model_controls_temp$name)
+    temp_controls_diag <- build_sfa_diagnostics_row(model_controls_temp, geo2)
+    temp_controls_diag$input_cost_var <- geo2_input_col
+    temp_controls_diag$ineffDecrease <- SFA_ASSUMPTIONS$ineffDecrease
+    temp_controls_diag$truncNorm <- SFA_ASSUMPTIONS$truncNorm
+    temp_controls_diag$timeEffect <- SFA_ASSUMPTIONS$timeEffect
+    diagnostic_rows[[length(diagnostic_rows) + 1]] <- temp_controls_diag
+    if (isTRUE(temp_controls_diag$gamma_near_boundary)) {
+      warning(sprintf("Gamma near boundary for model %s (gamma=%.4f).", temp_controls_diag$model, temp_controls_diag$gamma))
+    }
+    if (isTRUE(temp_controls_diag$cov_singular)) {
+      warning(sprintf("Covariance matrix singular for model %s. DO NOT INTERPRET inference.", temp_controls_diag$model))
+    }
+    temp_controls_table <- tidy_frontier(model_controls_temp$model, model_controls_temp$name)
+    temp_controls_table <- attach_diagnostics(temp_controls_table, temp_controls_diag)
+    geo2_rows[[length(geo2_rows) + 1]] <- temp_controls_table
   }
 
   if (length(geo2_rows) > 0) {
@@ -461,6 +663,8 @@ if (file.exists(geo_path)) {
     "area_total_ha",
     "labor_total",
     "input_costs",
+    "gasto_agricola_total",
+    "costo_total_agropecuario",
     "diversificacion_area",
     "shannon_area",
     "num_crops_area",
@@ -477,10 +681,14 @@ if (file.exists(geo_path)) {
   geo <- geo[!is.na(geo$diversificacion_area) & !is.na(geo$size_cat) & !is.na(geo$region_natural), ]
   geo <- geo[!is.na(geo$prcp_total_z), ]
 
+  geo_input <- attach_input_costs(geo)
+  geo <- geo_input$data
+  geo_input_col <- geo_input$input_col
+
   geo$log_y <- log(geo$valor_total)
   geo$log_land <- log(geo$area_total_ha)
   geo$log_labor <- log(geo$labor_total + 1)
-  geo$log_inputs <- log(geo$input_costs + 1)
+  geo$log_inputs <- log(geo$input_costs_sfa + 1)
   geo$log_surface_km2 <- if ("surface_km2" %in% names(geo)) log(geo$surface_km2 + 1) else NA
 
   geo$size_cat <- factor(geo$size_cat)
@@ -497,12 +705,20 @@ if (file.exists(geo_path)) {
   }
   geo <- cbind(geo, geo_region_dummies)
 
-  x_geo_base <- c("log_land", "log_labor", "log_inputs", colnames(geo_region_dummies))
+  x_geo_base <- c("log_land", "log_labor", "log_inputs")
   if ("surface_km2" %in% names(geo)) {
     x_geo_base <- c(x_geo_base, "log_surface_km2")
   }
 
-  z_geo <- c("diversificacion_area", "size_mediano", "size_grande", "diversif_mediano", "diversif_grande", "prcp_total_z")
+  z_geo <- c(
+    "diversificacion_area",
+    "size_mediano",
+    "size_grande",
+    "diversif_mediano",
+    "diversif_grande",
+    "prcp_total_z",
+    colnames(geo_region_dummies)
+  )
 
   geo_models <- list()
   model_xgeo <- NULL
@@ -510,12 +726,40 @@ if (file.exists(geo_path)) {
   geo_x_names <- c(x_geo_base, "prcp_total_z")
   model_xgeo <- safe_frontier(geo, geo_x_names, z_names_main, "xgeo_prcp")
   if (!is.null(model_xgeo)) {
-    geo_models[[length(geo_models) + 1]] <- tidy_frontier(model_xgeo$model, model_xgeo$name)
+    xgeo_diag <- build_sfa_diagnostics_row(model_xgeo, geo)
+    xgeo_diag$input_cost_var <- geo_input_col
+    xgeo_diag$ineffDecrease <- SFA_ASSUMPTIONS$ineffDecrease
+    xgeo_diag$truncNorm <- SFA_ASSUMPTIONS$truncNorm
+    xgeo_diag$timeEffect <- SFA_ASSUMPTIONS$timeEffect
+    diagnostic_rows[[length(diagnostic_rows) + 1]] <- xgeo_diag
+    if (isTRUE(xgeo_diag$gamma_near_boundary)) {
+      warning(sprintf("Gamma near boundary for model %s (gamma=%.4f).", xgeo_diag$model, xgeo_diag$gamma))
+    }
+    if (isTRUE(xgeo_diag$cov_singular)) {
+      warning(sprintf("Covariance matrix singular for model %s. DO NOT INTERPRET inference.", xgeo_diag$model))
+    }
+    xgeo_table <- tidy_frontier(model_xgeo$model, model_xgeo$name)
+    xgeo_table <- attach_diagnostics(xgeo_table, xgeo_diag)
+    geo_models[[length(geo_models) + 1]] <- xgeo_table
   }
 
   model_zgeo <- safe_frontier(geo, x_geo_base, z_geo, "zgeo_prcp")
   if (!is.null(model_zgeo)) {
-    geo_models[[length(geo_models) + 1]] <- tidy_frontier(model_zgeo$model, model_zgeo$name)
+    zgeo_diag <- build_sfa_diagnostics_row(model_zgeo, geo)
+    zgeo_diag$input_cost_var <- geo_input_col
+    zgeo_diag$ineffDecrease <- SFA_ASSUMPTIONS$ineffDecrease
+    zgeo_diag$truncNorm <- SFA_ASSUMPTIONS$truncNorm
+    zgeo_diag$timeEffect <- SFA_ASSUMPTIONS$timeEffect
+    diagnostic_rows[[length(diagnostic_rows) + 1]] <- zgeo_diag
+    if (isTRUE(zgeo_diag$gamma_near_boundary)) {
+      warning(sprintf("Gamma near boundary for model %s (gamma=%.4f).", zgeo_diag$model, zgeo_diag$gamma))
+    }
+    if (isTRUE(zgeo_diag$cov_singular)) {
+      warning(sprintf("Covariance matrix singular for model %s. DO NOT INTERPRET inference.", zgeo_diag$model))
+    }
+    zgeo_table <- tidy_frontier(model_zgeo$model, model_zgeo$name)
+    zgeo_table <- attach_diagnostics(zgeo_table, zgeo_diag)
+    geo_models[[length(geo_models) + 1]] <- zgeo_table
   }
 
   if (length(geo_models) > 0) {
@@ -567,6 +811,21 @@ if (file.exists(geo_path)) {
     )
     system2("python", c("-c", shQuote(py_cmd_geo)))
   }
+}
+
+if (length(diagnostic_rows) > 0) {
+  diagnostics_table <- do.call(rbind, diagnostic_rows)
+  diag_csv <- file.path(out_tables, "02_sfa_diagnostics.csv")
+  write.csv(diagnostics_table, diag_csv, row.names = FALSE)
+  writeLines(
+    paste(
+      "|", paste(names(diagnostics_table), collapse = " | "), "|",
+      "\n|", paste(rep("---", ncol(diagnostics_table)), collapse = " | "), "|",
+      "\n",
+      paste(apply(diagnostics_table, 1, function(row) paste("|", paste(row, collapse = " | "), "|")), collapse = "\n")
+    ),
+    con = file.path(out_tables, "02_sfa_diagnostics.md")
+  )
 }
 
 cat("SFA outputs written to outputs/tables and data/processed.\\n")

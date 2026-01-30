@@ -1,0 +1,27 @@
+{
+  "source": "CHIRPS v2 monthly precipitation",
+  "target_year": 2024,
+  "baseline_start": 2015,
+  "baseline_end": 2020,
+  "baseline_note": "fallback_baseline_2015_2020_due_to_download_size",
+  "season_definitions": {
+    "wet": "Nov-Mar",
+    "dry": "May-Sep",
+    "wet_mode": "within_year"
+  },
+  "units": {
+    "prcp_2024_total": "mm/year",
+    "prcp_2024_wet": "mm/season",
+    "prcp_2024_dry": "mm/season",
+    "prcp_baseline_mean": "mm/year",
+    "prcp_baseline_sd": "mm/year",
+    "prcp_total_anom": "mm/year",
+    "prcp_total_z": "z-score"
+  },
+  "nodata": null,
+  "crs": "GEOGCS[\"WGS 84\",DATUM[\"World Geodetic System 1984\",SPHEROID[\"WGS 84\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST]]",
+  "resolution": [
+    0.05000000074505806,
+    0.05000000074505806
+  ]
+}

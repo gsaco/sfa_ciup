@@ -1,14 +1,14 @@
 | model | term | estimate | std_error | p_value | 
 | --- | --- | --- | --- | --- | 
- | main_area | Z_diversificacion_area |  -14.93047 |  1.820617 | 2.220446e-16 |
-| main_area | Z_diversif_mediano |  174.79297 | 23.979256 | 3.115286e-13 |
-| main_area | Z_diversif_grande |  -69.90127 | 10.234233 | 8.482992e-12 |
-| controls_ena | Z_diversificacion_area |  -14.86033 |  1.394045 | 0.000000e+00 |
-| controls_ena | Z_diversif_mediano |  166.96489 | 22.213213 | 5.617729e-14 |
-| controls_ena | Z_diversif_grande |  -61.31012 |  6.053377 | 0.000000e+00 |
-| temp_topo | Z_diversificacion_area |  -35.05566 |  9.836902 | 3.656795e-04 |
-| temp_topo | Z_diversif_mediano |  115.56889 | 35.232437 | 1.037393e-03 |
-| temp_topo | Z_diversif_grande |  -28.41762 |  7.026647 | 5.248756e-05 |
-| controls_temp_topo | Z_diversificacion_area | -102.12193 |  9.482710 | 0.000000e+00 |
-| controls_temp_topo | Z_diversif_mediano |  309.20792 | 29.057355 | 0.000000e+00 |
-| controls_temp_topo | Z_diversif_grande |  -52.79317 |  3.832613 | 0.000000e+00 |
+ | main_area | Z_diversificacion_area |  1.9293785 | 0.2007915 | 0.000000e+00 |
+| main_area | Z_diversif_mediano | -0.1995218 | 0.2429158 | 4.114401e-01 |
+| main_area | Z_diversif_grande | -5.5425393 | 0.2892420 | 0.000000e+00 |
+| controls_ena | Z_diversificacion_area |  0.9167076 | 0.1336999 | 7.059020e-12 |
+| controls_ena | Z_diversif_mediano |  0.7178567 | 0.2509501 | 4.229003e-03 |
+| controls_ena | Z_diversif_grande | -3.6453681 | 0.2522126 | 0.000000e+00 |
+| temp_topo | Z_diversificacion_area |  0.2734332 | 0.2464364 | 2.671935e-01 |
+| temp_topo | Z_diversif_mediano |  2.5314710 | 0.3415218 | 1.241229e-13 |
+| temp_topo | Z_diversif_grande | -7.9699531 | 0.8459190 | 0.000000e+00 |
+| controls_temp_topo | Z_diversificacion_area |  0.0183194 | 0.1353228 | 8.923150e-01 |
+| controls_temp_topo | Z_diversif_mediano |  1.9611241 | 0.2654042 | 1.476597e-13 |
+| controls_temp_topo | Z_diversif_grande | -3.5854552 | 0.2916842 | 0.000000e+00 |

@@ -41,7 +41,23 @@ def load_module(path: Path, raw_cols: list[str], variable_map: dict[str, str]) -
 
 def yes_no_dummy(series: pd.Series) -> pd.Series:
     numeric = pd.to_numeric(series, errors="coerce")
-    return (numeric == 1).astype(int)
+    out = pd.Series(pd.NA, index=series.index, dtype="Int64")
+    out.loc[numeric == 1] = 1
+    out.loc[numeric.isin([0, 2])] = 0
+    return out
+
+
+def add_missing_indicator(df: pd.DataFrame, col: str) -> None:
+    df[f"{col}_missing"] = df[col].isna().astype(int)
+
+
+def fill_zero_if_no(df: pd.DataFrame, indicator_col: str, value_cols: list[str]) -> None:
+    if indicator_col not in df.columns:
+        return
+    mask_no = df[indicator_col].fillna(-1).eq(0)
+    for col in value_cols:
+        if col in df.columns:
+            df.loc[mask_no, col] = df.loc[mask_no, col].fillna(0)
 
 
 def irrigation_features() -> pd.DataFrame:
@@ -54,8 +70,12 @@ def irrigation_features() -> pd.DataFrame:
     water_source = pd.to_numeric(schema["water_source"], errors="coerce")
     irrigation_system = pd.to_numeric(schema["irrigation_system"], errors="coerce")
 
-    schema["riego_crop"] = ((water_source.notna()) & (water_source != 1)).astype(int)
-    schema["riego_tecnificado_crop"] = irrigation_system.isin([1, 2, 3, 4, 5, 6]).astype(int)
+    schema["riego_crop"] = pd.Series(pd.NA, index=schema.index, dtype="Int64")
+    schema.loc[water_source.notna(), "riego_crop"] = (water_source[water_source.notna()] != 1).astype(int)
+    schema["riego_tecnificado_crop"] = pd.Series(pd.NA, index=schema.index, dtype="Int64")
+    schema.loc[irrigation_system.notna(), "riego_tecnificado_crop"] = irrigation_system[
+        irrigation_system.notna()
+    ].isin([1, 2, 3, 4, 5, 6]).astype(int)
 
     crop_agg = (
         schema.groupby(ID_COLS, dropna=False)
@@ -72,17 +92,20 @@ def irrigation_features() -> pd.DataFrame:
     cap800_cols = ["ANIO", "CCDD", "CCPP", "CCDI", "NSEGM", "ID_PROD", "UA", "P810"]
     cap800 = load_module(cap800_path, cap800_cols, variable_map)
     cap800["usuario_agua"] = yes_no_dummy(cap800["usuario_agua"])
+    add_missing_indicator(cap800, "usuario_agua")
     cap800 = cap800[ID_COLS + ["usuario_agua"]].drop_duplicates(subset=ID_COLS)
 
     cap1000_path = RAW_DIR / "973-Modulo1910" / "18_CAP1000.csv"
     cap1000_cols = ["ANIO", "CCDD", "CCPP", "CCDI", "NSEGM", "ID_PROD", "UA", "P1001A_3"]
     cap1000 = load_module(cap1000_path, cap1000_cols, variable_map)
-    cap1000["gasto_agua_riego"] = pd.to_numeric(cap1000["gasto_agua_riego"], errors="coerce").fillna(0)
+    cap1000["gasto_agua_riego"] = pd.to_numeric(cap1000["gasto_agua_riego"], errors="coerce")
     cap1000 = cap1000[ID_COLS + ["gasto_agua_riego"]].drop_duplicates(subset=ID_COLS)
 
     merged = crop_agg.merge(cap800, on=ID_COLS, how="left").merge(cap1000, on=ID_COLS, how="left")
-    merged["usuario_agua"] = merged["usuario_agua"].fillna(0).astype(int)
-    merged["gasto_agua_riego"] = merged["gasto_agua_riego"].fillna(0)
+    fill_zero_if_no(merged, "usuario_agua", ["gasto_agua_riego"])
+    add_missing_indicator(merged, "riego_any")
+    add_missing_indicator(merged, "riego_tecnificado_any")
+    add_missing_indicator(merged, "usuario_agua")
 
     return merged
 
@@ -105,8 +128,14 @@ def machinery_capital_features() -> pd.DataFrame:
     ]
     cap1000 = load_module(cap1000_path, cap1000_cols, variable_map)
     cap1000["uso_maquinaria"] = yes_no_dummy(cap1000["uso_maquinaria"])
+    add_missing_indicator(cap1000, "uso_maquinaria")
     for col in ["gasto_compra_equipos", "gasto_compra_maquinaria", "gasto_alquiler_mant_equipos"]:
-        cap1000[col] = pd.to_numeric(cap1000[col], errors="coerce").fillna(0)
+        cap1000[col] = pd.to_numeric(cap1000[col], errors="coerce")
+    fill_zero_if_no(
+        cap1000,
+        "uso_maquinaria",
+        ["gasto_compra_equipos", "gasto_compra_maquinaria", "gasto_alquiler_mant_equipos"],
+    )
     cap1000 = cap1000[
         ID_COLS
         + ["uso_maquinaria", "gasto_compra_equipos", "gasto_compra_maquinaria", "gasto_alquiler_mant_equipos"]
@@ -115,13 +144,13 @@ def machinery_capital_features() -> pd.DataFrame:
     cap1200_path = RAW_DIR / "973-Modulo1913" / "21_CAP1200B_ME.csv"
     cap1200_cols = ["ANIO", "CCDD", "CCPP", "CCDI", "NSEGM", "ID_PROD", "UA", "P1207_N"]
     cap1200 = load_module(cap1200_path, cap1200_cols, variable_map)
-    cap1200["num_maquinaria_equipo"] = pd.to_numeric(cap1200["num_maquinaria_equipo"], errors="coerce").fillna(0)
+    cap1200["num_maquinaria_equipo"] = pd.to_numeric(cap1200["num_maquinaria_equipo"], errors="coerce")
     cap1200_agg = (
-        cap1200.groupby(ID_COLS, dropna=False)["num_maquinaria_equipo"].sum().reset_index()
+        cap1200.groupby(ID_COLS, dropna=False)["num_maquinaria_equipo"].sum(min_count=1).reset_index()
     )
 
     merged = cap1000.merge(cap1200_agg, on=ID_COLS, how="left")
-    merged["num_maquinaria_equipo"] = merged["num_maquinaria_equipo"].fillna(0)
+    add_missing_indicator(merged, "uso_maquinaria")
 
     return merged
 
@@ -144,16 +173,16 @@ def fertilizer_seed_features() -> pd.DataFrame:
         "P238",
     ]
     cap200e = load_module(cap200e_path, cap200e_cols, variable_map)
-    cap200e["gasto_semilla"] = pd.to_numeric(cap200e["gasto_semilla"], errors="coerce").fillna(0)
-    cap200e["semilla_semillero"] = pd.to_numeric(cap200e["semilla_semillero"], errors="coerce").fillna(0)
-    cap200e["semilla_comercial"] = pd.to_numeric(cap200e["semilla_comercial"], errors="coerce").fillna(0)
+    cap200e["gasto_semilla"] = pd.to_numeric(cap200e["gasto_semilla"], errors="coerce")
+    cap200e["semilla_semillero"] = yes_no_dummy(cap200e["semilla_semillero"])
+    cap200e["semilla_comercial"] = yes_no_dummy(cap200e["semilla_comercial"])
     cap200e["usa_abono"] = yes_no_dummy(cap200e["usa_abono"])
     cap200e["usa_fertilizantes"] = yes_no_dummy(cap200e["usa_fertilizantes"])
 
     cap200e_agg = (
         cap200e.groupby(ID_COLS, dropna=False)
         .agg(
-            gasto_semilla=("gasto_semilla", "sum"),
+            gasto_semilla=("gasto_semilla", lambda x: x.sum(min_count=1)),
             usa_abono=("usa_abono", "max"),
             usa_fertilizantes=("usa_fertilizantes", "max"),
             semilla_semillero_any=("semilla_semillero", "max"),
@@ -179,10 +208,16 @@ def fertilizer_seed_features() -> pd.DataFrame:
         )
         .reset_index()
     )
-    seed_agg["semilla_certificada_any"] = seed_agg["semilla_certificada_any"].fillna(0)
-    seed_agg["semilla_certificada_share"] = seed_agg["semilla_certificada_share"].fillna(0)
 
     merged = cap200e_agg.merge(seed_agg, on=ID_COLS, how="left")
+    for col in [
+        "usa_abono",
+        "usa_fertilizantes",
+        "semilla_semillero_any",
+        "semilla_comercial_any",
+        "semilla_certificada_any",
+    ]:
+        add_missing_indicator(merged, col)
 
     return merged
 
@@ -217,7 +252,8 @@ def extension_credit_education_features() -> pd.DataFrame:
     cap800_cols = ["ANIO", "CCDD", "CCPP", "CCDI", "NSEGM", "ID_PROD", "UA", "P801", "P801_1"]
     cap800 = load_module(cap800_path, cap800_cols, variable_map)
     cap800["asociacion_miembro"] = yes_no_dummy(cap800["asociacion_miembro"])
-    cap800["asociacion_num"] = pd.to_numeric(cap800["asociacion_num"], errors="coerce").fillna(0)
+    cap800["asociacion_num"] = pd.to_numeric(cap800["asociacion_num"], errors="coerce")
+    fill_zero_if_no(cap800, "asociacion_miembro", ["asociacion_num"])
     cap800 = cap800[ID_COLS + ["asociacion_miembro", "asociacion_num"]].drop_duplicates(subset=ID_COLS)
 
     merged = cap700.merge(cap900, on=ID_COLS, how="left")
@@ -225,7 +261,7 @@ def extension_credit_education_features() -> pd.DataFrame:
     merged = merged.merge(cap800, on=ID_COLS, how="left")
 
     for col in ["capacitacion_recibida", "asistencia_tecnica_recibida", "credito_obtenido", "asociacion_miembro"]:
-        merged[col] = merged[col].fillna(0).astype(int)
-    merged["asociacion_num"] = merged["asociacion_num"].fillna(0)
+        add_missing_indicator(merged, col)
+    add_missing_indicator(merged, "asociacion_num")
 
     return merged
